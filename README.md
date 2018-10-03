@@ -1,36 +1,36 @@
-# SpringBootMVC
-Project skeleton for Software Project class in the University of Iceland.
+# Tournament manager
 
-## How do I get this ?
-Your IDE ([IntelliJ](https://www.jetbrains.com/idea/), [Eclipse](https://eclipse.org/), [Spring Tool Suit](https://spring.io/tools)) should be able to clone a project from Github.
-It should be easy to find information regarding how to do that for your chosen IDE.
-It's also possible to download the project as a .zip [here](https://github.com/mbook/SpringBootMVC/archive/master.zip).
+### Hópmeðlimir
 
-## How do I run this ?
-This project is setup using [Maven](https://maven.apache.org/what-is-maven.html) as a dependency manager, so if your IDE does not manage that, or you don't have it installed you can look [here](https://maven.apache.org/install.html) for further information.
-When all the dependencies are downloaded, you can run the project by running the ``main()`` method in the class ``Application`` and then enter [localhost:8080](http://localhost:8080) into the address bar of your favorite web browser.
+*Birgir Óli Snorrason 	- 150795-2499*
 
-## What is going on ?
-Look at the code and find the comments I wrote. I tried explaining what was happening in such a way that it should hopefully be easy to understand. I recommend starting by looking at the [HomeController](https://github.com/danielpall/SpringBootMVC/blob/master/src/main/java/project/controller/HomeController.java#L26).
+*Jón Þorsteinsson		- 130291-2289*
 
-### What did you use to make this ?
-I used IntelliJ Ultimate with Maven to setup this project. Students and Teachers get the Ultimate edition for free, apply [here](https://www.jetbrains.com/student/).
+*Kristján Pétur Þórarinsson	- 270695-2569*
 
-### Database
-This project runs an internal database while it is running. If the project is restarted, then all data will be reset, i.e. no data will persist between restarts.
-If you look at the [application.properties](https://github.com/danielpall/SpringBootMVC/blob/master/src/main/resources/application.properties) file, you can see how you can direct the project to use your own persistent database. The example shown is aimed at Postgres.
+*Kristófer Már Gíslason	- 181096-3579*
 
-## What is this application showing ?  
-This application is a small demonstration of using [Spring Boot](https://projects.spring.io/spring-boot/) to handle the full stack for the webapp. It handles the frontend using Jasper for jsp pages, which 
-allows for dynamic pages. It handles the backend with MVC pattern and easy to use annotations, and interfaces to a repository of our choice, in this instance, an in memory database.
-When the application is running, you can go to [http://localhost:8080/postit](http://localhost:8080/postit) for a demonstration for this tech stack.
+## Success metrics
 
-It's a simple postit application where an user writes a _name_ and a _note_ and posts it to a list. All users posts will be visible with name and note. 
+The most obvious criteria would be the number of tournaments being held over some period of time, and the fact that a tournament is completed, not just created. The average number of participants or teams that register to tournaments and the amount of 
+users could also give a good indication about whether the project is successful or not. It would also be a sign of success if an official tournament decides to use our platform.
 
-It's also possible to see notes from certain users by going to the url  [http://localhost:8080/postit/username](http://localhost:8080/postit/username) where _username_ is the name of the user you want to see the postit notes from.
+## Vision statement
 
-### Where can I find help ?
-In case of any questions, please refer to the "Spring Boot Intro" slides in the HBV501G Verkefni folder on Ugla, or contact your tutor.
+Our system is designed for professional and leisure tournament holders and participants   who want to set up and organize tournaments for football, handball or basketball. The tournament management system is an information system that will help organize and keep track of tournament status, unlike other tournament systems our will not use the popular solution of using an excel spreadsheet instead we will provide an easy to use platform with online results that will provide participants with real-time updates on games and leaderboard positions.
 
-### Credits
-This skeleton project was created by Daníel Páll Jóhannsson while tutoring the HBV501G course in Fall 2015 and 2018.
+## Major features
++ A new user is interested in using the application. He enters the SignUp section where he is prompted to provide a username and a password. The system then validates his input and creates his account.
++ A tournament manager wants to set up a tournament using the application. He enters the tournament creation section and selects the type of sport. Then he can either register the teams himself or he can let teams sign up themselves. The system then creates a tournament based on those parameters and organizes matches between registered teams.
++ A user wants to subscribe to a tournament to have quicker access to information regarding it. He searches for the tournament by name using the search window. The system finds the tournament matching the search in the database and shows the user the homepage for that tournament. On that page the user has an option to follow a tournament. The user chooses that option and the system adds the tournament to the list of tournaments followed by the user.
++ A tournament holder decides to have his tournament registration based, he then picks the expiration date for registration. The system issues a participation key for the tournament which the tournament holder can send to possible participants. The participants will then decide if they will register to the tournament. The system declines all attempts to register after the expiration date.
++ When the user is creating a new tournament he will be prompted by the system to add the ability to have a group stage with knockout phases. The system will then create a tournament with the abilities the user has chosen.
+
+
+
+
+## Scope of initial release
+
+In the initial release a user should be able to create an account (I). A user will be able to create tournaments for three different type of sports, football, handball and basketball (II).  A user can also sign his team up for tournaments (IV) and subscribe to tournaments he’s interested in to get updates about it (III). 
+
+
