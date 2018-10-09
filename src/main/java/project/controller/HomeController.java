@@ -3,8 +3,11 @@ package project.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import project.persistence.entities.Tournament;
+import project.service.Implementation.TournamentService;
 import project.service.StringManipulationService;
 
 @Controller
@@ -12,11 +15,13 @@ public class HomeController {
 
     // Instance Variables
     StringManipulationService stringService;
+    TournamentService tournamentService;
 
     // Dependency Injection
     @Autowired
-    public HomeController(StringManipulationService stringService) {
+    public HomeController(StringManipulationService stringService, TournamentService tournamentService) {
         this.stringService = stringService;
+        this.tournamentService = tournamentService;
     }
 
     // Request mapping is the path that you want to map this method to
@@ -24,12 +29,26 @@ public class HomeController {
     // is running and you enter "localhost:8080" into a browser, this
     // method is called
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String home(){
+    public String home(Model model){
 
         // The string "Index" that is returned here is the name of the view
         // (the Index.jsp file) that is in the path /main/webapp/WEB-INF/jsp/
         // If you change "Index" to something else, be sure you have a .jsp
         // file that has the same name
+        model.addAttribute("tournament",new Tournament());
+
+        // Here we get all the Tournaments (in a reverse order) and add them to the model
+        // model.addAttribute("tournaments",tournamentService.findAllReverseOrder());
+        // Sækja lista yfir öll mót
+        // model.addAttribute("tournaments", tournamentService.getTournaments());
+        return "Index";
+    }
+    @RequestMapping(value ="/", method = RequestMethod.POST)
+    public String createTournament(@ModelAttribute("tournament") Tournament tournament, Model model){
+        tournamentService.save(tournament);
+
+        model.addAttribute("tournament",new Tournament());
+
         return "Index";
     }
 
