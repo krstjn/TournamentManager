@@ -25,22 +25,22 @@
         <%--If the model has an attribute with the name `tournaments`--%>
         <c:when test="${not empty tournaments}">
             <%--Create a table for the Postit Notes--%>
-            <table class="tournaments">
+            <div class="tournaments">
 
                 <c:forEach var="tournament" items="${tournaments}">
-                    <tr>
-                        <td>${tournament.name}</td>
-                        <td>${tournament.teamCount}</td>
-                    </tr>
+                    <div>
+                        <p>${tournament.name}</p>
+                        <p>Fjöldi skráða liða: ${tournament.teamCount}</p>
+                    </div>
                 </c:forEach>
-            </table>
+            </div>
         </c:when>
 
     <%--If all tests are false, then do this--%>
         <c:otherwise>
-            <h3>No notes!</h3>
+            <h3>No tournaments!</h3>
         </c:otherwise>
     </c:choose>
     </body>
     <footer>Class HBV501G, University of Iceland</footer>
-    </html>
+</html>

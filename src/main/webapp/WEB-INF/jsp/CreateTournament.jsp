@@ -7,12 +7,12 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html lang="en">
 
-<head>
-    <title>Create tournament</title>
-    <meta charset="UTF-8">
-</head>
-<body>
-<sf:form method="POST" modelAttribute="tournament" action="/createTournament">
+    <head>
+        <title>Create tournament</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+    <sf:form method="POST" modelAttribute="tournament" action="/createTournament">
 
     <table>
         <tr>
@@ -31,7 +31,7 @@
             <td><sf:input path="signUpExpiration" type="date"/></td>
         </tr>
         <tr>
-            <td>Tegund móts: ${tournament.type}</td>
+            <td>Tegund móts:</td>
                 <%--the `path` attribute matches the `note` attribute of the Entity that was passed in the model--%>
             <td><sf:radiobutton path="type" value="Knockout"/>Knockout</td>
             <td><sf:radiobutton path="type" value="GroupStage"/>Group stage</td>
@@ -39,9 +39,8 @@
     </table>
 
     <input type="submit" VALUE="Búa til mót"/>
-
-</sf:form>
-<a href="/">Forsíða</a>
-</body>
-<footer>Class HBV501G, University of Iceland</footer>
+    </sf:form>
+    <a href="/">Forsíða</a>
+    </body>
+    <footer>Class HBV501G, University of Iceland</footer>
 </html>
