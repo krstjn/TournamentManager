@@ -36,20 +36,26 @@ public class HomeController {
         // If you change "Index" to something else, be sure you have a .jsp
         // file that has the same name
         model.addAttribute("tournament",new Tournament());
-
+        model.addAttribute("tournaments", tournamentService.findAll());
         // Here we get all the Tournaments (in a reverse order) and add them to the model
         // model.addAttribute("tournaments",tournamentService.findAllReverseOrder());
         // Sækja lista yfir öll mót
         // model.addAttribute("tournaments", tournamentService.getTournaments());
         return "Index";
     }
-    @RequestMapping(value ="/", method = RequestMethod.POST)
+    @RequestMapping(value ="/createTournament", method = RequestMethod.GET)
+    public String createTournament(Model model) {
+        model.addAttribute("tournament", new Tournament());
+        return "CreateTournament";
+    }
+
+    @RequestMapping(value ="/createTournament", method = RequestMethod.POST)
     public String createTournament(@ModelAttribute("tournament") Tournament tournament, Model model){
         tournamentService.save(tournament);
 
         model.addAttribute("tournament",new Tournament());
 
-        return "Index";
+        return "CreateTournament";
     }
 
     // To call this method, enter "localhost:8080/user" into a browser
