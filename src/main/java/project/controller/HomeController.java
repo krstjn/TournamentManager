@@ -6,9 +6,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import project.persistence.entities.Team;
 import project.persistence.entities.Tournament;
+import project.service.Implementation.TeamService;
 import project.service.Implementation.TournamentService;
 import project.service.StringManipulationService;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 public class HomeController {
@@ -16,12 +22,14 @@ public class HomeController {
     // Instance Variables
     StringManipulationService stringService;
     TournamentService tournamentService;
+    TeamService teamService;
 
     // Dependency Injection
     @Autowired
-    public HomeController(StringManipulationService stringService, TournamentService tournamentService) {
+    public HomeController(StringManipulationService stringService, TournamentService tournamentService, TeamService teamService) {
         this.stringService = stringService;
         this.tournamentService = tournamentService;
+        this.teamService = teamService;
     }
 
     // Request mapping is the path that you want to map this method to
@@ -50,7 +58,15 @@ public class HomeController {
     }
 
     @RequestMapping(value ="/createTournament", method = RequestMethod.POST)
-    public String createTournament(@ModelAttribute("tournament") Tournament tournament, Model model){
+    public String createTournament(@ModelAttribute("tournament") Tournament tournament,
+                                   @RequestParam(value = "teamList", required = false)String[] teamList,
+                                   Model model){
+        Set<Team> t = new HashSet<>();
+        for (String s: teamList)
+            t.add(new Team(s, tournament));
+        
+        if(t.size() > 0) tournament.setTeams(t);
+
         tournamentService.save(tournament);
 
         model.addAttribute("tournament",new Tournament());

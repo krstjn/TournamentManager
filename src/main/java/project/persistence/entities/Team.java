@@ -13,8 +13,11 @@ public class Team {
     private Tournament tournament;
 
     public Team(){}
-
-    public Team(long id, String name, Set<Match> matches, Tournament tournament) {
+    public Team(String name, Tournament tournament){
+        this.name = name;
+        this.tournament = tournament;
+    }
+    public Team(String name, Set<Match> matches, Tournament tournament) {
         this.id = id;
         this.name = name;
         this.matches = matches;
