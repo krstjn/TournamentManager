@@ -30,7 +30,7 @@
                 <c:forEach var="tournament" items="${tournaments}">
                     <div>
                         <p>${tournament.name}</p>
-                        <p>Fjöldi skráða liða: ${tournament.teamCount}</p>
+                        <p>Fjöldi skráða liða: ${tournament.teams.size()}</p>
                     </div>
                 </c:forEach>
             </div>

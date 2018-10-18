@@ -1,4 +1,4 @@
-package project.service;
+package project.service.Interfaces;
 
 import project.persistence.entities.Tournament;
 

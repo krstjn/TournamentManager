@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import project.persistence.entities.Team;
 import project.persistence.entities.Tournament;
-import project.service.Implementation.TeamService;
-import project.service.Implementation.TournamentService;
+import project.service.TournamentService;
 import project.service.StringManipulationService;
 
 import java.util.HashSet;
@@ -21,15 +20,13 @@ public class HomeController {
 
     // Instance Variables
     StringManipulationService stringService;
-    TournamentService tournamentService;
-    TeamService teamService;
+    private TournamentService tournamentService;
 
     // Dependency Injection
     @Autowired
-    public HomeController(StringManipulationService stringService, TournamentService tournamentService, TeamService teamService) {
+    public HomeController(StringManipulationService stringService, TournamentService tournamentService) {
         this.stringService = stringService;
         this.tournamentService = tournamentService;
-        this.teamService = teamService;
     }
 
     // Request mapping is the path that you want to map this method to
@@ -59,10 +56,10 @@ public class HomeController {
 
     @RequestMapping(value ="/createTournament", method = RequestMethod.POST)
     public String createTournament(@ModelAttribute("tournament") Tournament tournament,
-                                   @RequestParam(value = "teamList", required = false)String[] teamList,
+                                   @RequestParam(value = "myTeams", required = false)String[] myTeams,
                                    Model model){
         Set<Team> t = new HashSet<>();
-        for (String s: teamList)
+        for (String s: myTeams)
             t.add(new Team(s, tournament));
         
         if(t.size() > 0) tournament.setTeams(t);

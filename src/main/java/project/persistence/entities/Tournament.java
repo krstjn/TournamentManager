@@ -15,7 +15,7 @@ public class Tournament {
 
     private String name;
     private Date created = new Date();
-    @DateTimeFormat(pattern="yyyy-mm-dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date signUpExpiration;
     private int teamCount = 0;
     private int maxTeams = 10;
@@ -38,13 +38,11 @@ public class Tournament {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     public Set<Team> getTeams() { return teams; }
-
     public void setTeams(Set<Team> teams) { this.teams = teams; }
 
     public Date getCreated() {
         return created;
     }
-
     public void setCreated(Date created) {
         this.created = created;
     }

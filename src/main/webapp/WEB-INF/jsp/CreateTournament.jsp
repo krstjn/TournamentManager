@@ -11,6 +11,7 @@
         <title>Create tournament</title>
         <meta charset="UTF-8">
         <script src="<c:url value="/js/jquery-3.3.1.min.js" />"></script>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
     </head>
     <body>
     <script>
@@ -19,12 +20,12 @@
 
             $addTeam.click(function (e) {
                 var team = $('#newTeam').val();
+                var $teamContainer = $('#teams__container');
                 if(team.length === 0 || team === undefined) return;
                 console.log(team);
-                var p = $("<p name='teamList' id='teamList'></p>").text(team);
-                var hidden = $("<input name='teamList' id='teamList' style='display: none' />").val(team);
-                $('#teams__container').append(p);
-                $('#teams__container').append(hidden);
+                var p = $("<p name='myTeams' id='myTeams'></p>").text(team);
+                var hidden = $("<input name='myTeams' id='myTeams' style='display: none' />").val(team);
+                $teamContainer.append(p, hidden);
                 $('#newTeam').val("");
             });
 
@@ -54,8 +55,10 @@
             <p>Lið/þáttakendur:</p>
             <div id="teams__container" name="teams">
             </div>
-            <span id="addTeam" class="button">Bæta við liði:</span>
-            <input type="text" id="newTeam"/>
+            <div style="display:flex; flex-direction: row;">
+                <input type="text" id="newTeam"/>
+                <div id="addTeam" class="button button-round">+</div>
+            </div>
         </div>
     </div>
 
