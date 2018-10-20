@@ -64,7 +64,11 @@ public class HomeController {
         
         if(t.size() > 0) tournament.setTeams(t);
 
-        tournamentService.save(tournament);
+        try{
+            tournamentService.save(tournament);
+        } catch (Exception e){
+            System.out.println("villa");
+        }
 
         model.addAttribute("tournament",new Tournament());
 

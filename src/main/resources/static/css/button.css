@@ -1,21 +1,25 @@
 .button {
     border: 1px solid #3700B3;
     border-radius: 4px;
-    background-color: #6200EE;
+    background-color: #018786;
     color: #fff;
     text-align: center;
 }
 
 .button-large {
     width:200px;
+    padding: 4px 6px;
 }
 
 .button-medium {
     width: 150px;
+    padding: 4px 6px;
 }
 
 .button-small {
     width: 100px;
+    padding: 4px 6px;
+
 }
 
 .button-round {

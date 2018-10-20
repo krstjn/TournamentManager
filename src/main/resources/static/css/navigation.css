@@ -1,0 +1,40 @@
+.navbar {
+    position: relative;
+    min-height: 50px;
+    margin-bottom: 22px;
+    border: 1px solid transparent;
+    width: 100%;
+    background-color: #EF8823;
+}
+
+.navbar--container{
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.navbar--nav {
+    display: flex;
+    align-items: center;
+}
+
+.navbar--item {
+    margin-left: 10px;
+}
+
+.navbar--item:hover img {
+    fill: #999;
+}
+
+.navbar--heading {
+
+}
+
+.svg {
+    transition: filter .3s ease-in-out;
+}
+.svg:hover {
+    filter: invert(100%);
+}

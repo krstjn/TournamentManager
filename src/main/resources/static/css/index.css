@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    overflow-y: scroll;
+
+    font-size: 16px;
+    font-family: 'Open sans', sans-serif;
+    background-color: #F5F5F5;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Raleway',  sans-serif;
+}
+
+a {
+    text-decoration: underline;
+    color: #000;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #FFFFFF;
+    border: 1px solid #dde2e2;
+    border-radius: 3px;
+    box-shadow: 0 5px 4px -2px rgba(0,0,0,0.08);
+}
+.hidden {
+    display: none;
+}
