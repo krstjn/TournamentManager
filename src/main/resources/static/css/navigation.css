@@ -1,10 +1,12 @@
 .navbar {
-    position: relative;
-    min-height: 50px;
-    margin-bottom: 22px;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    min-height: 44px;
+    margin-bottom: 20px;
     border: 1px solid transparent;
     width: 100%;
     background-color: #EF8823;
+    z-index: 10;
 }
 
 .navbar--container{

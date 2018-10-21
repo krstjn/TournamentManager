@@ -24,7 +24,7 @@
                 <a href="/"><img class="svg" src="<c:url value="/img/home-48.svg"/>" alt="Forsíða"></a>
             </div>
             <div class="navbar--nav">
-                <a href="/" class="navbar--item"><img class="svg" src="<c:url value="/img/user-30.svg"/>" alt="Menu"></a>
+                <a href="/createTournament" class="navbar--item"><img class="svg" src="<c:url value="/img/user-30.svg"/>" alt="Menu"></a>
                 <a href="/" class="navbar--item"><img class="svg" src="<c:url value="/img/calendar-30.svg"/>" alt="Cal"></a>
                 <a href="/" class="navbar--item"><img class="svg" src="<c:url value="/img/hamburger-30.svg"/>" alt="Menu"></a>
             </div>

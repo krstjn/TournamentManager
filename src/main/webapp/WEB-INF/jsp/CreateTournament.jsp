@@ -11,25 +11,26 @@
         <title>Create tournament</title>
         <meta charset="UTF-8">
         <script src="<c:url value="/js/jquery-3.3.1.min.js" />"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/navigation.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/CreateTournament.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/index.css"/>"/>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/icons.css"/>"/>
     </head>
     <body>
-    <div class="navbar">
+    <nav class="navbar">
         <div class="navbar--container">
             <div class="navbar--heading">
-                <a href="/"><img class="svg" src="<c:url value="/img/home-48.svg"/>" alt="Forsíða"></a>
+                <a href="/"><i class="material-icons md-light md-36">home</i></a>
             </div>
             <div class="navbar--nav">
-                <a href="/" class="navbar--item"><img class="svg" src="<c:url value="/img/user-30.svg"/>" alt="Menu"></a>
-                <a href="/" class="navbar--item"><img class="svg" src="<c:url value="/img/calendar-30.svg"/>" alt="Cal"></a>
-                <a href="/" class="navbar--item"><img class="svg"
-                                                      src="<c:url value="/img/hamburger-30.svg"/>" alt="Menu"></a>
+                <a href="/" class="navbar--item"><i class="material-icons md-light">calendar_today</i></a>
+                <a href="/" class="navbar--item"><i class="material-icons md-light">menu</i></a>
+                <a href="/" class="navbar--item"><i class="material-icons md-light">face</i></a>
             </div>
         </div>
-    </div>
+    </nav>
     <main>
         <div class="form">
 
