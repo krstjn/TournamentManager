@@ -1,0 +1,42 @@
+.navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    min-height: 44px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    width: 100%;
+    background-color: #EF8823;
+    z-index: 10;
+}
+
+.navbar--container{
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.navbar--nav {
+    display: flex;
+    align-items: center;
+}
+
+.navbar--item {
+    margin-left: 10px;
+}
+
+.navbar--item:hover img {
+    fill: #999;
+}
+
+.navbar--heading {
+
+}
+
+.svg {
+    transition: filter .3s ease-in-out;
+}
+.svg:hover {
+    filter: invert(100%);
+}

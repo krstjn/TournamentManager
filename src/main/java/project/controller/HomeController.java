@@ -6,16 +6,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import project.persistence.entities.Team;
 import project.persistence.entities.Tournament;
-import project.service.Implementation.TournamentService;
+import project.service.TournamentService;
 import project.service.StringManipulationService;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 public class HomeController {
 
     // Instance Variables
     StringManipulationService stringService;
-    TournamentService tournamentService;
+    private TournamentService tournamentService;
 
     // Dependency Injection
     @Autowired
@@ -50,8 +55,20 @@ public class HomeController {
     }
 
     @RequestMapping(value ="/createTournament", method = RequestMethod.POST)
-    public String createTournament(@ModelAttribute("tournament") Tournament tournament, Model model){
-        tournamentService.save(tournament);
+    public String createTournament(@ModelAttribute("tournament") Tournament tournament,
+                                   @RequestParam(value = "myTeams", required = false)String[] myTeams,
+                                   Model model){
+        Set<Team> t = new HashSet<>();
+        for (String s: myTeams)
+            t.add(new Team(s, tournament));
+        
+        if(t.size() > 0) tournament.setTeams(t);
+
+        try{
+            tournamentService.save(tournament);
+        } catch (Exception e){
+            System.out.println("villa");
+        }
 
         model.addAttribute("tournament",new Tournament());
 

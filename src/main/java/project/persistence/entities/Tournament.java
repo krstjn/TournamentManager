@@ -5,23 +5,23 @@ import project.utils.TournamentType;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "tournament")
+@Table(name = "tournaments")
 public class Tournament {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     private String name;
     private Date created = new Date();
-    @DateTimeFormat(pattern="yyyy-mm-dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date signUpExpiration;
     private int teamCount = 0;
     private int maxTeams = 10;
     @Enumerated(EnumType.STRING)
     private TournamentType type = TournamentType.GroupStage;
-
+    private Set<Team> teams = new HashSet<>();
 
     public Tournament() {
     }
@@ -32,10 +32,17 @@ public class Tournament {
         this.maxTeams = maxTeams;
         this.type = type;
     }
+
+    @OneToMany(mappedBy = "tournament",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    public Set<Team> getTeams() { return teams; }
+    public void setTeams(Set<Team> teams) { this.teams = teams; }
+
     public Date getCreated() {
         return created;
     }
-
     public void setCreated(Date created) {
         this.created = created;
     }
@@ -72,13 +79,14 @@ public class Tournament {
         this.type = type;
     }
 
-
-
-    public Long getId() {
+    @Id
+    @Column(name = "TournamentId")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
