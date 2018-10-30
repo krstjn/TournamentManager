@@ -30,8 +30,6 @@ public interface ITournamentService {
      */
     List<Tournament> findAllReverseOrder();
 
-    List<Tournament> findAllByDateReverseOrder();
-
     /**
      * Find a {@link Tournament} based on {@link Long id}
      * @param id {@link Long}

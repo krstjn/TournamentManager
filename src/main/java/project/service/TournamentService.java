@@ -49,17 +49,6 @@ public class TournamentService implements ITournamentService {
     }
 
     @Override
-    public List<Tournament> findAllByDateReverseOrder(){
-        List<Tournament> tournaments = repository.findAll();
-
-        // Reverse the list
-        Collections.reverse(tournaments);
-
-        return tournaments;
-    }
-
-
-    @Override
     public Tournament findOne(Long id) {
         return repository.findOne(id);
     }

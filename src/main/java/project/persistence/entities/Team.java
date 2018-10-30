@@ -18,7 +18,6 @@ public class Team {
         this.tournament = tournament;
     }
     public Team(String name, Set<Match> matches, Tournament tournament) {
-        this.id = id;
         this.name = name;
         this.matches = matches;
         this.tournament = tournament;

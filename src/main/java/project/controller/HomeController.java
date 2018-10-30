@@ -1,12 +1,11 @@
 package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import project.persistence.entities.Team;
 import project.persistence.entities.Tournament;
 import project.service.TournamentService;
@@ -49,21 +48,29 @@ public class HomeController {
         return "Index";
     }
     @RequestMapping(value ="/createTournament", method = RequestMethod.GET)
-    public String createTournament(Model model) {
+    public String createTournamentGet(Model model) {
         model.addAttribute("tournament", new Tournament());
         return "CreateTournament";
     }
 
     @RequestMapping(value ="/createTournament", method = RequestMethod.POST)
-    public String createTournament(@ModelAttribute("tournament") Tournament tournament,
-                                   @RequestParam(value = "myTeams", required = false)String[] myTeams,
-                                   Model model){
+    public String createTournamentPost(@ModelAttribute("tournament") Tournament tournament,
+                                       @RequestParam(value = "myTeams", required = false)String[] myTeams,
+                                       @RequestParam(value = "allowSignUp")boolean allowSignUp,
+                                       Model model){
         Set<Team> t = new HashSet<>();
-        for (String s: myTeams)
-            t.add(new Team(s, tournament));
-        
-        if(t.size() > 0) tournament.setTeams(t);
+        if(myTeams != null)
+            for (String s: myTeams)
+                t.add(new Team(s, tournament));
 
+        // -1 used to indicate no limit
+        //if(!useSizeLimit) tournament.setMaxTeams(-1);
+
+        if(!allowSignUp) tournament.setSignUpExpiration(null);
+        
+        if(t.size() > 0) {
+            tournament.setTeams(t);
+        }
         try{
             tournamentService.save(tournament);
         } catch (Exception e){
@@ -75,6 +82,11 @@ public class HomeController {
         return "CreateTournament";
     }
 
+    @ExceptionHandler(NoHandlerFoundException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public String error(NoHandlerFoundException ex){
+        return "Error";
+    }
     // To call this method, enter "localhost:8080/user" into a browser
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public String user(Model model){

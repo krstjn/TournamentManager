@@ -12,11 +12,14 @@
         <meta charset="UTF-8">
         <script src="<c:url value="/js/jquery-3.3.1.min.js" />"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Raleway:400,700|Roboto:400,400i,700" rel="stylesheet">        <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/navigation.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/CreateTournament.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/index.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/icons.css"/>"/>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/input.css"/>"/>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/grid.css"/>"/>
     </head>
     <body>
     <nav class="navbar">
@@ -28,45 +31,68 @@
                 <a href="/" class="navbar--item"><i class="material-icons md-light">calendar_today</i></a>
                 <a href="/" class="navbar--item"><i class="material-icons md-light">menu</i></a>
                 <a href="/" class="navbar--item"><i class="material-icons md-light">face</i></a>
+                <a href="/" class="navbar--item"><i class="far fa-inverse fa-2x fa-user"></i></a>
+                <a href="/" class="navbar--item"><i class="far fa-inverse fa-2x fa-calendar"></i></a>
+                <a href="/" class="navbar--item"><i class="far fa-inverse fa-2x fa-comment"></i></a>
             </div>
         </div>
     </nav>
     <main>
-        <div class="form">
+        <div class="container">
 
             <sf:form method="POST" modelAttribute="tournament" action="/createTournament">
-                <div class="form-row">
-                    <div class="form-col form-col-6">
-                        <div>
-                            <label for="name"></label>
-                            <sf:input path="name" type="text" placeholder="Nafn móts"/>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="input-container">
+                            <label class="input-label" for="name">Name</label>
+                            <sf:input class="input" path="name" type="text"/>
                         </div>
-                        <div>
-                            <label for="maxTeams"></label>
-                            <sf:input path="maxTeams" type="number"/>
+                        <div class="input-container">
+                            <label class="input-label" for="maxTeams">Max team limit</label>
+                            <sf:input class="input" path="maxTeams" type="number"/>
                         </div>
-                        <div>
-                            <label for="signUpExpiration">Skráningarfrestur:</label>
-                            <sf:input path="signUpExpiration" type="date"/>
+                        <div class="input-container">
+                            <label class="input-label" for="signUpExpiration">SignUp expiration: ${signUpExpiration}</label>
+                            <input type="checkbox" name="allowSignUp" id="allowSignUp" value="false">
+                            <div id="signUpDate" class="input-group hidden">
+                                <sf:input class="input" path="signUpExpiration" type="date" value=""/>
+                                <span class="input-icon">
+                                    <i id="openSignUpDate" class="far fa-calendar fa-2x"></i>
+                                </span>
+                            </div>
+
                         </div>
                     </div>
-                    <div class="form-col form-col-6">
-                        <div>
-                            <p>Lið/þáttakendur:</p>
+                    <div class="col-6">
+                        <div class="input-container">
+                            <label class="input-label" for="addTeam">Lið/þáttakendur:</label>
                             <div id="teams__container" name="teams">
                             </div>
-                            <div style="display:flex; flex-direction: row;">
-                                <input type="text" id="newTeam"/>
-                                <div id="addTeam" class="button button-round">+</div>
+                            <div class="input-group" style="display:flex; flex-direction: row;">
+                                <input class="input" type="text" id="newTeam"/>
+                                <a id="addTeam" class="btn btn-round btn-inline btn-add" style="text-decoration: none">+</a>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div>
+                        <div>
+                            <sf:radiobutton path="type" id="GroupStage" value="GroupStage"/>
+                            <label for="GroupStage">Group stage</label>
+                        </div>
+                        <div>
+                            <sf:radiobutton path="type" id="Knockout" value="Knockout"/>
+                            <label for="Knockout">Knockout</label>
                         </div>
                     </div>
                 </div>
 
 
-                <button id="submitTournament" class="button hidden"  type="submit">Búa til mót</button>
+                <button id="submitTournament" class="hidden"  type="submit">Búa til mót</button>
+                <input type="checkbox" name="allowSignUp" class="hidden">
             </sf:form>
-            <button id="verifyTournament" class="button">Búa til mót</button>
+            <button id="verifyTournament" class="btn btn-primary">Búa til mót</button>
         </div>
 
         <a href="/">Forsíða</a>
@@ -75,9 +101,20 @@
     <footer>Class HBV501G, University of Iceland</footer>
     <script>
         $('document').ready(function (){
-            var $addTeam = $('#addTeam');
 
-            $addTeam.click(function (e) {
+            var dtToday = new Date();
+            var month = dtToday.getMonth() + 1;
+            var day = dtToday.getDate();
+            var year = dtToday.getFullYear();
+            if(month < 10)
+                month = '0' + month.toString();
+            if(day < 10)
+                day = '0' + day.toString();
+
+            var minDate = year + '-' + month + '-' + day;
+            $('#signUpExpiration').attr('min', minDate);
+
+            $('#addTeam').click(function (e) {
                 var team = $('#newTeam').val();
                 var $teamContainer = $('#teams__container');
                 if(team.length === 0 || team === undefined) return;
@@ -94,6 +131,18 @@
                     $('#submitTournament').click();
                 }
             });
+
+            $('#allowSignUp').change(function (){
+                if($('#allowSignUp').is(':checked')){
+                    $('#allowSignUp').val('true');
+                    $('#signUpDate').removeClass('hidden');
+                }
+                else {
+                    $('#allowSignUp').val('false');
+                    $('#signUpDate').addClass('hidden');
+                }
+            });
+
         });
     </script>
 </html>

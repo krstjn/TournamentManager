@@ -1,14 +1,27 @@
-.button {
-    border: 1px solid #3700B3;
+.btn {
     border-radius: 4px;
     background-color: #018786;
     color: #fff;
     text-align: center;
 }
 
-.button-large {
+.btn-primary {
+    border: 1px solid #018786;
+    background-color: #018786;
+}
+
+.btn-large {
     width:200px;
     padding: 4px 6px;
+}
+
+.btn-add {
+    background: transparent;
+    border:none;
+    position: absolute;
+    right:0;
+    color: green;
+
 }
 
 .button-medium {
@@ -16,19 +29,25 @@
     padding: 4px 6px;
 }
 
-.button-small {
+.btn-small {
     width: 100px;
     padding: 4px 6px;
 
 }
 
-.button-round {
+.btn-round {
     border-radius: 50%;
     width: 20px;
     font-weight: bold;
 }
+.btn-inline{
+    display: inline-block;
+}
 
-.button:hover{
-    cursor: pointer;
+.btn-primary:hover{
     background-color: #3700B3
+}
+
+.btn:hover {
+    cursor: pointer;
 }

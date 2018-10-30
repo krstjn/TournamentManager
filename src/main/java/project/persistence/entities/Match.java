@@ -18,7 +18,7 @@ public class Match {
     private String location;
     private Team homeTeam;
     private Team awayTeam;
-
+    private Tournament tournament;
 
     public Match(){}
 
@@ -47,6 +47,10 @@ public class Match {
     @ManyToOne
     public Team getAwayTeam() { return awayTeam; }
     public void setAwayTeam(Team awayTeam) { this.awayTeam = awayTeam; }
+
+    @ManyToOne
+    public Tournament getTournament() { return tournament; }
+    public void setTournament(Tournament tournament) { this.tournament = tournament; }
 
     public int getHomeTeamScore() {
         return homeTeamScore;

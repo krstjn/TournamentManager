@@ -17,20 +17,21 @@ public class Tournament {
     private Date created = new Date();
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date signUpExpiration;
-    private int teamCount = 0;
     private int maxTeams = 10;
     @Enumerated(EnumType.STRING)
     private TournamentType type = TournamentType.GroupStage;
     private Set<Team> teams = new HashSet<>();
+    //private User owner;
+    private boolean isPublic;
 
     public Tournament() {
     }
-    public Tournament(String name, Date signUpExpiration, int teamCount, int maxTeams, TournamentType type) {
+    public Tournament(String name, Date signUpExpiration, int maxTeams, TournamentType type, boolean isPublic) {
         this.name = name;
         this.signUpExpiration = signUpExpiration;
-        this.teamCount = teamCount;
         this.maxTeams = maxTeams;
         this.type = type;
+        this.isPublic = isPublic;
     }
 
     @OneToMany(mappedBy = "tournament",
@@ -50,23 +51,13 @@ public class Tournament {
     public Date getSignUpExpiration() {
         return signUpExpiration;
     }
-
     public void setSignUpExpiration(Date signUpExpiration) {
         this.signUpExpiration = signUpExpiration;
-    }
-
-    public int getTeamCount() {
-        return teamCount;
-    }
-
-    public void setTeamCount(int teamCount) {
-        this.teamCount = teamCount;
     }
 
     public int getMaxTeams() {
         return maxTeams;
     }
-
     public void setMaxTeams(int maxTeams) {
         this.maxTeams = maxTeams;
     }
@@ -74,7 +65,6 @@ public class Tournament {
     public TournamentType getType() {
         return type;
     }
-
     public void setType(TournamentType type) {
         this.type = type;
     }
@@ -85,7 +75,6 @@ public class Tournament {
     public long getId() {
         return id;
     }
-
     public void setId(long id) {
         this.id = id;
     }
@@ -93,8 +82,15 @@ public class Tournament {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
+
+    /*
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "ownerId")
+    public User getOwner() { return this.owner; }
+    public void setOwner(User owner) { this.owner = owner; }
+     */
+
 }
