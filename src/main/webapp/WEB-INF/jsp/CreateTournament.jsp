@@ -60,7 +60,6 @@
                                     <i id="openSignUpDate" class="far fa-calendar fa-2x"></i>
                                 </span>
                             </div>
-
                         </div>
                     </div>
                     <div class="col-6">
@@ -76,14 +75,27 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div>
-                        <div>
-                            <sf:radiobutton path="type" id="GroupStage" value="GroupStage"/>
-                            <label for="GroupStage">Group stage</label>
+                    <h3>Tournament setup</h3>
+                    <div class="col-6">
+                        <div class="">
+                            <div>
+                                <sf:radiobutton path="type" id="GroupStage" value="GroupStage"/>
+                                <label for="GroupStage">Group stage</label>
+                            </div>
+                            <div>
+                                <sf:radiobutton path="type" id="Knockout" value="Knockout"/>
+                                <label for="Knockout">Knockout</label>
+                            </div>
+                            <div>
+                                <sf:radiobutton path="type" id="League" value="League"/>
+                                <label for="League">League</label>
+                            </div>
                         </div>
-                        <div>
-                            <sf:radiobutton path="type" id="Knockout" value="Knockout"/>
-                            <label for="Knockout">Knockout</label>
+                    </div>
+                    <div class="col-6">
+                        <div class="">
+                            <label for="isPublic">Public: </label>
+                            <sf:checkbox path="isPublic" value="true" />
                         </div>
                     </div>
                 </div>

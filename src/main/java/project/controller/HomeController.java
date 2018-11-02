@@ -11,8 +11,7 @@ import project.persistence.entities.Tournament;
 import project.service.TournamentService;
 import project.service.StringManipulationService;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class HomeController {
@@ -47,16 +46,15 @@ public class HomeController {
         // model.addAttribute("tournaments", tournamentService.getTournaments());
         return "Index";
     }
+
     @RequestMapping(value ="/createTournament", method = RequestMethod.GET)
     public String createTournamentGet(Model model) {
         model.addAttribute("tournament", new Tournament());
         return "CreateTournament";
     }
-
     @RequestMapping(value ="/createTournament", method = RequestMethod.POST)
     public String createTournamentPost(@ModelAttribute("tournament") Tournament tournament,
                                        @RequestParam(value = "myTeams", required = false)String[] myTeams,
-                                       @RequestParam(value = "allowSignUp")boolean allowSignUp,
                                        Model model){
         Set<Team> t = new HashSet<>();
         if(myTeams != null)
@@ -64,10 +62,8 @@ public class HomeController {
                 t.add(new Team(s, tournament));
 
         // -1 used to indicate no limit
-        //if(!useSizeLimit) tournament.setMaxTeams(-1);
+        // if(!useSizeLimit) tournament.setMaxTeams(-1);
 
-        if(!allowSignUp) tournament.setSignUpExpiration(null);
-        
         if(t.size() > 0) {
             tournament.setTeams(t);
         }
