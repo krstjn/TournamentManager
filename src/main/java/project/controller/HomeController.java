@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import project.persistence.entities.Team;
 import project.persistence.entities.Tournament;
-import project.service.TournamentService;
+import project.service.Interfaces.ITournamentService;
 import project.service.StringManipulationService;
 
 import java.util.*;
@@ -17,13 +17,11 @@ import java.util.*;
 public class HomeController {
 
     // Instance Variables
-    StringManipulationService stringService;
-    private TournamentService tournamentService;
+    private ITournamentService tournamentService;
 
     // Dependency Injection
     @Autowired
-    public HomeController(StringManipulationService stringService, TournamentService tournamentService) {
-        this.stringService = stringService;
+    public HomeController(ITournamentService tournamentService) {
         this.tournamentService = tournamentService;
     }
 
@@ -99,15 +97,6 @@ public class HomeController {
 
         // Since we want our attributes regarding the user always in the same format,
         // we are going to convert some strings using our StringManipulationService
-
-        // Let's assume that the name, job and description always have
-        // the first character in upper case
-        name = stringService.convertsFirstCharInStringToUpperCase(name);
-        job = stringService.convertsFirstCharInStringToUpperCase(job);
-        description = stringService.convertsFirstCharInStringToUpperCase(description);
-
-        // Let's assume that we always want e-mail in lower case
-        email = stringService.convertStringToLowerCase(email);
 
 
         // Now let's add the attributes to the model
