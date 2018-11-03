@@ -3,6 +3,7 @@ package project.service.Interfaces;
 import project.persistence.entities.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IUserService {
     User save(User user);
@@ -31,5 +32,9 @@ public interface IUserService {
      * @param username {@link String}
      * @return All {@link User}s with the {@link String name} passed
      */
-    List<User> findByUsername(String username);
+    User findByUsername(String username);
+
+    String hashPW(String password);
+
+    User checkCredentials(String username, String password);
 }

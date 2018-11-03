@@ -1,6 +1,7 @@
 package project.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import project.persistence.entities.User;
 import project.persistence.repositories.UserRepository;
@@ -39,7 +40,17 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<User> findByUsername(String username) {
+    public User findByUsername(String username) {
         return repository.findByUsername(username);
+    }
+
+    public String hashPW(String password){
+        return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    public User checkCredentials(String username, String password){
+        User user = findByUsername(username);
+        if(user != null && BCrypt.checkpw(password, user.getPassword())) return user;
+        else return null;
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import project.persistence.entities.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     User save(User user);
@@ -16,5 +17,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT p FROM User p WHERE p.id = ?1")
     User findOne(Long id);
 
-    List<User> findByUsername(String username);
+    User findByUsername(String username);
 }

@@ -40,12 +40,20 @@
     <div class="container">
         <div class="col-6 center">
             <h3>${title}</h3>
-            <sf:form modelAttribute="user" method="POST" action="${target}">
+            <c:if test="${not empty errors}">
+                <ul>
+                    <c:forEach var="error" items="${errors}">
+                        <li class="error">${error}</li>
+                    </c:forEach>
+                </ul>
+
+            </c:if>
+            <sf:form method="POST" action="${target}">
                 <div class="center">
-                    <sf:input class="input" path="username" type="text" placeholder="Username"/>
+                    <input class="input" name="username" id="username" type="text" placeholder="Username"/>
                 </div>
                 <div class="center">
-                    <sf:input class="input" path="password" type="password" placeholder="Password"/>
+                    <input class="input" name="password" id="password" type="password" placeholder="Password"/>
                 </div>
                 <button class="btn btn-medium">${title}</button>
             </sf:form>
