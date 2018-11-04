@@ -1,30 +1,44 @@
 package project.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import project.persistence.entities.Role;
 import project.persistence.entities.User;
+import project.service.Interfaces.IRoleService;
 import project.service.Interfaces.IUserService;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 public class UserController {
 
+    Logger logger = LogManager.getLogger(UserController.class);
     private IUserService userService;
-
+    private IRoleService roleService;
     @Autowired
-    public UserController(IUserService userService){
+    public UserController(IUserService userService, IRoleService roleService){
+        this.roleService = roleService;
         this.userService = userService;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginGet(Model model){
+    public String loginGet(Model model,
+                           @RequestParam(name = "error", required = false, defaultValue = "false")String error){
+        logger.info("Innskrá page");
+        ArrayList<String> errors = new ArrayList<>();
+        if(Boolean.valueOf(error)) errors.add("Login unsuccessful, try again");
         model.addAttribute("title", "Login");
+        model.addAttribute("errors", errors);
+
 
         return "Login";
     }
@@ -36,7 +50,7 @@ public class UserController {
         return "Login";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login_test", method = RequestMethod.POST)
     public String loginPost(Model model,
                             @RequestParam(value = "username") String username,
                             @RequestParam(value = "password") String password ){
@@ -78,7 +92,13 @@ public class UserController {
             return "Login";
         }
         User user = new User(username.toUpperCase(), userService.hashPW(password));
+        Set<Role> roles = new HashSet<>();
+        roles.add(new Role(user, "ROLE_USER"));
+
+        user.setRoles(roles);
         userService.save(user);
+        for(Role r : roles)
+            roleService.save(r);
         return "redirect:/login";
     }
 }

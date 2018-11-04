@@ -41,6 +41,7 @@ public class Team {
     public Set<Match> getMatches() { return this.matches; }
     public void setMatches(Set<Match> matches) { this.matches = matches;
     }
+
     @ManyToOne(fetch = FetchType.EAGER,
             optional = false)
     @JoinColumn(name = "TournamentId")

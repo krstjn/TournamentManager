@@ -2,6 +2,7 @@ package project.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.persistence.entities.User;
 import project.persistence.repositories.UserRepository;
@@ -45,12 +46,14 @@ public class UserService implements IUserService {
     }
 
     public String hashPW(String password){
-        return BCrypt.hashpw(password, BCrypt.gensalt());
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
+        return encoder.encode(password);
     }
 
     public User checkCredentials(String username, String password){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
         User user = findByUsername(username);
-        if(user != null && BCrypt.checkpw(password, user.getPassword())) return user;
+        if(user != null && encoder.matches(password, user.getPassword())) return user;
         else return null;
     }
 }

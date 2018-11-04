@@ -1,13 +1,18 @@
 package project.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import project.persistence.entities.Team;
 import project.persistence.entities.Tournament;
+import project.persistence.entities.User;
 import project.service.Interfaces.ITournamentService;
 import project.service.StringManipulationService;
 
@@ -18,6 +23,7 @@ public class HomeController {
 
     // Instance Variables
     private ITournamentService tournamentService;
+    Logger logger = LogManager.getLogger(UserController.class);
 
     // Dependency Injection
     @Autowired
@@ -83,8 +89,9 @@ public class HomeController {
     }
     // To call this method, enter "localhost:8080/user" into a browser
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String user(Model model){
+    public String user(Model model, Authentication auth){
 
+        logger.info(auth.getName());
         // Here we will show how to add attributes to a model and send it to the view
 
         // Since this small example is for a user, let's create some attributes
@@ -104,7 +111,7 @@ public class HomeController {
         model.addAttribute("job",job);
         model.addAttribute("email",email);
         model.addAttribute("description",description);
-
+        model.addAttribute("username", auth.getName());
         // By adding attributes to the model, we can pass information from the controller
         // to the view (the .jsp file).
         // Look at the User.jsp file in /main/webapp/WEB-INF/jsp/ to see how the data is accessed

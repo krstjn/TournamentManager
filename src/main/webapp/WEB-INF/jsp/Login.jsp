@@ -62,8 +62,13 @@
             </c:if>
         </div>
     </div>
-
 </main>
+<script>
+    $('#username').on("keyup", function(){
+        var str = $('#username').val();
+        $('#username').val(str.toUpperCase());
+    });
+</script>
 </body>
 <footer>Class HBV501G, University of Iceland</footer>
 </html>

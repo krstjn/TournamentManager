@@ -32,7 +32,7 @@
         </tbody>
     </table>
 
-
+    <p>Logged in as ${username}. <a href="<c:url value="/logout" />">Logout</a></p>
     </body>
 
 </html>
