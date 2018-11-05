@@ -25,9 +25,8 @@
             <a href="/"><i class="material-icons md-light md-36">home</i></a>
         </div>
         <div class="navbar--nav">
-            <a href="/" class="navbar--item"><i class="material-icons md-light">calendar_today</i></a>
-            <a href="/" class="navbar--item"><i class="material-icons md-light">menu</i></a>
-            <a href="/" class="navbar--item"><i class="material-icons md-light">face</i></a>
+            <a href="/login" class="navbar--item"><i class="material-icons md-light">lock</i>Login</a>
+            <a href="/profile" class="navbar--item"><i class="material-icons md-light">face</i></a>
         </div>
     </div>
 </nav>

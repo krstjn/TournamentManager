@@ -52,3 +52,12 @@ main {
 .hidden {
     display: none;
 }
+
+.error {
+    color: red;
+}
+
+ul .error{
+    /*list-style-type: none;*/
+    margin: 0 50px;
+}

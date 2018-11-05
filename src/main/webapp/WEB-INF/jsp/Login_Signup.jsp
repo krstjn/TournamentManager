@@ -27,12 +27,8 @@
             <a href="/"><i class="material-icons md-light md-36">home</i></a>
         </div>
         <div class="navbar--nav">
-            <a href="/" class="navbar--item"><i class="material-icons md-light">calendar_today</i></a>
-            <a href="/" class="navbar--item"><i class="material-icons md-light">menu</i></a>
-            <a href="/" class="navbar--item"><i class="material-icons md-light">face</i></a>
-            <a href="/" class="navbar--item"><i class="far fa-inverse fa-2x fa-user"></i></a>
-            <a href="/" class="navbar--item"><i class="far fa-inverse fa-2x fa-calendar"></i></a>
-            <a href="/" class="navbar--item"><i class="far fa-inverse fa-2x fa-comment"></i></a>
+            <a href="/login" class="navbar--item"><i class="material-icons md-light">lock</i>Login</a>
+            <a href="/profile" class="navbar--item"><i class="material-icons md-light">face</i></a>
         </div>
     </div>
 </nav>
@@ -40,6 +36,7 @@
     <div class="container">
         <div class="col-6 center">
             <h3>${title}</h3>
+            <i class="material-icons md-96">account_circle</i>
             <c:if test="${not empty errors}">
                 <ul>
                     <c:forEach var="error" items="${errors}">
@@ -55,7 +52,7 @@
                 <div class="center">
                     <input class="input" name="password" id="password" type="password" placeholder="Password"/>
                 </div>
-                <button class="btn btn-medium">${title}</button>
+                <button class="btn btn-primary btn-medium">${title}</button>
             </sf:form>
             <c:if test="${title == 'Login'}">
                 <p>Not a user? <a href="/signup">SignUp</a></p>
@@ -64,9 +61,15 @@
     </div>
 </main>
 <script>
-    $('#username').on("keyup", function(){
-        var str = $('#username').val();
-        $('#username').val(str.toUpperCase());
+    $('#username').on("keypress", function(e){
+        e.preventDefault();
+        var charCode = e.charCode;
+        if ((charCode > 47 && charCode < 58 ) ||
+            (charCode > 64 && charCode < 90 ) ||
+            (charCode > 96 && charCode < 123)){
+            var str = $('#username').val() + e.key.toUpperCase();
+            $('#username').val(str);
+        }
     });
 </script>
 </body>

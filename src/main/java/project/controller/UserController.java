@@ -40,14 +40,14 @@ public class UserController {
         model.addAttribute("errors", errors);
 
 
-        return "Login";
+        return "Login_Signup";
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signupGet(Model model){
         model.addAttribute("title", "Signup");
         model.addAttribute("target", "/signup");
-        return "Login";
+        return "Login_Signup";
     }
 
     @RequestMapping(value = "/login_test", method = RequestMethod.POST)
@@ -65,7 +65,7 @@ public class UserController {
             model.addAttribute("title","Login");
             model.addAttribute("target", "/login");
 
-            return "Login";
+            return "Login_Signup";
         }
     }
 
@@ -89,7 +89,7 @@ public class UserController {
             model.addAttribute("title","Signup");
             model.addAttribute("target", "/signup");
 
-            return "Login";
+            return "Login_Signup";
         }
         User user = new User(username.toUpperCase(), userService.hashPW(password));
         Set<Role> roles = new HashSet<>();
