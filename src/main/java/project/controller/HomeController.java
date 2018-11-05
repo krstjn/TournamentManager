@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import project.persistence.entities.Team;
 import project.persistence.entities.Tournament;
 import project.persistence.entities.User;
+import project.service.Interfaces.IAuthenticationService;
 import project.service.Interfaces.ITournamentService;
 import project.service.StringManipulationService;
 
@@ -23,12 +25,14 @@ public class HomeController {
 
     // Instance Variables
     private ITournamentService tournamentService;
+    private IAuthenticationService authenticationService;
     Logger logger = LogManager.getLogger(UserController.class);
 
     // Dependency Injection
     @Autowired
-    public HomeController(ITournamentService tournamentService) {
+    public HomeController(ITournamentService tournamentService, IAuthenticationService authenticationService) {
         this.tournamentService = tournamentService;
+        this.authenticationService = authenticationService;
     }
 
     // Request mapping is the path that you want to map this method to
@@ -44,6 +48,10 @@ public class HomeController {
         // file that has the same name
         model.addAttribute("tournament",new Tournament());
         model.addAttribute("tournaments", tournamentService.findAll());
+        if(authenticationService.isAuthenticated()){
+            model.addAttribute("isAuthenticated", true);
+            model.addAttribute("username", authenticationService.getUsername());
+        }
         // Here we get all the Tournaments (in a reverse order) and add them to the model
         // model.addAttribute("tournaments",tournamentService.findAllReverseOrder());
         // Sækja lista yfir öll mót
@@ -54,6 +62,10 @@ public class HomeController {
     @RequestMapping(value ="/createTournament", method = RequestMethod.GET)
     public String createTournamentGet(Model model) {
         model.addAttribute("tournament", new Tournament());
+        if(authenticationService.isAuthenticated()){
+            model.addAttribute("isAuthenticated", true);
+            model.addAttribute("username", authenticationService.getUsername());
+        }
         return "CreateTournament";
     }
     @RequestMapping(value ="/createTournament", method = RequestMethod.POST)
@@ -78,7 +90,10 @@ public class HomeController {
         }
 
         model.addAttribute("tournament",new Tournament());
-
+        if(authenticationService.isAuthenticated()){
+            model.addAttribute("isAuthenticated", true);
+            model.addAttribute("username", authenticationService.getUsername());
+        }
         return "CreateTournament";
     }
 
@@ -112,7 +127,10 @@ public class HomeController {
         model.addAttribute("email",email);
         model.addAttribute("description",description);
         model.addAttribute("username", auth.getName());
-        // By adding attributes to the model, we can pass information from the controller
+        if(authenticationService.isAuthenticated()){
+            model.addAttribute("isAuthenticated", true);
+            model.addAttribute("username", authenticationService.getUsername());
+        }        // By adding attributes to the model, we can pass information from the controller
         // to the view (the .jsp file).
         // Look at the User.jsp file in /main/webapp/WEB-INF/jsp/ to see how the data is accessed
         return "User";

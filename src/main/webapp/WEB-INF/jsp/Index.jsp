@@ -27,13 +27,20 @@
                 <a href="/"><i class="material-icons md-light md-36">home</i></a>
             </div>
             <div class="navbar--nav">
-                <a href="/login" class="navbar--item"><i class="material-icons md-light">lock</i>Login</a>
-                <a href="/profile" class="navbar--item"><i class="material-icons md-light">face</i></a>
+                <c:choose>
+                    <c:when test="${!isAuthenticated}">
+                        <a href="/login" class="navbar--item"><i class="material-icons md-light">lock</i>Login</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="/user" class="navbar--item"><i class="material-icons md-light">account_circle</i>${username}</a>
+                        <a href="/logout" class="navbar--item">Logout</a>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
     </nav>
     <main>
-        <h1>HBV501G Project Spring Boot Skeleton</h1>
+        <h1>HBV501G Project Spring Boot Skeleton: Is authenticated: ${isAuthenticated}. Username: ${username}</h1>
         <p>This skeleton of a Spring Boot Web project was made to help groups get started on their projects without to much
             hassle.</p>
 

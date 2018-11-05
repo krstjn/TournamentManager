@@ -27,8 +27,15 @@
             <a href="/"><i class="material-icons md-light md-36">home</i></a>
         </div>
         <div class="navbar--nav">
-            <a href="/login" class="navbar--item"><i class="material-icons md-light">lock</i>Login</a>
-            <a href="/profile" class="navbar--item"><i class="material-icons md-light">face</i></a>
+            <c:choose>
+                <c:when test="${!isAuthenticated}">
+                    <a href="/login" class="navbar--item"><i class="material-icons md-light">lock</i>Login</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="/user" class="navbar--item"><i class="material-icons md-light">account_circle</i>${username}</a>
+                    <a href="/logout" class="navbar--item">Logout</a>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
 </nav>
@@ -47,7 +54,7 @@
             </c:if>
             <sf:form method="POST" action="${target}">
                 <div class="center">
-                    <input class="input" name="username" id="username" type="text" placeholder="Username"/>
+                    <input class="input" name="username" id="username" type="text" autocomplete="off" placeholder="Username"/>
                 </div>
                 <div class="center">
                     <input class="input" name="password" id="password" type="password" placeholder="Password"/>
