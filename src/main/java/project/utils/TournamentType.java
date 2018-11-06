@@ -1,5 +1,5 @@
 package project.utils;
 
 public enum TournamentType {
-    GroupStage, Knockout
+    League, GroupStage, Knockout
 }

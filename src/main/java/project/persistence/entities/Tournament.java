@@ -19,19 +19,20 @@ public class Tournament {
     private Date signUpExpiration;
     private int maxTeams = 10;
     @Enumerated(EnumType.STRING)
-    private TournamentType type = TournamentType.GroupStage;
+    private TournamentType type = TournamentType.League;
     private Set<Team> teams = new HashSet<>();
     //private User owner;
-    private boolean isPublic;
+    private boolean isPublic = true;
 
     public Tournament() {
     }
-    public Tournament(String name, Date signUpExpiration, int maxTeams, TournamentType type, boolean isPublic) {
+    public Tournament(String name, Date signUpExpiration, int maxTeams, TournamentType type, boolean isPublic/*, User user*/) {
         this.name = name;
         this.signUpExpiration = signUpExpiration;
         this.maxTeams = maxTeams;
         this.type = type;
         this.isPublic = isPublic;
+        //this.owner = user;
     }
 
     @OneToMany(mappedBy = "tournament",
@@ -55,12 +56,13 @@ public class Tournament {
         this.signUpExpiration = signUpExpiration;
     }
 
-    public int getMaxTeams() {
-        return maxTeams;
-    }
+    public int getMaxTeams() { return maxTeams; }
     public void setMaxTeams(int maxTeams) {
         this.maxTeams = maxTeams;
     }
+
+    public boolean getIsPublic() { return isPublic; }
+    public void setIsPublic(boolean isPublic) { this.isPublic = isPublic; }
 
     public TournamentType getType() {
         return type;
@@ -92,5 +94,4 @@ public class Tournament {
     public User getOwner() { return this.owner; }
     public void setOwner(User owner) { this.owner = owner; }
      */
-
 }

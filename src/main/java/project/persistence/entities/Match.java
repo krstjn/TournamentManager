@@ -12,7 +12,7 @@ public class Match {
     private long id;
     private int homeTeamScore;
     private int awayTeamScore;
-    @DateTimeFormat(pattern = "YYYY/mm/dd hh:mm")
+    @DateTimeFormat(pattern = "YYYY/mm/dd")
     private Date matchDate;
     private int round;
     private String location;

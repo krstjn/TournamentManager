@@ -8,17 +8,19 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import project.persistence.entities.Team;
 import project.persistence.entities.Tournament;
+<<<<<<< HEAD
 import project.service.TeamService;
 import project.service.TournamentService;
+=======
+>>>>>>> cb8f4053974adf1f0c443c960ce2b3f252280132
 import project.service.StringManipulationService;
 
-import java.util.HashSet;
-import java.util.Set;
 
 @Controller
 public class HomeController {
 
     // Instance Variables
+<<<<<<< HEAD
     StringManipulationService stringService;
     private TournamentService tournamentService;
     private TeamService teamService;
@@ -29,6 +31,8 @@ public class HomeController {
         this.stringService = stringService;
         this.tournamentService = tournamentService;
         this.teamService = teamService;
+=======
+>>>>>>> cb8f4053974adf1f0c443c960ce2b3f252280132
     }
 
     // Request mapping is the path that you want to map this method to
@@ -50,16 +54,15 @@ public class HomeController {
         // model.addAttribute("tournaments", tournamentService.getTournaments());
         return "Index";
     }
+
     @RequestMapping(value ="/createTournament", method = RequestMethod.GET)
     public String createTournamentGet(Model model) {
         model.addAttribute("tournament", new Tournament());
         return "CreateTournament";
     }
-
     @RequestMapping(value ="/createTournament", method = RequestMethod.POST)
     public String createTournamentPost(@ModelAttribute("tournament") Tournament tournament,
                                        @RequestParam(value = "myTeams", required = false)String[] myTeams,
-                                       @RequestParam(value = "allowSignUp")boolean allowSignUp,
                                        Model model){
         Set<Team> t = new HashSet<>();
         if(myTeams != null)
@@ -67,10 +70,7 @@ public class HomeController {
                 t.add(new Team(s, tournament));
 
         // -1 used to indicate no limit
-        //if(!useSizeLimit) tournament.setMaxTeams(-1);
 
-        if(!allowSignUp) tournament.setSignUpExpiration(null);
-        
         if(t.size() > 0) {
             tournament.setTeams(t);
         }
@@ -81,7 +81,7 @@ public class HomeController {
         }
 
         model.addAttribute("tournament",new Tournament());
-
+        }
         return "CreateTournament";
     }
 
@@ -108,23 +108,12 @@ public class HomeController {
         // Since we want our attributes regarding the user always in the same format,
         // we are going to convert some strings using our StringManipulationService
 
-        // Let's assume that the name, job and description always have
-        // the first character in upper case
-        name = stringService.convertsFirstCharInStringToUpperCase(name);
-        job = stringService.convertsFirstCharInStringToUpperCase(job);
-        description = stringService.convertsFirstCharInStringToUpperCase(description);
-
-        // Let's assume that we always want e-mail in lower case
-        email = stringService.convertStringToLowerCase(email);
-
 
         // Now let's add the attributes to the model
         model.addAttribute("name",name);
         model.addAttribute("job",job);
         model.addAttribute("email",email);
         model.addAttribute("description",description);
-
-        // By adding attributes to the model, we can pass information from the controller
         // to the view (the .jsp file).
         // Look at the User.jsp file in /main/webapp/WEB-INF/jsp/ to see how the data is accessed
         return "User";

@@ -1,13 +1,12 @@
 .btn {
     border-radius: 4px;
-    background-color: #018786;
     color: #fff;
     text-align: center;
 }
 
 .btn-primary {
-    border: 1px solid #018786;
-    background-color: #018786;
+    background-color: #EF8823;
+    border: 1px solid #ED8823;
 }
 
 .btn-large {
@@ -24,7 +23,7 @@
 
 }
 
-.button-medium {
+.btn-medium {
     width: 150px;
     padding: 4px 6px;
 }
@@ -45,7 +44,9 @@
 }
 
 .btn-primary:hover{
-    background-color: #3700B3
+    background-color: #CD6E0F;
+    border: 1px solid #CD6E0F;
+
 }
 
 .btn:hover {

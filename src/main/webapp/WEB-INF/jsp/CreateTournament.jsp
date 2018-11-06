@@ -12,7 +12,6 @@
         <meta charset="UTF-8">
         <script src="<c:url value="/js/jquery-3.3.1.min.js" />"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Raleway:400,700|Roboto:400,400i,700" rel="stylesheet">        <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/navigation.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/CreateTournament.css"/>"/>
@@ -28,12 +27,15 @@
                 <a href="/"><i class="material-icons md-light md-36">home</i></a>
             </div>
             <div class="navbar--nav">
-                <a href="/" class="navbar--item"><i class="material-icons md-light">calendar_today</i></a>
-                <a href="/" class="navbar--item"><i class="material-icons md-light">menu</i></a>
-                <a href="/" class="navbar--item"><i class="material-icons md-light">face</i></a>
-                <a href="/" class="navbar--item"><i class="far fa-inverse fa-2x fa-user"></i></a>
-                <a href="/" class="navbar--item"><i class="far fa-inverse fa-2x fa-calendar"></i></a>
-                <a href="/" class="navbar--item"><i class="far fa-inverse fa-2x fa-comment"></i></a>
+                <c:choose>
+                    <c:when test="${!isAuthenticated}">
+                        <a href="/login" class="navbar--item"><i class="material-icons md-light">lock</i>Login</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="/user" class="navbar--item"><i class="material-icons md-light">account_circle</i>${username}</a>
+                        <a href="/logout" class="navbar--item">Logout</a>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
     </nav>
@@ -60,7 +62,6 @@
                                     <i id="openSignUpDate" class="far fa-calendar fa-2x"></i>
                                 </span>
                             </div>
-
                         </div>
                     </div>
                     <div class="col-6">
@@ -76,14 +77,27 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div>
-                        <div>
-                            <sf:radiobutton path="type" id="GroupStage" value="GroupStage"/>
-                            <label for="GroupStage">Group stage</label>
+                    <h3>Tournament setup</h3>
+                    <div class="col-6">
+                        <div class="">
+                            <div>
+                                <sf:radiobutton path="type" id="GroupStage" value="GroupStage"/>
+                                <label for="GroupStage">Group stage</label>
+                            </div>
+                            <div>
+                                <sf:radiobutton path="type" id="Knockout" value="Knockout"/>
+                                <label for="Knockout">Knockout</label>
+                            </div>
+                            <div>
+                                <sf:radiobutton path="type" id="League" value="League"/>
+                                <label for="League">League</label>
+                            </div>
                         </div>
-                        <div>
-                            <sf:radiobutton path="type" id="Knockout" value="Knockout"/>
-                            <label for="Knockout">Knockout</label>
+                    </div>
+                    <div class="col-6">
+                        <div class="">
+                            <label for="isPublic">Public: </label>
+                            <sf:checkbox path="isPublic" value="true" />
                         </div>
                     </div>
                 </div>

@@ -23,11 +23,20 @@
 }
 
 .navbar--item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-left: 10px;
+    text-decoration: none;
+    color: #fff;
 }
 
-.navbar--item:hover img {
-    fill: #999;
+.navbar--item:hover {
+     color: #000;
+ }
+
+.navbar--item:hover i{
+    color: #000;
 }
 
 .navbar--heading {
