@@ -1,5 +1,7 @@
 package project.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -11,8 +13,11 @@ import project.persistence.entities.Team;
 import project.persistence.entities.Tournament;
 import project.persistence.entities.User;
 import project.service.Interfaces.IAuthenticationService;
+import project.service.Interfaces.ITeamService;
 import project.service.Interfaces.ITournamentService;
 import project.service.Interfaces.IUserService;
+
+import java.util.Set;
 
 
 @Controller
@@ -22,14 +27,16 @@ public class HomeController {
     private ITournamentService tournamentService;
     private IAuthenticationService authenticationService;
     private IUserService userService;
+    private ITeamService teamService;
     Logger logger = LogManager.getLogger(UserController.class);
 
     // Dependency Injection
     @Autowired
-    public HomeController(ITournamentService tournamentService,IUserService userService, IAuthenticationService authenticationService) {
+    public HomeController(ITournamentService tournamentService,ITeamService teamService, IUserService userService, IAuthenticationService authenticationService) {
         this.tournamentService = tournamentService;
         this.authenticationService = authenticationService;
         this.userService = userService;
+        this.teamService = teamService;
     }
 
     // Request mapping is the path that you want to map this method to
@@ -50,44 +57,6 @@ public class HomeController {
         // Sækja lista yfir öll mót
         // model.addAttribute("tournaments", tournamentService.getTournaments());
         return "Index";
-    }
-
-    @RequestMapping(value ="/createTournament", method = RequestMethod.GET)
-    public String createTournamentGet(Model model) {
-        model.addAttribute("tournament", new Tournament());
-        if(authenticationService.isAuthenticated()){
-            model.addAttribute("isAuthenticated", true);
-            model.addAttribute("username", authenticationService.getUsername());
-        }
-        return "CreateTournament";
-    }
-    @RequestMapping(value ="/createTournament", method = RequestMethod.POST)
-    public String createTournamentPost(@ModelAttribute("tournament") Tournament tournament,
-                                       @RequestParam(value = "myTeams", required = false)String[] myTeams,
-                                       Model model){
-        Set<Team> t = new HashSet<>();
-        if(myTeams != null)
-            for (String s: myTeams)
-                t.add(new Team(s, tournament));
-
-        // -1 used to indicate no limit
-        // if(!useSizeLimit) tournament.setMaxTeams(-1);
-
-        if(t.size() > 0) {
-            tournament.setTeams(t);
-        }
-        try{
-            tournamentService.save(tournament);
-        } catch (Exception e){
-            System.out.println("villa");
-        }
-
-        model.addAttribute("tournament",new Tournament());
-        if(authenticationService.isAuthenticated()){
-            model.addAttribute("isAuthenticated", true);
-            model.addAttribute("username", authenticationService.getUsername());
-        }
-        return "CreateTournament";
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
