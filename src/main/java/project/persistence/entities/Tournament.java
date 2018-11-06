@@ -21,18 +21,19 @@ public class Tournament {
     @Enumerated(EnumType.STRING)
     private TournamentType type = TournamentType.League;
     private Set<Team> teams = new HashSet<>();
-    //private User owner;
+    private User user;
     private boolean isPublic = true;
 
-    public Tournament() {
-    }
-    public Tournament(String name, Date signUpExpiration, int maxTeams, TournamentType type, boolean isPublic/*, User user*/) {
+    public Tournament() { }
+
+    public Tournament(User user) { this.user = user; }
+
+    public Tournament(String name, Date signUpExpiration, int maxTeams, TournamentType type, boolean isPublic) {
         this.name = name;
         this.signUpExpiration = signUpExpiration;
         this.maxTeams = maxTeams;
         this.type = type;
         this.isPublic = isPublic;
-        //this.owner = user;
     }
 
     @OneToMany(mappedBy = "tournament",
@@ -88,10 +89,8 @@ public class Tournament {
         this.name = name;
     }
 
-    /*
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "ownerId")
-    public User getOwner() { return this.owner; }
-    public void setOwner(User owner) { this.owner = owner; }
-     */
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "UserId")
+    public User getUser() { return this.user; }
+    public void setUser(User user) { this.user = user; }
 }

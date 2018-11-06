@@ -20,7 +20,7 @@ public class User implements Serializable{
     private Set<Role> roles = new HashSet<>();
     private boolean enabled = true;
 
-    //private Set<Tournament> tournaments = new HashSet<>();
+    private Set<Tournament> tournaments = new HashSet<>();
 
 
 
@@ -52,10 +52,10 @@ public class User implements Serializable{
     public Set<Role> getRoles() { return roles; }
     public void setRoles(Set<Role> roles) { this.roles = roles; }
 
-    /*
-    @OneToMany(mappedBy = "user",
-            fetch = FetchType.LAZY)
+    @OneToMany(mappedBy ="user",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     public Set<Tournament> getTournaments() { return tournaments; }
     public void setTournaments(Set<Tournament> tournaments) { this.tournaments = tournaments; }
-    */
 }

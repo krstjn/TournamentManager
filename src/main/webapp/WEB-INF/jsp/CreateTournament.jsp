@@ -43,6 +43,7 @@
         <div class="container">
 
             <sf:form method="POST" modelAttribute="tournament" action="/createTournament">
+                <sf:hidden path="user" />
                 <div class="row">
                     <div class="col-6">
                         <div class="input-container">

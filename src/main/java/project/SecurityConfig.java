@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        logger.info("Tilraun til innskráningar");
+        logger.info("Set upp innskráningar config");
         auth.jdbcAuthentication().dataSource(dataSource)
                 .usersByUsernameQuery("select username, password, enabled"
                         + " from users where username=?")
@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/createTournament", "/user").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/profile","/createTournament","/tournaments/create", "/user").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/login*").anonymous()
                 .and()
                 .formLogin()

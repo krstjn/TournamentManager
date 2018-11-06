@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import project.persistence.entities.Role;
+import project.persistence.entities.Tournament;
 import project.persistence.entities.User;
+import project.service.Interfaces.IAuthenticationService;
 import project.service.Interfaces.IRoleService;
 import project.service.Interfaces.IUserService;
 
@@ -23,10 +25,12 @@ public class UserController {
     Logger logger = LogManager.getLogger(UserController.class);
     private IUserService userService;
     private IRoleService roleService;
+    private IAuthenticationService authenticationService;
     @Autowired
-    public UserController(IUserService userService, IRoleService roleService){
+    public UserController(IUserService userService, IRoleService roleService, IAuthenticationService authenticationService){
         this.roleService = roleService;
         this.userService = userService;
+        this.authenticationService = authenticationService;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -99,5 +103,18 @@ public class UserController {
         for(Role r : roles)
             roleService.save(r);
         return "redirect:/login";
+    }
+
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public String profileGet(Model model){
+
+        User user = userService.findByUsername(authenticationService.getUsername());
+        Set<Tournament> tournaments = user.getTournaments();
+        if(authenticationService.isAuthenticated()){
+            model.addAttribute("isAuthenticated", true);
+            model.addAttribute("username", authenticationService.getUsername());
+            model.addAttribute("tournaments", tournaments);
+        }
+        return "Profile";
     }
 }

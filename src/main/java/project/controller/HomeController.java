@@ -2,37 +2,34 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import project.persistence.entities.Team;
 import project.persistence.entities.Tournament;
-<<<<<<< HEAD
-import project.service.TeamService;
-import project.service.TournamentService;
-=======
->>>>>>> cb8f4053974adf1f0c443c960ce2b3f252280132
-import project.service.StringManipulationService;
+import project.persistence.entities.User;
+import project.service.Interfaces.IAuthenticationService;
+import project.service.Interfaces.ITournamentService;
+import project.service.Interfaces.IUserService;
 
 
 @Controller
 public class HomeController {
 
     // Instance Variables
-<<<<<<< HEAD
-    StringManipulationService stringService;
-    private TournamentService tournamentService;
-    private TeamService teamService;
+    private ITournamentService tournamentService;
+    private IAuthenticationService authenticationService;
+    private IUserService userService;
+    Logger logger = LogManager.getLogger(UserController.class);
 
     // Dependency Injection
     @Autowired
-    public HomeController(StringManipulationService stringService, TournamentService tournamentService, TeamService teamService) {
-        this.stringService = stringService;
+    public HomeController(ITournamentService tournamentService,IUserService userService, IAuthenticationService authenticationService) {
         this.tournamentService = tournamentService;
-        this.teamService = teamService;
-=======
->>>>>>> cb8f4053974adf1f0c443c960ce2b3f252280132
+        this.authenticationService = authenticationService;
+        this.userService = userService;
     }
 
     // Request mapping is the path that you want to map this method to
@@ -58,6 +55,10 @@ public class HomeController {
     @RequestMapping(value ="/createTournament", method = RequestMethod.GET)
     public String createTournamentGet(Model model) {
         model.addAttribute("tournament", new Tournament());
+        if(authenticationService.isAuthenticated()){
+            model.addAttribute("isAuthenticated", true);
+            model.addAttribute("username", authenticationService.getUsername());
+        }
         return "CreateTournament";
     }
     @RequestMapping(value ="/createTournament", method = RequestMethod.POST)
@@ -70,6 +71,7 @@ public class HomeController {
                 t.add(new Team(s, tournament));
 
         // -1 used to indicate no limit
+        // if(!useSizeLimit) tournament.setMaxTeams(-1);
 
         if(t.size() > 0) {
             tournament.setTeams(t);
@@ -81,6 +83,9 @@ public class HomeController {
         }
 
         model.addAttribute("tournament",new Tournament());
+        if(authenticationService.isAuthenticated()){
+            model.addAttribute("isAuthenticated", true);
+            model.addAttribute("username", authenticationService.getUsername());
         }
         return "CreateTournament";
     }
@@ -114,6 +119,13 @@ public class HomeController {
         model.addAttribute("job",job);
         model.addAttribute("email",email);
         model.addAttribute("description",description);
+        User user = userService.findByUsername(authenticationService.getUsername());
+        Set<Tournament> tournaments = user.getTournaments();
+        if(authenticationService.isAuthenticated()){
+            model.addAttribute("isAuthenticated", true);
+            model.addAttribute("username", authenticationService.getUsername());
+            model.addAttribute("tournaments", tournaments);
+        }        // By adding attributes to the model, we can pass information from the controller
         // to the view (the .jsp file).
         // Look at the User.jsp file in /main/webapp/WEB-INF/jsp/ to see how the data is accessed
         return "User";
