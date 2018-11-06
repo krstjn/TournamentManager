@@ -15,6 +15,7 @@
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/navigation.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/index.css"/>"/>
+
     </head>
 </head>
 <body>
@@ -47,7 +48,7 @@
 
                     <c:forEach var="tournament" items="${tournaments}">
                         <div>
-                            <p>${tournament.name}</p>
+                            <p><a href="/tournament?id=${tournament.id}"> ${tournament.name}</a></p>
                             <p>Fjöldi skráða liða: ${tournament.teams.size()}</p>
                         </div>
                     </c:forEach>

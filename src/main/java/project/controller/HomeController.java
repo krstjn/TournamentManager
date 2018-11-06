@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import project.persistence.entities.Team;
 import project.persistence.entities.Tournament;
+import project.service.TeamService;
 import project.service.TournamentService;
 import project.service.StringManipulationService;
 
@@ -20,12 +21,14 @@ public class HomeController {
     // Instance Variables
     StringManipulationService stringService;
     private TournamentService tournamentService;
+    private TeamService teamService;
 
     // Dependency Injection
     @Autowired
-    public HomeController(StringManipulationService stringService, TournamentService tournamentService) {
+    public HomeController(StringManipulationService stringService, TournamentService tournamentService, TeamService teamService) {
         this.stringService = stringService;
         this.tournamentService = tournamentService;
+        this.teamService = teamService;
     }
 
     // Request mapping is the path that you want to map this method to
@@ -87,6 +90,7 @@ public class HomeController {
     public String error(NoHandlerFoundException ex){
         return "Error";
     }
+
     // To call this method, enter "localhost:8080/user" into a browser
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public String user(Model model){
@@ -124,5 +128,28 @@ public class HomeController {
         // to the view (the .jsp file).
         // Look at the User.jsp file in /main/webapp/WEB-INF/jsp/ to see how the data is accessed
         return "User";
+    }
+
+
+
+    // To call this method, enter "localhost:8080/tournament" into a browser
+    @RequestMapping(value = "/tournament", method = RequestMethod.GET)
+    public String tournament(Model model){
+        // The string "TournamentView" that is returned here is the name of the view
+        // (the Index.jsp file) that is in the path /main/webapp/WEB-INF/jsp/
+        // If you change "TournamentView" to something else, be sure you have a .jsp
+        // file that has the same name
+        model.addAttribute("tournament",new Tournament());
+        model.addAttribute("tournaments", tournamentService.findAll());
+        model.addAttribute("teams", teamService.findAll());
+
+
+
+        // Here we get all the Tournaments (in a reverse order) and add them to the model
+        // model.addAttribute("tournaments",tournamentService.findAllReverseOrder());
+        // Sækja lista yfir öll mót
+        // model.addAttribute("tournaments", tournamentService.getTournaments());
+
+        return "TournamentView";
     }
 }
