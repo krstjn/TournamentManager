@@ -36,7 +36,6 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginGet(Model model,
                            @RequestParam(name = "error", required = false, defaultValue = "false")String error){
-        logger.info("Innskrá page");
         ArrayList<String> errors = new ArrayList<>();
         if(Boolean.valueOf(error)) errors.add("Login unsuccessful, try again");
         model.addAttribute("title", "Login");
@@ -51,25 +50,6 @@ public class UserController {
         model.addAttribute("title", "Signup");
         model.addAttribute("target", "/signup");
         return "Login_Signup";
-    }
-
-    @RequestMapping(value = "/login_test", method = RequestMethod.POST)
-    public String loginPost(Model model,
-                            @RequestParam(value = "username") String username,
-                            @RequestParam(value = "password") String password ){
-
-        ArrayList<String> errors = new ArrayList<>();
-        User user = userService.checkCredentials(username.toUpperCase(),password);
-        if(user != null){
-            return "redirect:/user?id="+user.getId();
-        } else {
-            errors.add("Login unsuccessful, try again");
-            model.addAttribute("errors", errors);
-            model.addAttribute("title","Login");
-            model.addAttribute("target", "/login");
-
-            return "Login_Signup";
-        }
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
@@ -107,7 +87,7 @@ public class UserController {
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public String profileGet(Model model){
-
+        // TODO: Improve view, and maybe add more fields
         User user = userService.findByUsername(authenticationService.getUsername());
         Set<Tournament> tournaments = user.getTournaments();
         if(authenticationService.isAuthenticated()){

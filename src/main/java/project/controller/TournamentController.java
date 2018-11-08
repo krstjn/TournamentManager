@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Controller
+@RequestMapping(value = "/tournaments")
 public class TournamentController {
 
     // Instance Variables
@@ -33,7 +34,7 @@ public class TournamentController {
         this.userService = userService;
     }
 
-    @RequestMapping(value ="/tournaments/create", method = RequestMethod.GET)
+    @RequestMapping(value ="/create", method = RequestMethod.GET)
     public String createTournamentGet(Model model) {
 
         User user = userService.findByUsername(authenticationService.getUsername());
@@ -45,11 +46,13 @@ public class TournamentController {
         return "CreateTournament";
     }
 
-    @RequestMapping(value ="/tournaments/create", method = RequestMethod.POST)
+    @RequestMapping(value ="/create", method = RequestMethod.POST)
     public String createTournamentPost(@ModelAttribute("tournament") Tournament tournament,
                                        @RequestParam(value = "myTeams", required = false)String[] myTeams,
                                        Model model){
-
+        // TODO: Improve User input, figure out if more fields are needed
+        // TODO: Improve view based on input fields
+        logger.info("Creating tournament: " + tournament.getName());
         Set<Team> t = new HashSet<>();
         if(myTeams != null)
             for (String s: myTeams)
@@ -69,6 +72,7 @@ public class TournamentController {
             model.addAttribute("isAuthenticated", true);
             model.addAttribute("username", authenticationService.getUsername());
         }
+        logger.info("Tournament created: " + tournament.getName());
         return "CreateTournament";
     }
 }

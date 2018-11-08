@@ -33,7 +33,7 @@
                     <a href="/login" class="navbar--item"><i class="material-icons md-light">lock</i>Login</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="/user" class="navbar--item"><i class="material-icons md-light">account_circle</i>${username}</a>
+                    <a href="/profile" class="navbar--item"><i class="material-icons md-light">account_circle</i>${username}</a>
                     <a href="/logout" class="navbar--item">Logout</a>
                 </c:otherwise>
             </c:choose>
