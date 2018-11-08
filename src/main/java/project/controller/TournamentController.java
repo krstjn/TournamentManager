@@ -80,7 +80,7 @@ public class TournamentController {
     public String tournamentEditGet(Model model,
                                     @RequestParam(value = "id")Long id){
         // TODO: Implement this
-        model.addAttribute("errorMsg", "Not implemented yet");
+        model.addAttribute("errorMsg", "501 - Not implemented yet");
 
         return "errors/error";
     }
@@ -89,7 +89,7 @@ public class TournamentController {
     public String tournamentEditPut(Model model,
                                     @RequestParam(value = "id")Long id){
         // TODO: Implement this
-        model.addAttribute("errorMsg", "Not implemented yet");
+        model.addAttribute("errorMsg", "501 - Not implemented yet");
 
         return "errors/error";
     }
@@ -98,7 +98,7 @@ public class TournamentController {
     public String tournamentEditPatch(Model model,
                                       @RequestParam(value = "id")Long id){
         // TODO: Implement this
-        model.addAttribute("errorMsg", "Not implemented yet");
+        model.addAttribute("errorMsg", "501 - Not implemented yet");
 
         return "errors/error";
     }
@@ -107,7 +107,7 @@ public class TournamentController {
     public String tournamentDelete(Model model,
                                    @RequestParam(value = "id")Long id){
         // TODO: Implement this
-        model.addAttribute("errorMsg", "Not implemented yet");
+        model.addAttribute("errorMsg", "501 - Not implemented yet");
 
         return "errors/error";
     }
