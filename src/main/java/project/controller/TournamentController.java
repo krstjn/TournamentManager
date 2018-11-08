@@ -75,4 +75,42 @@ public class TournamentController {
         logger.info("Tournament created: " + tournament.getName());
         return "CreateTournament";
     }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public String tournamentEditGet(Model model,
+                                    @RequestParam(value = "id")Long id){
+        // TODO: Implement this
+        model.addAttribute("errorMsg", "Not implemented yet");
+
+        return "errors/error";
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
+    public String tournamentEditPut(Model model,
+                                    @RequestParam(value = "id")Long id){
+        // TODO: Implement this
+        model.addAttribute("errorMsg", "Not implemented yet");
+
+        return "errors/error";
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.PATCH)
+    public String tournamentEditPatch(Model model,
+                                      @RequestParam(value = "id")Long id){
+        // TODO: Implement this
+        model.addAttribute("errorMsg", "Not implemented yet");
+
+        return "errors/error";
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.DELETE)
+    public String tournamentDelete(Model model,
+                                   @RequestParam(value = "id")Long id){
+        // TODO: Implement this
+        model.addAttribute("errorMsg", "Not implemented yet");
+
+        return "errors/error";
+    }
+
+
 }

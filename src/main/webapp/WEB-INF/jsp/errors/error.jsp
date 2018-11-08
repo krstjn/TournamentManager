@@ -33,6 +33,9 @@
 <main>
     <div>
         <h2>Villa kom upp</h2>
+        <c:if test="${not empty errorMsg}">
+            <p>${errorMsg}</p>
+        </c:if>
     </div>
 </main>
 </body>
