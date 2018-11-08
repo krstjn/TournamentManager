@@ -41,16 +41,6 @@ Correct persitance connections between entities. use jsp include directive
 
 Is it sensible to have a default layout, fixed header and footer so we don't have to copy and paste them to every new jsp file.
 
-## Color scheme
+## UML
 
-Primary color: #6200EE
-
-Primary variant: #3700B3
-
-Secondary: #03DAC6
-
-Secondary variant: #018786
-
-Background: #FFFFFFF
-
-Error: #C51162 
+![](UML.png)
