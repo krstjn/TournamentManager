@@ -2,12 +2,10 @@ package project.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import project.persistence.entities.Team;
 import project.persistence.entities.Tournament;
 import project.persistence.entities.User;
@@ -77,6 +75,7 @@ public class TournamentController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.NOT_IMPLEMENTED)
     public String tournamentEditGet(Model model,
                                     @RequestParam(value = "id")Long id){
         // TODO: Implement this
@@ -86,6 +85,7 @@ public class TournamentController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
+    @ResponseStatus(value = HttpStatus.NOT_IMPLEMENTED)
     public String tournamentEditPut(Model model,
                                     @RequestParam(value = "id")Long id){
         // TODO: Implement this
@@ -95,6 +95,7 @@ public class TournamentController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.PATCH)
+    @ResponseStatus(value = HttpStatus.NOT_IMPLEMENTED)
     public String tournamentEditPatch(Model model,
                                       @RequestParam(value = "id")Long id){
         // TODO: Implement this
@@ -104,6 +105,7 @@ public class TournamentController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.DELETE)
+    @ResponseStatus(value = HttpStatus.NOT_IMPLEMENTED)
     public String tournamentDelete(Model model,
                                    @RequestParam(value = "id")Long id){
         // TODO: Implement this
