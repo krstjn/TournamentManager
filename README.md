@@ -33,24 +33,6 @@ Our system is designed for professional and leisure tournament holders and parti
 
 In the initial release a user should be able to create an account (I). A user will be able to create tournaments for three different type of sports, football, handball and basketball (II).  A user can also sign his team up for tournaments (IV) and subscribe to tournaments he’s interested in to get updates about it (III). 
 
-## Questions for Matthias
+## UML
 
-Is it possible to persist an array/list from the front-end to the back-end? ...without using the ajax method?
-
-Correct persitance connections between entities. use jsp include directive
-
-Is it sensible to have a default layout, fixed header and footer so we don't have to copy and paste them to every new jsp file.
-
-## Color scheme
-
-Primary color: #6200EE
-
-Primary variant: #3700B3
-
-Secondary: #03DAC6
-
-Secondary variant: #018786
-
-Background: #FFFFFFF
-
-Error: #C51162 
+![](UML.png)

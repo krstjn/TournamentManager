@@ -4,20 +4,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.NoHandlerFoundException;
-import project.persistence.entities.Team;
 import project.persistence.entities.Tournament;
-import project.persistence.entities.User;
 import project.service.Interfaces.IAuthenticationService;
 import project.service.Interfaces.ITeamService;
 import project.service.Interfaces.ITournamentService;
 import project.service.Interfaces.IUserService;
 
-import java.util.Set;
 
 
 @Controller
