@@ -23,7 +23,7 @@ public interface IMatchService {
      * @param id {@link Long}
      * @return A {@link Match} with {@link Long id}
      */
-    Match findOne(long id);
+    Match findOne(Long id);
 
     /**
      * Find all {@link Match}s with {@link Long teamId}

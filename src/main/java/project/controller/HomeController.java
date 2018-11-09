@@ -62,7 +62,7 @@ public class HomeController {
         // file that has the same name
         model.addAttribute("tournament",new Tournament());
         model.addAttribute("tournaments", tournamentService.findAll());
-        model.addAttribute("teams", teamService.findAll());
+        //model.addAttribute("teams", teamService.findAll());
 
 
 
