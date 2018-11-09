@@ -23,7 +23,7 @@ public class MatchService implements IMatchService {
     }
 
     @Override
-    public Match findOne(long id) {
+    public Match findOne(Long id) {
         return repository.findOne(id);
     }
 
