@@ -3,7 +3,7 @@ package project.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.persistence.entities.Team;
-import project.persistence.repositories.TeamRepository;
+import project.persistence.repositories.ITeamRepository;
 import project.service.Interfaces.ITeamService;
 
 import java.util.Collections;
@@ -15,11 +15,11 @@ import java.util.List;
 @Service
 public class TeamService implements ITeamService {
     // Instance Variables
-    TeamRepository repository;
+    ITeamRepository repository;
 
     // Dependency Injection
     @Autowired
-    public TeamService(TeamRepository repository) {
+    public TeamService(ITeamRepository repository) {
         this.repository = repository;
     }
 
@@ -34,38 +34,12 @@ public class TeamService implements ITeamService {
     }
 
     @Override
-    public List<Team> findAll() {
-        return repository.findAll();
-    }
-
-    @Override
-    public List<Team> findAllReverseOrder() {
-        List<Team> teams = repository.findAll();
-
-        // Reverse the list
-        Collections.reverse(teams);
-
-        return teams;
-    }
-
-    @Override
-    public List<Team> findAllByDateReverseOrder(){
-        List<Team> teams = repository.findAll();
-
-        // Reverse the list
-        Collections.reverse(teams);
-
-        return teams;
-    }
-
-
-    @Override
     public Team findOne(Long id) {
         return repository.findOne(id);
     }
 
     @Override
-    public List<Team> findByName(String name) {
-        return repository.findByName(name);
+    public List<Team> findByTournamentId(Long tournamentId) {
+        return repository.findByTournamentId(tournamentId);
     }
 }

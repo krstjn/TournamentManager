@@ -3,16 +3,16 @@ package project.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.persistence.entities.Role;
-import project.persistence.repositories.RoleRepository;
+import project.persistence.repositories.IRoleRepository;
 import project.service.Interfaces.IRoleService;
 
 @Service
 public class RoleService implements IRoleService {
 
-    RoleRepository repository;
+    IRoleRepository repository;
 
     @Autowired
-    public RoleService(RoleRepository repository) {
+    public RoleService(IRoleRepository repository) {
         this.repository = repository;
     }
 

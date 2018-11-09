@@ -19,20 +19,6 @@ public interface ITeamService {
     void delete(Team team);
 
     /**
-     * Get all {@link Team}s
-     * @return A list of {@link Team}s
-     */
-    List<Team> findAll();
-
-    /**
-     * Get all {@link Team}s in a reverse order
-     * @return A reversed list of {@link Team}
-     */
-    List<Team> findAllReverseOrder();
-
-    List<Team> findAllByDateReverseOrder();
-
-    /**
      * Find a {@link Team} based on {@link Long id}
      * @param id {@link Long}
      * @return A {@link Team} with {@link Long id}
@@ -40,9 +26,9 @@ public interface ITeamService {
     Team findOne(Long id);
 
     /**
-     * Find all {@link Team}s with {@link String name}
-     * @param name {@link String}
-     * @return All {@link Team}s with the {@link String name} passed
+     * Find all {@link Team}s with {@link Long tournamentId}
+     * @param tournamentId {@link Long}
+     * @return All {@link Team}s with the {@link Long tournamentId} passed
      */
-    List<Team> findByName(String name);
+    List<Team> findByTournamentId(Long tournamentId);
 }

@@ -41,7 +41,6 @@ public class UserController {
         model.addAttribute("title", "Login");
         model.addAttribute("errors", errors);
 
-
         return "Login_Signup";
     }
 
@@ -57,6 +56,8 @@ public class UserController {
                              @RequestParam(value = "username") String username,
                              @RequestParam(value = "password") String password){
         ArrayList<String> errors = new ArrayList<>();
+
+        // Lightweight validation, might need improvement
         if(userService.findByUsername(username.toUpperCase()) != null){
             errors.add("Username already in use.");
         }
@@ -65,7 +66,6 @@ public class UserController {
         }
         if(password.length() < 5){
             errors.add("Password has to be at least 5 letters.");
-
         }
         if (errors.size() > 0) {
             model.addAttribute("errors", errors);
@@ -74,14 +74,20 @@ public class UserController {
 
             return "Login_Signup";
         }
+
         User user = new User(username.toUpperCase(), userService.hashPW(password));
+
+        // Setup up default ROLE as user
         Set<Role> roles = new HashSet<>();
         roles.add(new Role(user, "ROLE_USER"));
 
         user.setRoles(roles);
         userService.save(user);
+
         for(Role r : roles)
             roleService.save(r);
+
+        logger.info("User created: " + user.getUsername());
         return "redirect:/login";
     }
 
@@ -90,11 +96,14 @@ public class UserController {
         // TODO: Improve view, and maybe add more fields
         User user = userService.findByUsername(authenticationService.getUsername());
         Set<Tournament> tournaments = user.getTournaments();
+
+        // Setup authentication
         if(authenticationService.isAuthenticated()){
             model.addAttribute("isAuthenticated", true);
             model.addAttribute("username", authenticationService.getUsername());
             model.addAttribute("tournaments", tournaments);
         }
+
         return "Profile";
     }
 }

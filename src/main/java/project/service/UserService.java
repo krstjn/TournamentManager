@@ -1,22 +1,21 @@
 package project.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.persistence.entities.User;
-import project.persistence.repositories.UserRepository;
+import project.persistence.repositories.IUserRepository;
 import project.service.Interfaces.IUserService;
 
 import java.util.List;
 
 @Service
 public class UserService implements IUserService {
-    UserRepository repository;
+    IUserRepository repository;
 
     // Dependency Injection
     @Autowired
-    public UserService(UserRepository repository) {
+    public UserService(IUserRepository repository) {
         this.repository = repository;
     }
 
