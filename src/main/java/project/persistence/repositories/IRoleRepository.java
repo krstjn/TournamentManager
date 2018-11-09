@@ -6,7 +6,7 @@ import project.persistence.entities.Role;
 /************************
  * Höfundur: Kristján P.*
  ************************/
-public interface RoleRepository extends JpaRepository<Role, Long> {
+public interface IRoleRepository extends JpaRepository<Role, Long> {
 
     Role save(Role role);
 

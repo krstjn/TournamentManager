@@ -3,9 +3,10 @@ package project.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.persistence.entities.Tournament;
-import project.persistence.repositories.TournamentRepository;
+import project.persistence.repositories.ITournamentRepository;
 import project.service.Interfaces.ITournamentService;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,11 +16,11 @@ import java.util.List;
 @Service
 public class TournamentService implements ITournamentService {
     // Instance Variables
-    TournamentRepository repository;
+    ITournamentRepository repository;
 
     // Dependency Injection
     @Autowired
-    public TournamentService(TournamentRepository repository) {
+    public TournamentService(ITournamentRepository repository) {
         this.repository = repository;
     }
 
@@ -39,7 +40,7 @@ public class TournamentService implements ITournamentService {
     }
 
     @Override
-    public List<Tournament> findAllReverseOrder() {
+    public List<Tournament> findAllByOrderByIdDesc() {
         List<Tournament> tournaments = repository.findAll();
 
         // Reverse the list
@@ -54,7 +55,12 @@ public class TournamentService implements ITournamentService {
     }
 
     @Override
-    public List<Tournament> findByName(String name) {
-        return repository.findByName(name);
+    public List<Tournament> findByUserId(Long userId) {
+        return repository.findByUserId(userId);
+    }
+
+    @Override
+    public ArrayList generateScoreboard(Tournament tournament) {
+        return null;
     }
 }

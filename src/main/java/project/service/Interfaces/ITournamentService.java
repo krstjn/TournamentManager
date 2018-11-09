@@ -2,6 +2,7 @@ package project.service.Interfaces;
 
 import project.persistence.entities.Tournament;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ITournamentService {
@@ -28,7 +29,7 @@ public interface ITournamentService {
      * Get all {@link Tournament}s in a reverse order
      * @return A reversed list of {@link Tournament}s
      */
-    List<Tournament> findAllReverseOrder();
+    List<Tournament> findAllByOrderByIdDesc();
 
     /**
      * Find a {@link Tournament} based on {@link Long id}
@@ -38,9 +39,12 @@ public interface ITournamentService {
     Tournament findOne(Long id);
 
     /**
-     * Find all {@link Tournament}s with {@link String name}
-     * @param name {@link String}
-     * @return All {@link Tournament}s with the {@link String name} passed
+     * Find all {@link Tournament}s with {@link Long userId}
+     * @param userId {@link Long}
+     * @return All {@link Tournament}s with the {@link Long userId} passed
      */
-    List<Tournament> findByName(String name);
+    List<Tournament> findByUserId(Long userId);
+
+
+    ArrayList generateScoreboard(Tournament tournament);
 }
