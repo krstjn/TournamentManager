@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import project.utils.TournamentType;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,9 +15,8 @@ public class Tournament {
     private long id;
 
     private String name;
-    private Date created = new Date();
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date signUpExpiration;
+    private LocalDateTime created;
+    private LocalDateTime signUpExpiration;
     private int maxTeams = 10;
     @Enumerated(EnumType.STRING)
     private TournamentType type = TournamentType.League;
@@ -28,7 +28,7 @@ public class Tournament {
 
     public Tournament(User user) { this.user = user; }
 
-    public Tournament(String name, Date signUpExpiration, int maxTeams, TournamentType type, boolean isPublic) {
+    public Tournament(String name, LocalDateTime signUpExpiration, int maxTeams, TournamentType type, boolean isPublic) {
         this.name = name;
         this.signUpExpiration = signUpExpiration;
         this.maxTeams = maxTeams;
@@ -43,17 +43,17 @@ public class Tournament {
     public Set<Team> getTeams() { return teams; }
     public void setTeams(Set<Team> teams) { this.teams = teams; }
 
-    public Date getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
-    public void setCreated(Date created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 
-    public Date getSignUpExpiration() {
+    public LocalDateTime getSignUpExpiration() {
         return signUpExpiration;
     }
-    public void setSignUpExpiration(Date signUpExpiration) {
+    public void setSignUpExpiration(LocalDateTime signUpExpiration) {
         this.signUpExpiration = signUpExpiration;
     }
 

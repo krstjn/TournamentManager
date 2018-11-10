@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  ************************/
 @Controller
 public class CustomErrorController implements ErrorController {
-    Logger logger = LogManager.getLogger(UserController.class);
+    Logger logger = LogManager.getLogger(ErrorController.class);
 
     @RequestMapping("/error")
     public String handleError(HttpServletRequest request) {
