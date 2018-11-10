@@ -1,8 +1,11 @@
 package project.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import project.controller.UserController;
 import project.persistence.entities.User;
 import project.persistence.repositories.IUserRepository;
 import project.service.Interfaces.IUserService;
@@ -12,6 +15,7 @@ import java.util.List;
 @Service
 public class UserService implements IUserService {
     IUserRepository repository;
+    Logger logger = LogManager.getLogger(UserService.class);
 
     // Dependency Injection
     @Autowired

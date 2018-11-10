@@ -75,7 +75,7 @@
             (charCode > 64 && charCode < 90 ) ||
             (charCode > 96 && charCode < 123)){
             var str = $('#username').val() + e.key.toUpperCase();
-            $('#username').val(str);
+            $('#username').val(str.toUpperCase());
         }
     });
 </script>

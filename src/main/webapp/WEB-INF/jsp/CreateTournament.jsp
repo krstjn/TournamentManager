@@ -66,9 +66,9 @@
                             <label class="input-label" for="addTeam">Lið/þáttakendur:</label>
                             <div id="teams__container" name="teams">
                             </div>
-                            <div class="input-group" style="display:flex; flex-direction: row;">
+                            <div class="input-group flex-row-reverse">
                                 <input class="input" type="text" id="newTeam" autocomplete="off"/>
-                                <a id="addTeam" class="btn btn-round btn-inline btn-add" style="text-decoration: none">+</a>
+                                <i id="addTeam" class="material-icons md-18 btn btn-add">add</i>
                             </div>
                         </div>
                     </div>

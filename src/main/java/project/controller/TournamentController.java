@@ -15,10 +15,8 @@ import project.service.Interfaces.ITournamentService;
 import project.service.Interfaces.IUserService;
 
 import java.text.ParseException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,7 +28,7 @@ public class TournamentController {
     private ITournamentService tournamentService;
     private IAuthenticationService authenticationService;
     private IUserService userService;
-    Logger logger = LogManager.getLogger(TournamentController.class);
+    private Logger logger = LogManager.getLogger(TournamentController.class);
 
     public TournamentController(ITournamentService tournamentService, IAuthenticationService authenticationService, IUserService userService) {
         this.tournamentService = tournamentService;
