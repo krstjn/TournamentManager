@@ -37,6 +37,8 @@ public class TournamentController {
 
         User user = userService.findByUsername(authenticationService.getUsername());
         model.addAttribute("tournament", new Tournament(user));
+
+        // Setup authentication
         if(authenticationService.isAuthenticated()){
             model.addAttribute("isAuthenticated", true);
             model.addAttribute("username", authenticationService.getUsername());
@@ -51,21 +53,20 @@ public class TournamentController {
         // TODO: Improve User input, figure out if more fields are needed
         // TODO: Improve view based on input fields
         logger.info("Creating tournament: " + tournament.getName());
-        Set<Team> t = new HashSet<>();
+        Set<Team> teams = new HashSet<>();
         if(myTeams != null)
             for (String s: myTeams)
-                t.add(new Team(s, tournament));
+                teams.add(new Team(s, tournament));
 
-        if(t.size() > 0) {
-            tournament.setTeams(t);
+        if(teams.size() > 0) {
+            tournament.setTeams(teams);
         }
-        try{
-            tournamentService.save(tournament);
-        } catch (Exception e){
-            System.out.println("villa");
-        }
+
+        tournamentService.save(tournament);
 
         model.addAttribute("tournament",new Tournament());
+
+        // Setup authentication
         if(authenticationService.isAuthenticated()){
             model.addAttribute("isAuthenticated", true);
             model.addAttribute("username", authenticationService.getUsername());
