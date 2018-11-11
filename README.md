@@ -2,13 +2,13 @@
 
 ### Hópmeðlimir
 
-*Birgir Óli Snorrason 	- 150795-2499*
+*Birgir Óli Snorrason       - bos32@hi.is	 - 150795-2499*
 
-*Jón Þorsteinsson		- 130291-2289*
+*Jón Þorsteinsson           - jth56@hi.is	 - 130291-2289*
 
-*Kristján Pétur Þórarinsson	- 270695-2569*
+*Kristján Pétur Þórarinsson - kth130@hi.is - 270695-2569*
 
-*Kristófer Már Gíslason	- 181096-3579*
+*Kristófer Már Gíslason	    - kmg14@hi.is  - 181096-3579*
 
 ## Success metrics
 

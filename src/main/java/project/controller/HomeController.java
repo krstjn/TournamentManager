@@ -42,10 +42,20 @@ public class HomeController {
             model.addAttribute("isAuthenticated", true);
             model.addAttribute("username", authenticationService.getUsername());
         }
-        model.addAttribute("tournament",new Tournament());
-        model.addAttribute("tournaments", tournamentService.findAll());
         return "Index";
     }
+
+    @RequestMapping(value = "/view", method = RequestMethod.GET)
+    public String view(Model model){
+        if(authenticationService.isAuthenticated()){
+            model.addAttribute("isAuthenticated", true);
+            model.addAttribute("username", authenticationService.getUsername());
+        }
+        model.addAttribute("tournament",new Tournament());
+        model.addAttribute("tournaments", tournamentService.findAll());
+        return "ViewTournaments";
+    }
+
 
     @ExceptionHandler(NoHandlerFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)

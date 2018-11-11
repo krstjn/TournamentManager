@@ -25,6 +25,16 @@ h3 {
     font-family: 'Raleway',  sans-serif;
 }
 
+.row {
+    display: flex;
+    height: 40vh;
+}
+
+.col-12 {
+    display: flex;
+    align-content: center;
+}
+
 a {
     text-decoration: underline;
     color: #000;
