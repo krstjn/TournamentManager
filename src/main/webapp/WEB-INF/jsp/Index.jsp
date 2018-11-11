@@ -51,7 +51,7 @@
                 <li><a href="<c:url value="/tournaments/create"/>">Create a Tournament</a></li>
             </div>
             <div class="col-6">
-                <li><a href="<c:url value="/view"/>">View Tournaments</a></li>
+                <li><a href="<c:url value="/tournaments"/>">View Tournaments</a></li>
             </div>
         </div>
     </main>

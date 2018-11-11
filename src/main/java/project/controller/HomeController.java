@@ -22,17 +22,13 @@ public class HomeController {
     // Instance Variables
     private ITournamentService tournamentService;
     private IAuthenticationService authenticationService;
-    private IUserService userService;
-    private ITeamService teamService;
     Logger logger = LogManager.getLogger(UserController.class);
 
     // Dependency Injection
     @Autowired
-    public HomeController(ITournamentService tournamentService,ITeamService teamService, IUserService userService, IAuthenticationService authenticationService) {
+    public HomeController(ITournamentService tournamentService, IAuthenticationService authenticationService) {
         this.tournamentService = tournamentService;
         this.authenticationService = authenticationService;
-        this.userService = userService;
-        this.teamService = teamService;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -43,17 +39,6 @@ public class HomeController {
             model.addAttribute("username", authenticationService.getUsername());
         }
         return "Index";
-    }
-
-    @RequestMapping(value = "/view", method = RequestMethod.GET)
-    public String view(Model model){
-        if(authenticationService.isAuthenticated()){
-            model.addAttribute("isAuthenticated", true);
-            model.addAttribute("username", authenticationService.getUsername());
-        }
-        model.addAttribute("tournament",new Tournament());
-        model.addAttribute("tournaments", tournamentService.findAll());
-        return "ViewTournaments";
     }
 
 

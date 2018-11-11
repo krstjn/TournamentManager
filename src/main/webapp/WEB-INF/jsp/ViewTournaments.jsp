@@ -53,10 +53,12 @@
                 <div class="tournaments">
 
                     <c:forEach var="tournament" items="${tournaments}">
-                        <div>
-                            <p><a href="/tournament?id=${tournament.id}"> ${tournament.name}</a></p>
-                            <p>Fjöldi skráða liða: ${tournament.teams.size()}</p>
-                        </div>
+                        <c:if test="${tournament.isPublic}">
+                            <div>
+                                <p><a href="/tournament?id=${tournament.id}"> ${tournament.name}</a></p>
+                                <p>Fjöldi skráða liða: ${tournament.teams.size()}</p>
+                            </div>
+                        </c:if>
                     </c:forEach>
                 </div>
             </c:when>

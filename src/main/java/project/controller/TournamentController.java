@@ -36,6 +36,16 @@ public class TournamentController {
         this.userService = userService;
     }
 
+    @GetMapping
+    public String tournamentsGet(Model model){
+        if(authenticationService.isAuthenticated()){
+            model.addAttribute("isAuthenticated", true);
+            model.addAttribute("username", authenticationService.getUsername());
+        }
+        model.addAttribute("tournaments", tournamentService.findAll());
+        return "ViewTournaments";
+    }
+
     @RequestMapping(value ="/create", method = RequestMethod.GET)
     public String createTournamentGet(Model model) throws ParseException {
         Tournament tournament = new Tournament();
