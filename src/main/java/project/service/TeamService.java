@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class TeamService implements ITeamService {
     // Instance Variables
-    ITeamRepository repository;
+    private ITeamRepository repository;
 
     // Dependency Injection
     @Autowired

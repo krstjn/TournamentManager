@@ -1,7 +1,10 @@
 package project.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import project.controller.UserController;
 import project.persistence.entities.Tournament;
 import project.persistence.repositories.ITournamentRepository;
 import project.service.Interfaces.ITournamentService;
@@ -10,13 +13,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/************************
- * Höfundur: Kristján P.*
- ************************/
 @Service
 public class TournamentService implements ITournamentService {
     // Instance Variables
-    ITournamentRepository repository;
+    private ITournamentRepository repository;
 
     // Dependency Injection
     @Autowired
@@ -61,6 +61,8 @@ public class TournamentService implements ITournamentService {
 
     @Override
     public ArrayList generateScoreboard(Tournament tournament) {
+        // TODO: Implement this
         return null;
     }
+
 }

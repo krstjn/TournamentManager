@@ -22,10 +22,11 @@ import java.util.Set;
 @Controller
 public class UserController {
 
-    Logger logger = LogManager.getLogger(UserController.class);
     private IUserService userService;
     private IRoleService roleService;
     private IAuthenticationService authenticationService;
+    private Logger logger = LogManager.getLogger(UserController.class);
+
     @Autowired
     public UserController(IUserService userService, IRoleService roleService, IAuthenticationService authenticationService){
         this.roleService = roleService;
@@ -39,6 +40,7 @@ public class UserController {
         ArrayList<String> errors = new ArrayList<>();
         if(Boolean.valueOf(error)) errors.add("Login unsuccessful, try again");
         model.addAttribute("title", "Login");
+        model.addAttribute("target", "/login");
         model.addAttribute("errors", errors);
 
         return "Login_Signup";

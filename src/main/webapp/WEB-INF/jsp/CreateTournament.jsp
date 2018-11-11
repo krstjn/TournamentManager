@@ -43,7 +43,6 @@
         <div class="container">
 
             <sf:form method="POST" modelAttribute="tournament" action="/tournaments/create">
-                <sf:hidden path="user" />
                 <div class="row">
                     <div class="col-6">
                         <div class="input-container">
@@ -55,13 +54,10 @@
                             <sf:input class="input" path="maxTeams" type="number"/>
                         </div>
                         <div class="input-container">
-                            <label class="input-label" for="signUpExpiration">SignUp expiration: ${signUpExpiration}</label>
-                            <input type="checkbox" name="allowSignUp" id="allowSignUp" value="false">
+                            <label class="input-label" for="signUpDate">SignUp expiration: <input type="checkbox" name="allowSignUp" id="allowSignUp" value="false">
+                            </label>
                             <div id="signUpDate" class="input-group hidden">
-                                <sf:input class="input" path="signUpExpiration" type="date" value=""/>
-                                <span class="input-icon">
-                                    <i id="openSignUpDate" class="far fa-calendar fa-2x"></i>
-                                </span>
+                                <input class="input" name="signUpExp" id="signUpExp-date" type="datetime-local" min="${minDate}"/>
                             </div>
                         </div>
                     </div>
@@ -70,9 +66,9 @@
                             <label class="input-label" for="addTeam">Lið/þáttakendur:</label>
                             <div id="teams__container" name="teams">
                             </div>
-                            <div class="input-group" style="display:flex; flex-direction: row;">
-                                <input class="input" type="text" id="newTeam"/>
-                                <a id="addTeam" class="btn btn-round btn-inline btn-add" style="text-decoration: none">+</a>
+                            <div class="input-group flex-row-reverse">
+                                <input class="input" type="text" id="newTeam" autocomplete="off"/>
+                                <i id="addTeam" class="material-icons md-18 btn btn-add">add</i>
                             </div>
                         </div>
                     </div>
@@ -104,8 +100,7 @@
                 </div>
 
 
-                <button id="submitTournament" class="hidden"  type="submit">Búa til mót</button>
-                <input type="checkbox" name="allowSignUp" class="hidden">
+                <button id="submitTournament" class="hidden"  type="submit"></button>
             </sf:form>
             <button id="verifyTournament" class="btn btn-primary">Búa til mót</button>
         </div>
@@ -116,18 +111,6 @@
     <footer>Class HBV501G, University of Iceland</footer>
     <script>
         $('document').ready(function (){
-
-            var dtToday = new Date();
-            var month = dtToday.getMonth() + 1;
-            var day = dtToday.getDate();
-            var year = dtToday.getFullYear();
-            if(month < 10)
-                month = '0' + month.toString();
-            if(day < 10)
-                day = '0' + day.toString();
-
-            var minDate = year + '-' + month + '-' + day;
-            $('#signUpExpiration').attr('min', minDate);
 
             $('#addTeam').click(function (e) {
                 var team = $('#newTeam').val();
@@ -155,8 +138,30 @@
                 else {
                     $('#allowSignUp').val('false');
                     $('#signUpDate').addClass('hidden');
+                    $('#signUpExp-date').val(null);
                 }
             });
+
+            $('#signUpExp-date').change(function (){
+                console.log($('#signUpExp-date').val());
+            });
+
+            $(window).keydown(function(e){
+                if(e.keyCode === 13) {
+                    e.preventDefault();
+                    console.log(e)
+                    var target = e.target.id || e.target.name;
+                    if(target === 'newTeam'){
+                        $('#addTeam').click();
+                    }
+                    else{
+                        $('#verifyTournament').click();
+                    }
+                    return false;
+                }
+
+            });
+
 
         });
     </script>
