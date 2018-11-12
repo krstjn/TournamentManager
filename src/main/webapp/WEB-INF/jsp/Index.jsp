@@ -41,17 +41,23 @@
         </div>
     </nav>
     <main>
-        <div class="row">
-            <div class="col-12">
-                <h1>Tournament Manager</h1>
+        <div class="index">
+            <div class="index row">
+                <div class="index col-12">
+                    <h1>Tournament Manager</h1>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <li><a href="<c:url value="/tournaments/create"/>">Create a Tournament</a></li>
-            </div>
-            <div class="col-6">
-                <li><a href="<c:url value="/tournaments"/>">View Tournaments</a></li>
+            <div class="index row">
+                <div class="index col-6">
+                    <a class="index__link" href="<c:url value="/tournaments/create"/>"></a>
+                    <i class="material-icons index__icon">create</i>
+                    <h2>Create a Tournament</h2>
+                </div>
+                <div class="index col-6">
+                    <a class="index__link" href="<c:url value="/tournaments"/>"></a>
+                    <i class="material-icons index__icon">list</i>
+                    <h2>View Tournaments</h2>
+                </div>
             </div>
         </div>
     </main>

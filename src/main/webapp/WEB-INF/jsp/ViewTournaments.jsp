@@ -17,7 +17,7 @@
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/icons.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/navigation.css"/>"/>
-        <link rel="stylesheet" type="text/css" href="<c:url value="/css/index.css"/>"/>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/viewTournaments.css"/>"/>
 
     </head>
 </head>
@@ -41,11 +41,7 @@
         </div>
     </nav>
     <main>
-        <div class="row">
-            <div class="col-12">
-                <h1>Tournaments</h1>
-            </div>
-        </div>
+        <h1>Tournaments</h1>
         <c:choose>
             <%--If the model has an attribute with the name `tournaments`--%>
             <c:when test="${not empty tournaments}">

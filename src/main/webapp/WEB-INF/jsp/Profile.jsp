@@ -18,7 +18,7 @@
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/icons.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/grid.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/navigation.css"/>"/>
-        <link rel="stylesheet" type="text/css" href="<c:url value="/css/index.css"/>"/>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/profile.css"/>"/>
     </head>
 </head>
 <body>
