@@ -21,6 +21,7 @@ public class Tournament {
     @Enumerated(EnumType.STRING)
     private TournamentType type = TournamentType.League;
     private Set<Team> teams = new HashSet<>();
+    private Set<Match> matches = new HashSet<>();
     private User user;
     private boolean isPublic = true;
 
@@ -88,6 +89,13 @@ public class Tournament {
     public void setName(String name) {
         this.name = name;
     }
+
+    @OneToMany(mappedBy = "tournament",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    public Set<Match> getMatches() { return matches; }
+    public void setMatches(Set<Match> matches) { this.matches = matches; }
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "UserId")

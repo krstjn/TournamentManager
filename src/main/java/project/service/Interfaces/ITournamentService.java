@@ -46,5 +46,5 @@ public interface ITournamentService {
     List<Tournament> findByUserId(Long userId);
 
 
-    ArrayList generateScoreboard(Tournament tournament);
+    List generateScoreboard(Tournament tournament);
 }
