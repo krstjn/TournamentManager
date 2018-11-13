@@ -9,6 +9,7 @@ import java.util.Date;
 @Entity
 @Table(name = "matches")
 public class Match {
+    // TODO: bæta við breytu sem segir hvort búið sé að spila leik
     private long id;
     private int homeTeamScore;
     private int awayTeamScore;
