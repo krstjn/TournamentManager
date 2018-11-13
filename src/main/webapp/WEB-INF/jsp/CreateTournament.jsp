@@ -19,8 +19,10 @@
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/icons.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/input.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/grid.css"/>"/>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/footer.css"/>"/>
     </head>
     <body>
+    <div class="content">
     <nav class="navbar">
         <div class="navbar--container">
             <div class="navbar--heading">
@@ -107,8 +109,15 @@
 
         <a href="/">Forsíða</a>
     </main>
+    </div>
     </body>
-    <footer>Class HBV501G, University of Iceland</footer>
+    <footer class="footer">
+        <div class="footer--container">
+            <div class="footer--item">Class HBV501G, University of Iceland</div>
+            <div class="footer--item">Class HBV501G, University of Iceland</div>
+            <div class="footer--item">Class HBV501G, University of Iceland</div>
+        </div>
+    </footer>
     <script>
         $('document').ready(function (){
 

@@ -15,12 +15,16 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Raleway:400,700|Roboto:400,400i,700" rel="stylesheet">        <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/index.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/navigation.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/TournamentView.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/icons.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/input.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/grid.css"/>"/>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/footer.css"/>"/>
     </head>
+    <body>
+    <div class="content">
     <nav class="navbar">
         <div class="navbar--container">
             <div class="navbar--heading">
@@ -36,9 +40,7 @@
             </div>
         </div>
     </nav>
-
-    <main>
-        <body>
+        <main>
             <div class = titleSection>
                 <c:forEach var="tournament" items="${tournaments}">
                     <c:if test = "${tournament.id == param.id}" >
@@ -142,7 +144,14 @@
 
  --%>
 
-        </body>
-    </main>
-
+        </main>
+    </div>
+    </body>
+    <footer class="footer">
+        <div class="footer--container">
+            <div class="footer--item">Class HBV501G, University of Iceland</div>
+            <div class="footer--item">Class HBV501G, University of Iceland</div>
+            <div class="footer--item">Class HBV501G, University of Iceland</div>
+        </div>
+    </footer>
 </html>

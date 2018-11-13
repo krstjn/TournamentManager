@@ -14,14 +14,18 @@
         <script src="<c:url value="/js/jquery-3.3.1.min.js" />"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Raleway:400,700|Roboto:400,400i,700" rel="stylesheet">        <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/index.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/icons.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/navigation.css"/>"/>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/footer.css"/>"/>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/grid.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/viewTournaments.css"/>"/>
 
     </head>
 </head>
 <body>
+<div class="content">
     <nav class="navbar">
         <div class="navbar--container">
             <div class="navbar--heading">
@@ -65,7 +69,13 @@
             </c:otherwise>
         </c:choose>
     </main>
-
+    </div>
     </body>
-    <footer>Class HBV501G, University of Iceland</footer>
+    <footer class="footer">
+        <div class="footer--container">
+            <div class="footer--item">Class HBV501G, University of Iceland</div>
+            <div class="footer--item">Class HBV501G, University of Iceland</div>
+            <div class="footer--item">Class HBV501G, University of Iceland</div>
+        </div>
+    </footer>
 </html>
