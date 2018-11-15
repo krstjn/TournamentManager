@@ -31,6 +31,7 @@ h3 {
 .index .row {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
     height: 350px;
 }
 

@@ -9,7 +9,7 @@ import java.util.Date;
 @Entity
 @Table(name = "matches")
 public class Match {
-    private long id;
+    private Long id;
     private int homeTeamScore;
     private int awayTeamScore;
     @DateTimeFormat(pattern = "YYYY/mm/dd")
@@ -22,8 +22,7 @@ public class Match {
 
     public Match(){}
 
-    public Match(long id, Team homeTeam, Team awayTeam, int round) {
-        this.id = id;
+    public Match(Team homeTeam, Team awayTeam, int round) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.round = round;
@@ -32,11 +31,11 @@ public class Match {
     @Id
     @Column(name = "MatchId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
