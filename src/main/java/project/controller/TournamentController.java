@@ -66,7 +66,7 @@ public class TournamentController {
     @RequestMapping(value ="/create", method = RequestMethod.POST)
     public String createTournamentPost(@ModelAttribute("tournament") Tournament tournament,
                                        @RequestParam(value = "myTeams", required = false)String[] myTeams,
-                                       @RequestParam(value = "signUpExp", required = false)@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")LocalDateTime signUpExp,
+                                       @RequestParam(value = "signUpExp", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")LocalDateTime signUpExp,
                                        Model model){
         // TODO: Improve User input, figure out if more fields are needed
         // TODO: Improve view based on input fields
@@ -79,6 +79,9 @@ public class TournamentController {
         if(teams.size() > 0) {
             tournament.setTeams(teams);
         }
+
+        // Set how many rounds should be played
+        tournament.setNrOfRounds(2);
 
         // Check if matches should be created
         if (signUpExp == null || signUpExp.isAfter(LocalDateTime.now())){

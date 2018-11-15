@@ -20,6 +20,7 @@ public class Tournament {
     private int maxTeams = 10;
     @Enumerated(EnumType.STRING)
     private TournamentType type = TournamentType.League;
+    private int nrOfRounds;
     private Set<Team> teams = new HashSet<>();
     private Set<Match> matches = new HashSet<>();
     private User user;
@@ -29,11 +30,12 @@ public class Tournament {
 
     public Tournament(User user) { this.user = user; }
 
-    public Tournament(String name, LocalDateTime signUpExpiration, int maxTeams, TournamentType type, boolean isPublic) {
+    public Tournament(String name, LocalDateTime signUpExpiration, int maxTeams, TournamentType type, int nrOfRounds, boolean isPublic) {
         this.name = name;
         this.signUpExpiration = signUpExpiration;
         this.maxTeams = maxTeams;
         this.type = type;
+        this.nrOfRounds = nrOfRounds;
         this.isPublic = isPublic;
     }
 
@@ -72,6 +74,9 @@ public class Tournament {
     public void setType(TournamentType type) {
         this.type = type;
     }
+
+    public int getNrOfRounds() { return nrOfRounds; }
+    public void setNrOfRounds(int nrOfRounds) { this.nrOfRounds = nrOfRounds; }
 
     @Id
     @Column(name = "TournamentId")
