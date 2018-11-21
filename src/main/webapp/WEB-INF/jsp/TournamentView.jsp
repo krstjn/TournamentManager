@@ -84,8 +84,8 @@
                     <c:forEach var="match" items="${matches}">
                         <div>
                             <tr>
-                                <td> ${match.homeTeam} </td>
-                                <td> ${match.awayTeam} </td>
+                                <td> ${match.homeTeam.name} </td>
+                                <td> ${match.awayTeam.name} </td>
                                 <td> ${match.homeTeamScore} - ${match.awayTeamScore} </td>
                                 <td> ${match.location} </td>
                                 <td> ${match.matchDate} </td>

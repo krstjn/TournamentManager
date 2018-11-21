@@ -54,6 +54,7 @@ public class TournamentController {
         if(tournament != null){
             model.addAttribute("tournament", tournament);
             model.addAttribute("scoreboard", tournamentService.generateScoreboard(tournament));
+            model.addAttribute("matches", matchService.generateMatches(tournament));
             return "TournamentView";
         }
 
@@ -147,6 +148,8 @@ public class TournamentController {
         model.addAttribute("tournament", tournamentService.findOne(id));
         Tournament tournament = tournamentService.findOne(id);
         model.addAttribute("scoreboard", tournamentService.generateScoreboard(tournament));
+        model.addAttribute("matches", matchService.generateMatches(tournament));
+
 
         return "Edit";
     }

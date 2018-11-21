@@ -85,16 +85,23 @@ tr:nth-child(even) {
     display: none;
 }
 
-input {
+.scoreTable input {
     width : 30px;
 }
 
 button {
+    border:none;
     padding : 0.5em;
+    background-color: whitesmoke;
+    transition: all 0.4s;
+    text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
+    color:#FFFFFF;
 
 }
 
 button:hover {
-
+    background-color: lightsteelblue;
+    border : solid 1px green;
+    border-color: rgba(255,255,255,1);
 }
 
