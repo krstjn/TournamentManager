@@ -17,6 +17,7 @@ import java.util.*;
 public class MatchService implements IMatchService {
 
     IMatchRepository repository;
+    private Logger logger = LogManager.getLogger(MatchService.class);
 
     @Autowired
     public MatchService(IMatchRepository repository) {this.repository = repository;}
@@ -46,7 +47,7 @@ public class MatchService implements IMatchService {
         return repository.findByTournamentId(tournamentId);
     }
 
-
+    @Override
     public List<Match> generateMatches(Tournament tournament){
         List teams = new ArrayList(tournament.getTeams());
         // If the number of teams is an odd number we add one "ghost" team to the tournament.
@@ -62,29 +63,29 @@ public class MatchService implements IMatchService {
         for(int i = 0; i < nrOfTeams-1; i++) {
             // Split teams into 2 lists.
             List<Team> t1 = new ArrayList<Team>(teams.subList(0, nrOfTeams/2));
-            List<Team> t2 = new ArrayList<Team>(teams.subList(nrOfTeams/2, nrOfTeams-1));
-            Collections.reverse(t2);
+            List<Team> t2 = new ArrayList<Team>(teams.subList(nrOfTeams/2, nrOfTeams));
+            //Collections.reverse(t2);
 
             if(i % 2 == 1) {
-                for(int j = 0; i < t1.size(); i++) {
+                for(int j = 0; j < t1.size(); j++) {
                     for(int x = 0; x < nrOfRounds; x++){
                         if(t1.get(j).getName() == "ghost" || t2.get(j).getName() == "ghost") break;
                         if(x % 2 == 1){
-                            matches.add(new Match(t1.get(j),t2.get(j), (round + ((nrOfTeams-1)*x))));
+                            matches.add(new Match(t1.get(j),t2.get(j), (round + ((nrOfTeams-1)*x)), tournament));
                         } else {
-                            matches.add(new Match(t2.get(j),t1.get(j), (round + ((nrOfTeams-1)*x))));
+                            matches.add(new Match(t2.get(j),t1.get(j), (round + ((nrOfTeams-1)*x)), tournament));
                         }
                     }
 
                 }
             } else {
-                for(int j = 0; i < t1.size(); i++) {
+                for(int j = 0; j < t1.size(); j++) {
                     for(int x = 0; x < nrOfRounds; x++){
                         if(t1.get(j).getName() == "ghost" || t2.get(j).getName() == "ghost") break;
                         if(x % 2 == 1){
-                            matches.add(new Match(t2.get(j),t1.get(j), (round + ((nrOfTeams-1)*x))));
+                            matches.add(new Match(t2.get(j),t1.get(j), (round + ((nrOfTeams-1)*x)), tournament));
                         } else {
-                            matches.add(new Match(t1.get(j),t2.get(j), (round + ((nrOfTeams-1)*x))));
+                            matches.add(new Match(t1.get(j),t2.get(j), (round + ((nrOfTeams-1)*x)), tournament));
                         }
                     }
                 }
@@ -96,6 +97,7 @@ public class MatchService implements IMatchService {
 
         }
 
+        logger.info(matches.size() + " matches created.");
         return matches;
     }
 

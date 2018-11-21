@@ -19,14 +19,17 @@ public class Match {
     private String location;
     private Team homeTeam;
     private Team awayTeam;
+    private boolean played;
     private Tournament tournament;
 
     public Match(){}
 
-    public Match(Team homeTeam, Team awayTeam, int round) {
+    public Match(Team homeTeam, Team awayTeam, int round, Tournament tournament) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.round = round;
+        played = false;
+        this.tournament = tournament;
     }
 
     @Id
@@ -91,4 +94,8 @@ public class Match {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public boolean getPlayed() { return played; }
+
+    public void setPlayed(boolean played) { this.played = played; }
 }

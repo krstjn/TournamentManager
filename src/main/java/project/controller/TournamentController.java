@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import project.persistence.entities.Match;
 import project.persistence.entities.Team;
 import project.persistence.entities.Tournament;
 import project.persistence.entities.User;
@@ -27,24 +28,23 @@ public class TournamentController {
 
     // Instance Variables
     private ITournamentService tournamentService;
+    private IMatchService matchService;
     private IAuthenticationService authenticationService;
     private IUserService userService;
     private IMatchService matchService;
     private Logger logger = LogManager.getLogger(TournamentController.class);
 
-    public TournamentController(ITournamentService tournamentService, IAuthenticationService authenticationService,
-                                IUserService userService, IMatchService matchService) {
+    public TournamentController(ITournamentService tournamentService, IAuthenticationService authenticationService, IUserService userService, IMatchService matchService) {
         this.tournamentService = tournamentService;
         this.authenticationService = authenticationService;
         this.userService = userService;
         this.matchService = matchService;
     }
 
-    @GetMapping()
+    @GetMapping
     public String tournamentsGet(Model model,
-                                 @RequestParam(value = "id")Long id){
-
-
+                                 @RequestParam(value="search", required = false)String search,
+                                 @RequestParam(value="id", required = false)Long id){
         if(authenticationService.isAuthenticated()){
             model.addAttribute("isAuthenticated", true);
             model.addAttribute("username", authenticationService.getUsername());
@@ -52,18 +52,18 @@ public class TournamentController {
 
         Tournament tournament = tournamentService.findOne(id);
 
-        model.addAttribute("tournaments", tournamentService.findAll());
-        model.addAttribute("tournament", tournamentService.findOne(id));
-        model.addAttribute("scoreboard", tournamentService.generateScoreboard(tournament));
-
-        // model.addAttribute("match", matchService.findByTournamentId(id));
-        //model.addAttribute("generate", matchService.generateMatches(tournamentService.findOne(id)) );
-
-        if (id == 0)
-            return "ViewTournaments";
-        else
+        if(tournament != null){
+            model.addAttribute("tournament", tournament);
+            model.addAttribute("scoreboard", tournamentService.generateScoreboard(tournament));
             return "TournamentView";
+        }
 
+        if(search != null) {
+            model.addAttribute("tournaments", tournamentService.findByNameSearch(search.toUpperCase()));
+        } else {
+            model.addAttribute("tournaments", tournamentService.findAll());
+        }
+        return "ViewTournaments";
     }
 
     @RequestMapping(value ="/create", method = RequestMethod.GET)
@@ -106,9 +106,9 @@ public class TournamentController {
         // Check if matches should be created
         if (signUpExp == null || signUpExp.isAfter(LocalDateTime.now())){
             tournament.setSignUpExpiration(signUpExp);
-            // logger.info("Creating matches for: " + tournament.getName());
-            // matchService.generateMatches(tournament);
-            // logger.info("Matches created for: " + tournament.getName());
+            logger.info("Creating matches for: " + tournament.getName());
+            tournament.setMatches(matchService.generateMatches(tournament));
+            logger.info("Matches created for: " + tournament.getName());
         }
 
         // Setup owner of tournament
@@ -116,11 +116,11 @@ public class TournamentController {
         tournament.setUser(user);
 
         tournament.setCreated(LocalDateTime.now());
-        try{
-            tournamentService.save(tournament);
-        } catch (Exception ex){
-            logger.error(ex.getMessage());
-        }
+        //try{
+            Tournament t = tournamentService.save(tournament);
+        //} catch (Exception ex){
+            //logger.error(ex.getMessage());
+        //}
 
         model.addAttribute("tournament",new Tournament());
 
@@ -132,7 +132,7 @@ public class TournamentController {
         logger.info("Tournament created: " + tournament.getName());
 
         // TODO: Redirecta á tournament síðuna
-        return "CreateTournament";
+        return "redirect:/tournaments?id=" + t.getId();
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)

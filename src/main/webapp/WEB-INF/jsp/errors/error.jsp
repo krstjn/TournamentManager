@@ -19,25 +19,17 @@
 
 </head>
 <body>
-<nav class="navbar">
-    <div class="navbar--container">
-        <div class="navbar--heading">
-            <a href="/"><i class="material-icons md-light md-36">home</i></a>
-        </div>
-        <div class="navbar--nav">
-            <a href="/login" class="navbar--item"><i class="material-icons md-light">lock</i>Login</a>
-            <a href="/profile" class="navbar--item"><i class="material-icons md-light">face</i></a>
-        </div>
-    </div>
-</nav>
-<main>
-    <div>
-        <h2>Villa kom upp</h2>
-        <c:if test="${not empty errorMsg}">
-            <p>${errorMsg}</p>
-        </c:if>
-    </div>
-</main>
+  <div>
+      <%@include file="../Navigation.jsp"%>
+      <main>
+          <div>
+              <h2>Villa kom upp</h2>
+              <c:if test="${not empty errorMsg}">
+                  <p>${errorMsg}</p>
+              </c:if>
+          </div>
+      </main>
+  </div>
 </body>
-<footer>Class HBV501G, University of Iceland</footer>
+<%@include file="../Footer.jsp"%>
 </html>
