@@ -11,6 +11,7 @@ import project.persistence.entities.Team;
 import project.persistence.entities.Tournament;
 import project.persistence.entities.User;
 import project.service.Interfaces.IAuthenticationService;
+import project.service.Interfaces.IMatchService;
 import project.service.Interfaces.ITournamentService;
 import project.service.Interfaces.IUserService;
 
@@ -28,12 +29,14 @@ public class TournamentController {
     private ITournamentService tournamentService;
     private IAuthenticationService authenticationService;
     private IUserService userService;
+    private IMatchService matchService;
     private Logger logger = LogManager.getLogger(TournamentController.class);
 
-    public TournamentController(ITournamentService tournamentService, IAuthenticationService authenticationService, IUserService userService) {
+    public TournamentController(IMatchService matchService, ITournamentService tournamentService, IAuthenticationService authenticationService, IUserService userService) {
         this.tournamentService = tournamentService;
         this.authenticationService = authenticationService;
         this.userService = userService;
+        this.matchService = matchService;
     }
 
     @GetMapping
@@ -47,7 +50,7 @@ public class TournamentController {
     }
 
     @RequestMapping(value ="/create", method = RequestMethod.GET)
-    public String createTournamentGet(Model model) throws ParseException {
+    public String createTournamentGet(Model model) {
         Tournament tournament = new Tournament();
 
         model.addAttribute("tournament", tournament);
@@ -87,7 +90,7 @@ public class TournamentController {
         if (signUpExp == null || signUpExp.isAfter(LocalDateTime.now())){
             tournament.setSignUpExpiration(signUpExp);
             // logger.info("Creating matches for: " + tournament.getName());
-            // matchService.generateMatches(tournament);
+            matchService.generateMatches(tournament);
             // logger.info("Matches created for: " + tournament.getName());
         }
 
