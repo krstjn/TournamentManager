@@ -33,6 +33,12 @@
     color: red;
 }
 
+.btn-danger {
+    background-color: red;
+    color: #fff;
+    border: 1px solid red;
+}
+
 .btn-small {
     width: 100px;
 }

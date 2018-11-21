@@ -40,7 +40,7 @@ public class Tournament {
     }
 
     @OneToMany(mappedBy = "tournament",
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     public Set<Team> getTeams() { return teams; }
@@ -96,13 +96,13 @@ public class Tournament {
     }
 
     @OneToMany(mappedBy = "tournament",
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     public Set<Match> getMatches() { return matches; }
     public void setMatches(Set<Match> matches) { this.matches = matches; }
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "UserId")
     public User getUser() { return this.user; }
     public void setUser(User user) { this.user = user; }
