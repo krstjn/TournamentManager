@@ -40,12 +40,18 @@ public class TournamentController {
     }
 
     @GetMapping
-    public String tournamentsGet(Model model){
+    public String tournamentsGet(Model model,
+                                 @RequestParam(value="search", required = false)String search){
         if(authenticationService.isAuthenticated()){
             model.addAttribute("isAuthenticated", true);
             model.addAttribute("username", authenticationService.getUsername());
         }
-        model.addAttribute("tournaments", tournamentService.findAll());
+
+        if(search != null) {
+            model.addAttribute("tournaments", tournamentService.findByNameSearch(search.toUpperCase()));
+        } else {
+            model.addAttribute("tournaments", tournamentService.findAll());
+        }
         return "ViewTournaments";
     }
 

@@ -51,6 +51,9 @@ public class TournamentService implements ITournamentService {
     }
 
     @Override
+    public List<Tournament> findByNameSearch(String search) { return repository.findByNameSearch(search); }
+
+    @Override
     public Tournament findOne(Long id) {
         return repository.findOne(id);
     }

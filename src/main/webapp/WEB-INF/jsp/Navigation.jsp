@@ -3,6 +3,12 @@
         <div class="navbar--heading">
             <a href="/"><i class="material-icons md-light md-36">home</i></a>
         </div>
+        <div class="search-container">
+            <form class="search-form" action="/tournaments" method="GET">
+                <input class="search-input" type="text" id="search" name="search" placeholder="Search..." />
+                <button class="search-button" type="submit"><i class="search-icon material-icons">search</i></button>
+            </form>
+        </div>
         <div class="navbar--nav">
             <c:choose>
                 <c:when test="${!isAuthenticated}">

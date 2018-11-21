@@ -43,9 +43,36 @@
 
 }
 
-.svg {
-    transition: filter .3s ease-in-out;
+.search-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #FFFFFF;
+    border-radius: 20px;
+    background-color: #fff;
+    height: 80%;
+    margin: auto 0;
 }
-.svg:hover {
-    filter: invert(100%);
+.search-form {
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    margin: 0 15px;
+    border: none;
+}
+
+.search-input:focus {
+    border:none;
+    background: none;
+    outline: none;
+}
+
+.search-button {
+    background: none;
+    border:none;
+}
+
+.search-icon {
+    cursor: pointer;
 }
