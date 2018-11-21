@@ -31,7 +31,6 @@ public class TournamentController {
     private IMatchService matchService;
     private IAuthenticationService authenticationService;
     private IUserService userService;
-    private IMatchService matchService;
     private Logger logger = LogManager.getLogger(TournamentController.class);
 
     public TournamentController(ITournamentService tournamentService, IAuthenticationService authenticationService, IUserService userService, IMatchService matchService) {
@@ -43,10 +42,19 @@ public class TournamentController {
 
     @GetMapping
     public String tournamentsGet(Model model,
-                                 @RequestParam(value="search", required = false)String search){
+                                 @RequestParam(value="search", required = false)String search,
+                                 @RequestParam(value="id", required = false)Long id){
         if(authenticationService.isAuthenticated()){
             model.addAttribute("isAuthenticated", true);
             model.addAttribute("username", authenticationService.getUsername());
+        }
+
+        Tournament tournament = tournamentService.findOne(id);
+
+        if(tournament != null){
+            model.addAttribute("tournament", tournament);
+            model.addAttribute("scoreboard", tournamentService.generateScoreboard(tournament));
+            return "TournamentView";
         }
 
         if(search != null) {

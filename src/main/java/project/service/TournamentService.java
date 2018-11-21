@@ -73,46 +73,45 @@ public class TournamentService implements ITournamentService {
         HashMap<String, Integer> goalsAgainst = new HashMap<>();
         HashMap<String, Integer> gamesPlayed = new HashMap<>();
         for(Match match: matches){
-            /*if(match.getPlayed()){
+            if(match.getPlayed()){
 
-            }*/
+                int home = match.getHomeTeamScore();
+                int away = match.getAwayTeamScore();
+                String homeTeam = match.getHomeTeam().getName();
+                String awayTeam = match.getAwayTeam().getName();
 
-            int home = match.getHomeTeamScore();
-            int away = match.getAwayTeamScore();
-            String homeTeam = match.getHomeTeam().getName();
-            String awayTeam = match.getAwayTeam().getName();
+                int playedHome = gamesPlayed.get(homeTeam) == null ? 0 : gamesPlayed.get(homeTeam);
+                gamesPlayed.put(homeTeam, playedHome + 1);
 
-            int playedHome = gamesPlayed.get(homeTeam) == null ? 0 : gamesPlayed.get(homeTeam);
-            gamesPlayed.put(homeTeam, playedHome + 1);
+                int playedAway = gamesPlayed.get(awayTeam) == null ? 0 : gamesPlayed.get(awayTeam);
+                gamesPlayed.put(awayTeam, playedAway +1);
 
-            int playedAway = gamesPlayed.get(awayTeam) == null ? 0 : gamesPlayed.get(awayTeam);
-            gamesPlayed.put(awayTeam, playedAway +1);
+                int homeFor = goalsFor.get(homeTeam) == null ? 0 : goalsFor.get(homeTeam);
+                goalsFor.put(homeTeam, homeFor + home);
 
-            int homeFor = goalsFor.get(homeTeam) == null ? 0 : goalsFor.get(homeTeam);
-            goalsFor.put(homeTeam, homeFor + home);
+                int awayFor = goalsFor.get(awayTeam) == null ? 0 : goalsFor.get(awayTeam);
+                goalsFor.put(awayTeam, awayFor + away);
 
-            int awayFor = goalsFor.get(awayTeam) == null ? 0 : goalsFor.get(awayTeam);
-            goalsFor.put(awayTeam, awayFor + away);
+                int homeAgainst = goalsAgainst.get(homeTeam) == null ? 0 : goalsAgainst.get(homeTeam);
+                goalsAgainst.put(homeTeam, homeAgainst + away);
 
-            int homeAgainst = goalsAgainst.get(homeTeam) == null ? 0 : goalsAgainst.get(homeTeam);
-            goalsAgainst.put(homeTeam, homeAgainst + away);
+                int awayAgainst = goalsAgainst.get(awayTeam) == null ? 0 : goalsAgainst.get(awayTeam);
+                goalsAgainst.put(awayTeam, awayAgainst + home);
 
-            int awayAgainst = goalsAgainst.get(awayTeam) == null ? 0 : goalsAgainst.get(awayTeam);
-            goalsAgainst.put(awayTeam, awayAgainst + home);
-
-            if(home > away) {
-                int value = points.get(homeTeam) == null ? 0 : points.get(homeTeam);
-                points.put(homeTeam, value + 3);
-            }
-            else if(home < away) {
-                int value = points.get(awayTeam) == null ? 0 : points.get(awayTeam);
-                points.put(awayTeam, value + 3);
-            }
-            else {
-                int oldHome = points.get(homeTeam) == null ? 0 : points.get(homeTeam);
-                int oldAway = points.get(awayTeam) == null ? 0 : points.get(awayTeam);
-                points.put(homeTeam, oldHome + 1);
-                points.put(awayTeam, oldAway + 1);
+                if(home > away) {
+                    int value = points.get(homeTeam) == null ? 0 : points.get(homeTeam);
+                    points.put(homeTeam, value + 3);
+                }
+                else if(home < away) {
+                    int value = points.get(awayTeam) == null ? 0 : points.get(awayTeam);
+                    points.put(awayTeam, value + 3);
+                }
+                else {
+                    int oldHome = points.get(homeTeam) == null ? 0 : points.get(homeTeam);
+                    int oldAway = points.get(awayTeam) == null ? 0 : points.get(awayTeam);
+                    points.put(homeTeam, oldHome + 1);
+                    points.put(awayTeam, oldAway + 1);
+                }
             }
         }
 
