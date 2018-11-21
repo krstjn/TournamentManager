@@ -56,7 +56,7 @@
                     <h2>Create a Tournament</h2>
                 </div>
                 <div class="index col-6">
-                    <a class="index__link" href="<c:url value="/tournaments"/>"></a>
+                    <a class="index__link" href="<c:url value="/tournaments?id=0"/>"></a>
                     <i class="material-icons index__icon">list</i>
                     <h2>View Tournaments</h2>
                 </div>

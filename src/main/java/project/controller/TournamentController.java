@@ -11,6 +11,7 @@ import project.persistence.entities.Team;
 import project.persistence.entities.Tournament;
 import project.persistence.entities.User;
 import project.service.Interfaces.IAuthenticationService;
+import project.service.Interfaces.IMatchService;
 import project.service.Interfaces.ITournamentService;
 import project.service.Interfaces.IUserService;
 
@@ -21,33 +22,52 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Controller
-@RequestMapping(value = "/tournaments")
+@RequestMapping(value = "/tournaments" )
 public class TournamentController {
 
     // Instance Variables
     private ITournamentService tournamentService;
     private IAuthenticationService authenticationService;
     private IUserService userService;
+    private IMatchService matchService;
     private Logger logger = LogManager.getLogger(TournamentController.class);
 
-    public TournamentController(ITournamentService tournamentService, IAuthenticationService authenticationService, IUserService userService) {
+    public TournamentController(ITournamentService tournamentService, IAuthenticationService authenticationService,
+                                IUserService userService, IMatchService matchService) {
         this.tournamentService = tournamentService;
         this.authenticationService = authenticationService;
         this.userService = userService;
+        this.matchService = matchService;
     }
 
-    @GetMapping
-    public String tournamentsGet(Model model){
+    @GetMapping()
+    public String tournamentsGet(Model model,
+                                 @RequestParam(value = "id")Long id){
+
+
         if(authenticationService.isAuthenticated()){
             model.addAttribute("isAuthenticated", true);
             model.addAttribute("username", authenticationService.getUsername());
         }
+
+        Tournament tournament = tournamentService.findOne(id);
+
         model.addAttribute("tournaments", tournamentService.findAll());
-        return "ViewTournaments";
+        model.addAttribute("tournament", tournamentService.findOne(id));
+        model.addAttribute("scoreboard", tournamentService.generateScoreboard(tournament));
+
+        // model.addAttribute("match", matchService.findByTournamentId(id));
+        //model.addAttribute("generate", matchService.generateMatches(tournamentService.findOne(id)) );
+
+        if (id == 0)
+            return "ViewTournaments";
+        else
+            return "TournamentView";
+
     }
 
     @RequestMapping(value ="/create", method = RequestMethod.GET)
-    public String createTournamentGet(Model model) throws ParseException {
+    public String createTournamentGet(Model model) {
         Tournament tournament = new Tournament();
 
         model.addAttribute("tournament", tournament);
@@ -119,10 +139,17 @@ public class TournamentController {
     @ResponseStatus(value = HttpStatus.NOT_IMPLEMENTED)
     public String tournamentEditGet(Model model,
                                     @RequestParam(value = "id")Long id){
-        // TODO: Implement this
-        model.addAttribute("errorMsg", "501 - Not implemented yet");
 
-        return "errors/error";
+        if(authenticationService.isAuthenticated()){
+            model.addAttribute("isAuthenticated", true);
+            model.addAttribute("username", authenticationService.getUsername());
+        }
+        model.addAttribute("tournaments", tournamentService.findAll());
+        model.addAttribute("tournament", tournamentService.findOne(id));
+        Tournament tournament = tournamentService.findOne(id);
+        model.addAttribute("scoreboard", tournamentService.generateScoreboard(tournament));
+
+        return "Edit";
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)

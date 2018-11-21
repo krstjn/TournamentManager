@@ -15,6 +15,7 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Raleway:400,700|Roboto:400,400i,700" rel="stylesheet">        <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/navigation.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/TournamentView.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/icons.css"/>"/>
@@ -32,27 +33,31 @@
                     <a href="/login" class="navbar--item"><i class="material-icons md-light">lock</i>Login</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="/profile" class="navbar--item"><i class="material-icons md-light">account_circle</i>${username}</a>
+                    <a href="/user" class="navbar--item"><i class="material-icons md-light">account_circle</i>${username}</a>
                     <a href="/logout" class="navbar--item">Logout</a>
                 </c:otherwise>
             </c:choose>
             </div>
         </div>
     </nav>
+
     <main>
         <body>
             <div class = titleSection>
-
+                <c:forEach var="tournament" items="${tournaments}">
+                    <c:if test = "${tournament.id == param.id}" >
                         <h1> ${tournament.name} </h1>
                         <h4> Tegund Móts ${tournament.type} -    Max fjöldi liða ${tournament.maxTeams}
-                                -    id ${tournament.id} -   Fjöldi liða í móti  ${tournament.teams.size()} </h4>
+                                -    id ${tournament.id} -   Fjöldi liða í móti   ${tournament.teams.size()} </h4>
 
                         <c:if test="${isAuthenticated}">
-                            <a href="tournaments/edit?id=${tournament.id}">
-                                <button class="edit" style="float: right;"><i class="material-icons">edit</i></button>
+                            <a href="/tournaments?id=${tournament.id}">
+                                <button class="edit" style="float: right;"><i class="material-icons">done</i></button>
                             </a>
                         </c:if>
 
+                    </c:if>
+                </c:forEach>
             </div>
 
             <div class = "tournamentTable">
@@ -83,9 +88,8 @@
             </div>
 
 
-
             <div class = "scoreTable">
-                <h3> Games </h3>
+                <h3> Leikir </h3>
                 <table>
                     <tr>
                         <th>Home</th>
@@ -94,7 +98,6 @@
                         <th>Location</th>
                         <th>Date</th>
                     </tr>
--
 
                     <c:forEach var="match" items="${matches}">
                         <div>
@@ -110,6 +113,8 @@
 
                 </table>
             </div>
+
+
 
         </body>
     </main>

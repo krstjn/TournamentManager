@@ -46,6 +46,7 @@ public class MatchService implements IMatchService {
         return repository.findByTournamentId(tournamentId);
     }
 
+
     public List<Match> generateMatches(Tournament tournament){
         List teams = new ArrayList(tournament.getTeams());
         // If the number of teams is an odd number we add one "ghost" team to the tournament.
@@ -97,4 +98,5 @@ public class MatchService implements IMatchService {
 
         return matches;
     }
+
 }

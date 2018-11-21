@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import project.persistence.entities.Role;
 import project.persistence.entities.Tournament;
 import project.persistence.entities.User;
-import project.service.Interfaces.IAuthenticationService;
-import project.service.Interfaces.IRoleService;
-import project.service.Interfaces.IUserService;
+import project.service.Interfaces.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -29,6 +27,7 @@ public class UserController {
 
     @Autowired
     public UserController(IUserService userService, IRoleService roleService, IAuthenticationService authenticationService){
+
         this.roleService = roleService;
         this.userService = userService;
         this.authenticationService = authenticationService;
@@ -108,4 +107,5 @@ public class UserController {
 
         return "Profile";
     }
+
 }

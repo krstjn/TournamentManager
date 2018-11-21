@@ -10,7 +10,7 @@ import java.util.Date;
 @Table(name = "matches")
 public class Match {
     // TODO: bæta við breytu sem segir hvort búið sé að spila leik
-    private Long id;
+    private long id;
     private int homeTeamScore;
     private int awayTeamScore;
     @DateTimeFormat(pattern = "YYYY/mm/dd")

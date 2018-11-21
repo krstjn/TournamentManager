@@ -32,9 +32,9 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String home(Model model){
+    public String home(Model model) {
         // TODO: Create a landing page
-        if(authenticationService.isAuthenticated()){
+        if (authenticationService.isAuthenticated()) {
             model.addAttribute("isAuthenticated", true);
             model.addAttribute("username", authenticationService.getUsername());
         }
@@ -44,28 +44,8 @@ public class HomeController {
 
     @ExceptionHandler(NoHandlerFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public String error(NoHandlerFoundException ex){
+    public String error(NoHandlerFoundException ex) {
         return "Error";
     }
 
-    // To call this method, enter "localhost:8080/tournament" into a browser
-    @RequestMapping(value = "/tournament", method = RequestMethod.GET)
-    public String tournament(Model model){
-        // The string "TournamentView" that is returned here is the name of the view
-        // (the Index.jsp file) that is in the path /main/webapp/WEB-INF/jsp/
-        // If you change "TournamentView" to something else, be sure you have a .jsp
-        // file that has the same name
-        model.addAttribute("tournament",new Tournament());
-        model.addAttribute("tournaments", tournamentService.findAll());
-        //model.addAttribute("teams", teamService.findAll());
-
-
-
-        // Here we get all the Tournaments (in a reverse order) and add them to the model
-        // model.addAttribute("tournaments",tournamentService.findAllReverseOrder());
-        // Sækja lista yfir öll mót
-        // model.addAttribute("tournaments", tournamentService.getTournaments());
-
-        return "TournamentView";
-    }
 }

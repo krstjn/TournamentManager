@@ -58,6 +58,7 @@ table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
+    table-layout: fixed;
 }
 
 td, th {
@@ -83,3 +84,17 @@ tr:nth-child(even) {
 .hidden {
     display: none;
 }
+
+input {
+    width : 30px;
+}
+
+button {
+    padding : 0.5em;
+
+}
+
+button:hover {
+
+}
+
