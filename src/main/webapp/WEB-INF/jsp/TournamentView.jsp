@@ -30,7 +30,8 @@
 
                         <h1> ${tournament.name} </h1>
                         <h4> Tegund Móts ${tournament.type} -    Max fjöldi liða ${tournament.maxTeams}
-                                -    id ${tournament.id} -   Fjöldi liða í móti  ${tournament.teams.size()} </h4>
+                                -    id ${tournament.id} -   Fjöldi liða í móti  ${tournament.teams.size()}
+                                - Fjöldi umferða ${tournament.nrOfRounds}</h4>
 
                         <c:if test="${isAuthenticated}">
                             <a href="tournaments/edit?id=${tournament.id}">

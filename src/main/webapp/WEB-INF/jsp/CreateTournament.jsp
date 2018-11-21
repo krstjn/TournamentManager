@@ -77,6 +77,15 @@
                         </div>
                     </div>
                     <div class="col-6">
+                        <div class="input-container">
+                            <label class="input-label" for="nrOfRounds">Number of rounds to be played</label>
+                            <sf:select class="input" path="nrOfRounds">
+                                <sf:option value="1">1</sf:option>
+                                <sf:option value="2">2</sf:option>
+                                <sf:option value="3">3</sf:option>
+                                <sf:option value="4">4</sf:option>
+                            </sf:select>
+                        </div>
                         <div class="">
                             <label for="isPublic">Public: </label>
                             <sf:checkbox path="isPublic" value="true" />

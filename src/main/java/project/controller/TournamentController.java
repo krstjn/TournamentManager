@@ -100,9 +100,6 @@ public class TournamentController {
             tournament.setTeams(teams);
         }
 
-        // Set how many rounds should be played
-        tournament.setNrOfRounds(2);
-
         // Check if matches should be created
         if (signUpExp == null || signUpExp.isAfter(LocalDateTime.now())){
             tournament.setSignUpExpiration(signUpExp);
