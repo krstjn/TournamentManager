@@ -18,7 +18,7 @@ public class Tournament {
     private int maxTeams = 10;
     @Enumerated(EnumType.STRING)
     private TournamentType type = TournamentType.League;
-    private int nrOfRounds;
+    private int nrOfRounds = 2;
     private Set<Team> teams = new HashSet<>();
     private List<Match> matches = new ArrayList<>();
     private User user;

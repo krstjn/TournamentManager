@@ -31,7 +31,6 @@ public class TournamentController {
     private IMatchService matchService;
     private IAuthenticationService authenticationService;
     private IUserService userService;
-    private IMatchService matchService;
     private Logger logger = LogManager.getLogger(TournamentController.class);
 
     public TournamentController(ITournamentService tournamentService, IAuthenticationService authenticationService, IUserService userService, IMatchService matchService) {
@@ -99,9 +98,6 @@ public class TournamentController {
         if(teams.size() > 0) {
             tournament.setTeams(teams);
         }
-
-        // Set how many rounds should be played
-        tournament.setNrOfRounds(2);
 
         // Check if matches should be created
         if (signUpExp == null || signUpExp.isAfter(LocalDateTime.now())){
