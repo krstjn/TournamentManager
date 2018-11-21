@@ -64,7 +64,7 @@ public class TournamentService implements ITournamentService {
     public List generateScoreboard(Tournament tournament) {
         // TODO: Implement this
 
-        Set<Match> matches = tournament.getMatches();
+        List<Match> matches = tournament.getMatches();
         HashMap<String, Integer> points = new HashMap<>();
         HashMap<String, Integer> goalsFor = new HashMap<>();
         HashMap<String, Integer> goalsAgainst = new HashMap<>();

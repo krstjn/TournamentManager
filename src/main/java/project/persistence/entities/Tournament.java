@@ -5,9 +5,7 @@ import project.utils.TournamentType;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "tournaments")
@@ -22,7 +20,7 @@ public class Tournament {
     private TournamentType type = TournamentType.League;
     private int nrOfRounds;
     private Set<Team> teams = new HashSet<>();
-    private Set<Match> matches = new HashSet<>();
+    private List<Match> matches = new ArrayList<>();
     private User user;
     private boolean isPublic = true;
 
@@ -99,8 +97,8 @@ public class Tournament {
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    public Set<Match> getMatches() { return matches; }
-    public void setMatches(Set<Match> matches) { this.matches = matches; }
+    public List<Match> getMatches() { return matches; }
+    public void setMatches(List<Match> matches) { this.matches = matches; }
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "UserId")
