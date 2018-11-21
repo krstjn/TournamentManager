@@ -31,6 +31,7 @@ public class TournamentController {
     private IMatchService matchService;
     private IAuthenticationService authenticationService;
     private IUserService userService;
+    private IMatchService matchService;
     private Logger logger = LogManager.getLogger(TournamentController.class);
 
     public TournamentController(ITournamentService tournamentService, IAuthenticationService authenticationService, IUserService userService, IMatchService matchService) {
@@ -41,17 +42,23 @@ public class TournamentController {
     }
 
     @GetMapping
-    public String tournamentsGet(Model model){
+    public String tournamentsGet(Model model,
+                                 @RequestParam(value="search", required = false)String search){
         if(authenticationService.isAuthenticated()){
             model.addAttribute("isAuthenticated", true);
             model.addAttribute("username", authenticationService.getUsername());
         }
-        model.addAttribute("tournaments", tournamentService.findAll());
+
+        if(search != null) {
+            model.addAttribute("tournaments", tournamentService.findByNameSearch(search.toUpperCase()));
+        } else {
+            model.addAttribute("tournaments", tournamentService.findAll());
+        }
         return "ViewTournaments";
     }
 
     @RequestMapping(value ="/create", method = RequestMethod.GET)
-    public String createTournamentGet(Model model) throws ParseException {
+    public String createTournamentGet(Model model) {
         Tournament tournament = new Tournament();
 
         model.addAttribute("tournament", tournament);
