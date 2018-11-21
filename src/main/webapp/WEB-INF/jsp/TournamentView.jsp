@@ -46,9 +46,9 @@
                 <table>
                     <tr>
                         <th>Team</th>
-                        <th>Games</th>
-                        <th>Won</th>
-                        <th>Lost</th>
+                        <th>Games Played</th>
+                        <th>Goals</th>
+                        <th>Goals Against</th>
                         <th>Points</th>
                     </tr>
 
