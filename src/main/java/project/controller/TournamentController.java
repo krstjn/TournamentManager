@@ -31,7 +31,6 @@ public class TournamentController {
     private IMatchService matchService;
     private IAuthenticationService authenticationService;
     private IUserService userService;
-    private IMatchService matchService;
     private Logger logger = LogManager.getLogger(TournamentController.class);
 
     public TournamentController(ITournamentService tournamentService, IAuthenticationService authenticationService, IUserService userService, IMatchService matchService) {

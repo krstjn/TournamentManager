@@ -3,6 +3,7 @@ package project.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.persistence.entities.Match;
+import project.persistence.entities.Team;
 import project.persistence.entities.Tournament;
 import project.persistence.repositories.ITournamentRepository;
 import project.service.Interfaces.ITournamentService;
@@ -116,21 +117,23 @@ public class TournamentService implements ITournamentService {
         }
 
 
-        return generateScoreboard(goalsFor,goalsAgainst,points, gamesPlayed);
+        return generateScoreboard(tournament.getTeams(), goalsFor,goalsAgainst,points, gamesPlayed);
     }
 
-    private List generateScoreboard(HashMap<String,Integer> goalsFor,
+    private List generateScoreboard(Set<Team> teams,
+                                    HashMap<String,Integer> goalsFor,
                                     HashMap<String,Integer> goalsAgainst,
                                     HashMap<String,Integer> points,
                                     HashMap<String,Integer> gamesPlayed){
         List<ScoreboardItem> scoreboard= new ArrayList<>();
-        for(String team : points.keySet()){
+        for(Team team : teams){
+            String name = team.getName();
             scoreboard.add(new ScoreboardItem(
-                    team,
-                    gamesPlayed.get(team),
-                    goalsFor.get(team),
-                    goalsAgainst.get(team),
-                    points.get(team))
+                    name,
+                    gamesPlayed.get(name) == null ? 0 : gamesPlayed.get(name),
+                    goalsFor.get(name) == null ? 0 : goalsFor.get(name),
+                    goalsAgainst.get(name) == null ? 0 : goalsAgainst.get(name),
+                    points.get(name) == null ? 0 : points.get(name))
             );
         }
         Collections.sort(scoreboard, Collections.reverseOrder());
