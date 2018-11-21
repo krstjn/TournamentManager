@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "matches")
-public class Match {
+public class Match implements Comparable<Match> {
     // TODO: bæta við breytu sem segir hvort búið sé að spila leik
     private long id;
     private int homeTeamScore;
@@ -98,4 +98,9 @@ public class Match {
     public boolean getPlayed() { return played; }
 
     public void setPlayed(boolean played) { this.played = played; }
+
+    @Override
+    public int compareTo(Match o) {
+        return this.round-o.round;
+    }
 }

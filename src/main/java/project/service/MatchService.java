@@ -96,6 +96,7 @@ public class MatchService implements IMatchService {
             round++;
 
         }
+        Collections.sort(matches);
 
         logger.info(matches.size() + " matches created.");
         return matches;
