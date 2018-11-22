@@ -91,44 +91,10 @@ public class TournamentController {
         // TODO: Improve User input, figure out if more fields are needed
         // TODO: Improve view based on input fields
         logger.info("Creating tournament: " + tournament.getName());
-        Set<Team> teams = new HashSet<>();
-        if(myTeams != null)
-            for (String s: myTeams)
-                teams.add(new Team(s, tournament));
+        Tournament t = tournamentService.create(tournament, myTeams);
+        logger.info("Tournament created: " + t.getName());
 
-        if(teams.size() > 0) {
-            tournament.setTeams(teams);
-        }
-
-        // Check if matches should be created
-        if (signUpExp == null || signUpExp.isAfter(LocalDateTime.now())){
-            tournament.setSignUpExpiration(signUpExp);
-            logger.info("Creating matches for: " + tournament.getName());
-            tournament.setMatches(matchService.generateMatches(tournament));
-            logger.info("Matches created for: " + tournament.getName());
-        }
-
-        // Setup owner of tournament
-        User user = userService.findByUsername(authenticationService.getUsername());
-        tournament.setUser(user);
-
-        tournament.setCreated(LocalDateTime.now());
-        //try{
-            Tournament t = tournamentService.save(tournament);
-        //} catch (Exception ex){
-            //logger.error(ex.getMessage());
-        //}
-
-        model.addAttribute("tournament",new Tournament());
-
-        // Setup authentication
-        if(authenticationService.isAuthenticated()){
-            model.addAttribute("isAuthenticated", true);
-            model.addAttribute("username", authenticationService.getUsername());
-        }
-        logger.info("Tournament created: " + tournament.getName());
-
-        // TODO: Redirecta á tournament síðuna
+        // Redirecta á tournament síðuna
         return "redirect:/tournaments?id=" + t.getId();
     }
 
