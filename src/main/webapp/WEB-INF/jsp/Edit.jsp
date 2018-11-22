@@ -52,7 +52,7 @@
 
                         <c:if test="${isAuthenticated}">
                             <a href="/tournaments?id=${tournament.id}">
-                                <button class="edit" style="float: right;"><i class="material-icons">done</i></button>
+                                <button class="edit" style="float: right;"><i class="material-icons md-dark">done</i></button>
 
                             </a>
 
@@ -73,7 +73,6 @@
                         <th>Points</th>
                     </tr>
 
-
                     <c:forEach var="team" items="${scoreboard}">
                         <div>
                             <tr>
@@ -88,7 +87,6 @@
 
                 </table>
             </div>
-
 
             <div class = "scoreTable">
                 <h3> Games </h3>
@@ -106,7 +104,7 @@
                             <tr>
                                 <td> ${match.homeTeam.name} </td>
                                 <td> ${match.awayTeam.name} </td>
-                                <td> <input type = "number">  </input> - <input type = "number">  </input></td>
+                                <td> <input type = "number" min = "0">  </input> - <input type = "number" min="0">  </input></td>
                                 <td> ${match.location} </td>
                                 <td> ${match.matchDate} </td>
                             </tr>

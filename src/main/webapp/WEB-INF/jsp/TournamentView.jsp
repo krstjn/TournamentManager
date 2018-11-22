@@ -35,7 +35,7 @@
 
                         <c:if test="${isAuthenticated}">
                             <a href="tournaments/edit?id=${tournament.id}">
-                                <button class="edit" style="float: right;"><i class="material-icons">edit</i></button>
+                                <button class="edit" style="float: right;"><i class="material-icons md-dark">edit</i></button>
                             </a>
                         </c:if>
 
