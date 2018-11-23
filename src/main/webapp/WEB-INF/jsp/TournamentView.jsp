@@ -29,7 +29,7 @@
             <div class = titleSection>
 
                         <h1> ${tournament.name} </h1>
-                        <h4>   Max fjöldi liða ${tournament.maxTeams}
+                        <h4> Max fjöldi liða ${tournament.maxTeams}
                                 -    id ${tournament.id} -   Fjöldi liða í móti  ${tournament.teams.size()}
                                 - Fjöldi umferða ${tournament.nrOfRounds}</h4>
 
