@@ -35,7 +35,7 @@
 
                         <c:if test="${isAuthenticated}">
                             <a href="tournaments/edit?id=${tournament.id}">
-                                <button class="edit" style="float: right;"><i class="material-icons">edit</i></button>
+                                <button class="edit" style="float: right;"><i class="material-icons md-dark">edit</i></button>
                             </a>
                         </c:if>
 
@@ -46,9 +46,9 @@
                 <table>
                     <tr>
                         <th>Team</th>
-                        <th>Games</th>
-                        <th>Won</th>
-                        <th>Lost</th>
+                        <th>Games Played</th>
+                        <th>Goals</th>
+                        <th>Goals Against</th>
                         <th>Points</th>
                     </tr>
 
