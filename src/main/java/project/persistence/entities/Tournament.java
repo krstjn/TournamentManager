@@ -1,8 +1,5 @@
 package project.persistence.entities;
 
-import org.springframework.format.annotation.DateTimeFormat;
-import project.utils.TournamentType;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -16,8 +13,6 @@ public class Tournament {
     private LocalDateTime created;
     private LocalDateTime signUpExpiration;
     private int maxTeams = 10;
-    @Enumerated(EnumType.STRING)
-    private TournamentType type = TournamentType.League;
     private int nrOfRounds = 2;
     private Set<Team> teams = new HashSet<>();
     private List<Match> matches = new ArrayList<>();
@@ -28,11 +23,10 @@ public class Tournament {
 
     public Tournament(User user) { this.user = user; }
 
-    public Tournament(String name, LocalDateTime signUpExpiration, int maxTeams, TournamentType type, int nrOfRounds, boolean isPublic) {
+    public Tournament(String name, LocalDateTime signUpExpiration, int maxTeams, int nrOfRounds, boolean isPublic) {
         this.name = name;
         this.signUpExpiration = signUpExpiration;
         this.maxTeams = maxTeams;
-        this.type = type;
         this.nrOfRounds = nrOfRounds;
         this.isPublic = isPublic;
     }
@@ -65,13 +59,6 @@ public class Tournament {
 
     public boolean getIsPublic() { return isPublic; }
     public void setIsPublic(boolean isPublic) { this.isPublic = isPublic; }
-
-    public TournamentType getType() {
-        return type;
-    }
-    public void setType(TournamentType type) {
-        this.type = type;
-    }
 
     public int getNrOfRounds() { return nrOfRounds; }
     public void setNrOfRounds(int nrOfRounds) { this.nrOfRounds = nrOfRounds; }

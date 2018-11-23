@@ -31,24 +31,17 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="input-container">
-                            <label class="input-label" for="name">Name</label>
+                            <label class="input-label" for="name">Tournament name</label>
                             <sf:input class="input" path="name" type="text"/>
                         </div>
                         <div class="input-container">
-                            <label class="input-label" for="maxTeams">Max team limit</label>
+                            <label class="input-label" for="maxTeams">Maximum team limit</label>
                             <sf:input class="input" path="maxTeams" type="number"/>
                         </div>
-                        <div class="input-container">
-                            <label class="input-label" for="signUpDate">SignUp expiration: <input type="checkbox" name="allowSignUp" id="allowSignUp" value="false">
-                            </label>
-                            <div id="signUpDate" class="input-group hidden">
-                                <input class="input" name="signUpExp" id="signUpExp-date" type="datetime-local" min="${minDate}"/>
-                            </div>
-                        </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="input-container">
-                            <label class="input-label" for="addTeam">Lið/þáttakendur:</label>
+                            <label class="input-label" for="addTeam">Teams:</label>
                             <div id="teams__container" name="teams">
                             </div>
                             <div class="input-group flex-row-reverse">
@@ -60,32 +53,27 @@
                 </div>
                 <div class="row">
                     <h3>Tournament setup</h3>
-                    <div class="col-6">
-                        <div class="">
-                            <div>
-                                <sf:radiobutton path="type" id="GroupStage" value="GroupStage"/>
-                                <label for="GroupStage">Group stage</label>
-                            </div>
-                            <div>
-                                <sf:radiobutton path="type" id="Knockout" value="Knockout"/>
-                                <label for="Knockout">Knockout</label>
-                            </div>
-                            <div>
-                                <sf:radiobutton path="type" id="League" value="League"/>
-                                <label for="League">League</label>
+                    <div class="col-4">
+                        <div class="input-container">
+                            <label class="input-label" for="signUpDate">Allow sign up: <input type="checkbox" name="allowSignUp" id="allowSignUp" value="false"></label>
+                            <div id="signUpDate" class="input-group hidden">
+                                <label for="signUpExp-date">Sign up expiration: </label>
+                                <input class="input" name="signUpExp" id="signUpExp-date" type="datetime-local" min="${minDate}"/>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="input-container">
-                            <label class="input-label" for="nrOfRounds">Number of rounds to be played</label>
-                            <sf:select class="input" path="nrOfRounds">
+                    <div class="col-4">
+                        <div class="input-container flex-row">
+                            <label class="input-label" for="nrOfRounds">Number of rounds:</label>
+                            <sf:select class="input col-4" path="nrOfRounds">
                                 <sf:option value="1">1</sf:option>
                                 <sf:option value="2">2</sf:option>
                                 <sf:option value="3">3</sf:option>
                                 <sf:option value="4">4</sf:option>
                             </sf:select>
                         </div>
+                    </div>
+                    <div class="col-4">
                         <div class="">
                             <label for="isPublic">Public: </label>
                             <sf:checkbox path="isPublic" value="true" />
@@ -98,8 +86,6 @@
             </sf:form>
             <button id="verifyTournament" class="btn btn-primary">Búa til mót</button>
         </div>
-
-        <a href="/">Forsíða</a>
     </main>
     </div>
     </body>
@@ -123,6 +109,8 @@
                 var name = $('#name').val();
                 if(name !== undefined && name !== ''){
                     $('#submitTournament').click();
+                } else {
+                    $('#name').addClass('input-danger');
                 }
             });
 
@@ -138,11 +126,12 @@
                 }
             });
 
-            $('#signUpExp-date').change(function (){
-                console.log($('#signUpExp-date').val());
+            $('#name').change(function () {
+                $('#name').removeClass('input-danger');
+
             });
 
-            $(window).keydown(function(e){
+                $(window).keydown(function(e){
                 if(e.keyCode === 13) {
                     e.preventDefault();
                     console.log(e)

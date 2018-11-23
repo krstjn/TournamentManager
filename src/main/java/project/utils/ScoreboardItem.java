@@ -1,8 +1,8 @@
 package project.utils;
 
-/************************
- * Höfundur: Kristján P.*
- ************************/
+/**
+ * Helper class for generating a scoreboard
+ */
 public class ScoreboardItem implements Comparable<ScoreboardItem> {
 
     private String team;
