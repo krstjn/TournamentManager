@@ -19,7 +19,9 @@ import project.service.Interfaces.IUserService;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -99,7 +101,6 @@ public class TournamentController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    @ResponseStatus(value = HttpStatus.NOT_IMPLEMENTED)
     public String tournamentEditGet(Model model,
                                     @RequestParam(value = "id")Long id){
 
@@ -107,11 +108,15 @@ public class TournamentController {
             model.addAttribute("isAuthenticated", true);
             model.addAttribute("username", authenticationService.getUsername());
         }
+
         model.addAttribute("tournaments", tournamentService.findAll());
         model.addAttribute("tournament", tournamentService.findOne(id));
         Tournament tournament = tournamentService.findOne(id);
+        List<Match> Matches = matchService.generateMatches(tournament);
         model.addAttribute("scoreboard", tournamentService.generateScoreboard(tournament));
-        model.addAttribute("matches", matchService.generateMatches(tournament));
+        model.addAttribute("matches", Matches);
+
+
 
 
         return "Edit";

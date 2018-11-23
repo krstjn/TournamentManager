@@ -22,40 +22,21 @@
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/input.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/grid.css"/>"/>
     </head>
-    <nav class="navbar">
-        <div class="navbar--container">
-            <div class="navbar--heading">
-            <a href="/"><i class="material-icons md-light md-36">home</i></a>
-            </div>
-        <div class="navbar--nav">
-            <c:choose>
-                <c:when test="${!isAuthenticated}">
-                    <a href="/login" class="navbar--item"><i class="material-icons md-light">lock</i>Login</a>
-                </c:when>
-                <c:otherwise>
-                    <a href="/user" class="navbar--item"><i class="material-icons md-light">account_circle</i>${username}</a>
-                    <a href="/logout" class="navbar--item">Logout</a>
-                </c:otherwise>
-            </c:choose>
-            </div>
-        </div>
-    </nav>
-
-    <main>
-        <body>
+    <body>
+    <div class="content">
+        <%@include file="Navigation.jsp"%>
+        <main>
             <div class = titleSection>
                 <c:forEach var="tournament" items="${tournaments}">
                     <c:if test = "${tournament.id == param.id}" >
                         <h1> ${tournament.name} </h1>
-                        <h4> Tegund Móts ${tournament.type} -    Max fjöldi liða ${tournament.maxTeams}
+                        <h4>  Max fjöldi liða ${tournament.maxTeams}
                                 -    id ${tournament.id} -   Fjöldi liða í móti   ${tournament.teams.size()} </h4>
 
                         <c:if test="${isAuthenticated}">
                             <a href="/tournaments?id=${tournament.id}">
                                 <button class="edit" style="float: right;"><i class="material-icons md-dark">done</i></button>
-
                             </a>
-
                         </c:if>
 
                     </c:if>

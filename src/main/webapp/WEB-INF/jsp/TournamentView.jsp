@@ -29,7 +29,7 @@
             <div class = titleSection>
 
                         <h1> ${tournament.name} </h1>
-                        <h4> Tegund Móts ${tournament.type} -    Max fjöldi liða ${tournament.maxTeams}
+                        <h4>   Max fjöldi liða ${tournament.maxTeams}
                                 -    id ${tournament.id} -   Fjöldi liða í móti  ${tournament.teams.size()}
                                 - Fjöldi umferða ${tournament.nrOfRounds}</h4>
 
@@ -80,7 +80,6 @@
                         <th>Location</th>
                         <th>Date</th>
                     </tr>
--
 
                     <c:forEach var="match" items="${matches}">
                         <div>
