@@ -5,25 +5,30 @@ import org.springframework.stereotype.Service;
 import project.persistence.entities.Match;
 import project.persistence.entities.Team;
 import project.persistence.entities.Tournament;
+import project.persistence.entities.User;
 import project.persistence.repositories.ITournamentRepository;
+import project.service.Interfaces.IAuthenticationService;
 import project.service.Interfaces.ITournamentService;
+import project.service.Interfaces.IUserService;
 import project.utils.ScoreboardItem;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.Collections;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class TournamentService implements ITournamentService {
     // Instance Variables
     private ITournamentRepository repository;
 
+    private IUserService userService;
+    private IAuthenticationService authenticationService;
+
     // Dependency Injection
     @Autowired
-    public TournamentService(ITournamentRepository repository) {
+    public TournamentService(ITournamentRepository repository, IUserService userService, IAuthenticationService authenticationService) {
         this.repository = repository;
+        this.userService = userService;
+        this.authenticationService = authenticationService;
     }
 
     @Override
@@ -42,16 +47,6 @@ public class TournamentService implements ITournamentService {
     }
 
     @Override
-    public List<Tournament> findAllByOrderByIdDesc() {
-        List<Tournament> tournaments = repository.findAll();
-
-        // Reverse the list
-        Collections.reverse(tournaments);
-
-        return tournaments;
-    }
-
-    @Override
     public List<Tournament> findByNameSearch(String search) { return repository.findByNameSearch(search); }
 
     @Override
@@ -65,7 +60,24 @@ public class TournamentService implements ITournamentService {
     }
 
     @Override
-    public List generateScoreboard(Tournament tournament) {
+    public Tournament create(Tournament tournament, String[] myTeams) {
+
+        Set<Team> teams = new HashSet<>();
+        if(myTeams != null)
+            for (String s: myTeams)
+                teams.add(new Team(s, tournament));
+
+        if(teams.size() > 0) {
+            tournament.setTeams(teams);
+        }
+        tournament.setUser(userService.findByUsername(authenticationService.getUsername()));
+        tournament.setCreated(LocalDateTime.now());
+
+        return this.save(tournament);
+    }
+
+    @Override
+    public List<ScoreboardItem> generateScoreboard(Tournament tournament) {
         // TODO: Implement this
 
         List<Match> matches = tournament.getMatches();
@@ -120,7 +132,9 @@ public class TournamentService implements ITournamentService {
         return generateScoreboard(tournament.getTeams(), goalsFor,goalsAgainst,points, gamesPlayed);
     }
 
-    private List generateScoreboard(Set<Team> teams,
+
+
+    private List<ScoreboardItem> generateScoreboard(Set<Team> teams,
                                     HashMap<String,Integer> goalsFor,
                                     HashMap<String,Integer> goalsAgainst,
                                     HashMap<String,Integer> points,
