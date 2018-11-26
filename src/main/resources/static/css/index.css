@@ -39,7 +39,7 @@ h3 {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    height: 350px;
+    height: 40vh;
 }
 
 .index .col-12 {
@@ -62,7 +62,7 @@ h3 {
 
 .index__icon {
     margin: 0 auto;
-    font-size: 13em;
+    font-size: 20vh;
 }
 
 .index h2 {
@@ -88,7 +88,7 @@ p {
 main {
     padding: 15px;
     max-width: 1200px;
-    margin: 74px auto;
+    margin: 50px auto;
     background-color: #FFFFFF;
     border: 1px solid #dde2e2;
     border-radius: 3px;

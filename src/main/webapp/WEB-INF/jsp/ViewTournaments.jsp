@@ -34,15 +34,26 @@
             <c:when test="${not empty tournaments}">
                 <%--Create a table for the Tournaments--%>
                 <div class="tournaments">
-
-                    <c:forEach var="tournament" items="${tournaments}">
-                        <c:if test="${tournament.isPublic}">
-                            <div>
-                                <p><a href="/tournaments?id=${tournament.id}"> ${tournament.name}</a></p>
-                                <p>Fjöldi skráða liða: ${tournament.teams.size()}</p>
-                            </div>
-                        </c:if>
-                    </c:forEach>
+                    <div class="col-12">
+                        <c:forEach var="tournament" items="${tournaments}">
+                            <c:if test="${tournament.isPublic}">
+                                <div class="row-12">
+                                    <a class="tournaments__link" href="/tournaments?id=${tournament.id}"></a>
+                                    <div class="tournaments__info">
+                                        <h2>${tournament.name}</h2>
+                                        <c:choose>
+                                          <c:when test="${tournament.teams.size() < tournament.maxTeams}">
+                                                <div class="open">Open for registration</div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="closed">Closed for registration</div>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                </div>
+                            </c:if>
+                        </c:forEach>
+                    </div>
                 </div>
             </c:when>
 
