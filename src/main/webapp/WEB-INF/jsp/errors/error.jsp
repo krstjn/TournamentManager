@@ -13,6 +13,7 @@
     <script src="<c:url value="/js/jquery-3.3.1.min.js" />"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/navigation.css"/>"/>
+    <link rel="stylesheet" type="text/css" href="<c:url value="/css/footer.css"/>"/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/index.css"/>"/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/icons.css"/>"/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
