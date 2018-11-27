@@ -53,7 +53,7 @@
                 </div>
                 <div class="row">
                     <h3>Tournament setup</h3>
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="input-container">
                             <label class="input-label" for="signUpDate">Allow sign up: <input type="checkbox" name="allowSignUp" id="allowSignUp" value="false"></label>
                             <div id="signUpDate" class="input-group hidden">
@@ -62,7 +62,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="input-container flex-row">
                             <label class="input-label" for="nrOfRounds">Number of rounds:</label>
                             <sf:select class="input col-4" path="nrOfRounds">
@@ -73,10 +73,20 @@
                             </sf:select>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="">
                             <label for="isPublic">Public: </label>
                             <sf:checkbox path="isPublic" value="true" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-container">
+                            <label class="input-label" for="sport">Sport</label>
+                            <sf:select class="input" path="sport">
+                                <sf:option value="Football">Football</sf:option>
+                                <sf:option value="Handball">Handball</sf:option>
+                                <sf:option value="Basketball">Basketball</sf:option>
+                            </sf:select>
                         </div>
                     </div>
                 </div>
