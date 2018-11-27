@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/navigation.css"/>"/>
+    <link rel="stylesheet" type="text/css" href="<c:url value="/css/footer.css"/>"/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/index.css"/>"/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/icons.css"/>"/>
 </head>
@@ -22,7 +23,7 @@
     <%@include file="../Navigation.jsp"%>
     <main>
         <div>
-            <h2>Villa 404 - Not found</h2>
+            <h2>Error 404 - Page not found</h2>
         </div>
     </main>
 </div>

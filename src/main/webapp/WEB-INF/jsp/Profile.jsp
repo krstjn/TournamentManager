@@ -28,19 +28,42 @@
     <%@include file="Navigation.jsp"%>
 
 <main>
-    <div class="container">
+        <div class="profile__info">
+            <div class="col-12">
+                <div class="row-6">
+                    <i class="material-icons md-light">account_circle</i>
+                </div>
+                <div class="row-6">
+                    <h1>${username}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <h1>My tournaments</h1>
+        </div>
         <c:choose>
-            <%--If the model has an attribute with the name `tournaments`--%>
             <c:when test="${not empty tournaments}">
-                <%--Create a table for the Postit Notes--%>
                 <div class="tournaments">
-
-                    <c:forEach var="tournament" items="${tournaments}">
-                        <div class="row">
-                            <p>${tournament.name}</p>
-                            <p>Fjöldi skráða liða: ${tournament.teams.size()}</p>
-                        </div>
-                    </c:forEach>
+                    <div class="col-12">
+                        <c:forEach var="tournament" items="${tournaments}">
+                            <c:if test="${tournament.isPublic}">
+                                <div class="row-12">
+                                    <a class="tournaments__link" href="/tournaments?id=${tournament.id}"></a>
+                                    <div class="tournaments__info">
+                                        <h2>${tournament.name}</h2>
+                                        <c:choose>
+                                            <c:when test="${tournament.teams.size() < tournament.maxTeams}">
+                                                <div class="open">Open for registration</div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="closed">Closed for registration</div>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                </div>
+                            </c:if>
+                        </c:forEach>
+                    </div>
                 </div>
             </c:when>
 
@@ -49,7 +72,6 @@
                 <h3>No tournaments!</h3>
             </c:otherwise>
         </c:choose>
-    </div>
 </main>
 </div>
 </body>

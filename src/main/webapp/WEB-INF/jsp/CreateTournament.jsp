@@ -39,9 +39,9 @@
                             <sf:input class="input" path="maxTeams" type="number"/>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-6">
                         <div class="input-container">
-                            <label class="input-label" for="addTeam">Teams:</label>
+                            <label class="input-label" for="addTeam">Teams</label>
                             <div id="teams__container" name="teams">
                             </div>
                             <div class="input-group flex-row-reverse">
@@ -53,7 +53,7 @@
                 </div>
                 <div class="row">
                     <h3>Tournament setup</h3>
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="input-container">
                             <label class="input-label" for="signUpDate">Allow sign up: <input type="checkbox" name="allowSignUp" id="allowSignUp" value="false"></label>
                             <div id="signUpDate" class="input-group hidden">
@@ -62,7 +62,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="input-container flex-row">
                             <label class="input-label" for="nrOfRounds">Number of rounds:</label>
                             <sf:select class="input col-4" path="nrOfRounds">
@@ -73,10 +73,20 @@
                             </sf:select>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="">
                             <label for="isPublic">Public: </label>
                             <sf:checkbox path="isPublic" value="true" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-container">
+                            <label class="input-label" for="sport">Sport</label>
+                            <sf:select class="input" path="sport">
+                                <sf:option value="Football">Football</sf:option>
+                                <sf:option value="Handball">Handball</sf:option>
+                                <sf:option value="Basketball">Basketball</sf:option>
+                            </sf:select>
                         </div>
                     </div>
                 </div>
@@ -92,16 +102,27 @@
     <%@include file="Footer.jsp"%>
 
     <script>
+        function removeTeam(element) {
+            var container = element.parentNode;
+            container.parentNode.removeChild(container);
+        };
+
         $('document').ready(function (){
+
+
 
             $('#addTeam').click(function (e) {
                 var team = $('#newTeam').val();
+                var container = $("<div class='input-group flex-row-reverse'></div>");
+                container.attr('id', team);
                 var $teamContainer = $('#teams__container');
                 if(team.length === 0 || team === undefined) return;
                 console.log(team);
-                var p = $("<p name='myTeams' id='myTeams'></p>").text(team);
-                var hidden = $("<input name='myTeams' id='myTeams' style='display: none' />").val(team);
-                $teamContainer.append(p, hidden);
+                var p = $("<p name='myTeams' id='myTeams' style='width: 100%'></p>").text(team);
+                var button = $("<i id='removeTeam' class='material-icons md-18 btn btn-remove' onclick='removeTeam(this)'>remove</i>").attr('name',team);
+                var hidden = $("<input name='myTeams' id='myTeams' class='hidden' />").val(team);
+                container.append(p, button, hidden);
+                $teamContainer.append(container);
                 $('#newTeam').val("");
             });
 

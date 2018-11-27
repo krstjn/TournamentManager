@@ -1,5 +1,7 @@
 package project.persistence.entities;
 
+import project.utils.Sport;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -7,8 +9,8 @@ import java.util.*;
 @Entity
 @Table(name = "tournaments")
 public class Tournament {
-    private long id;
 
+    private long id;
     private String name;
     private LocalDateTime created;
     private LocalDateTime signUpExpiration;
@@ -17,6 +19,7 @@ public class Tournament {
     private Set<Team> teams = new HashSet<>();
     private List<Match> matches = new ArrayList<>();
     private User user;
+    private Sport sport = Sport.Football;
     private boolean isPublic = true;
 
     public Tournament() { }
@@ -91,4 +94,7 @@ public class Tournament {
     @JoinColumn(name = "UserId")
     public User getUser() { return this.user; }
     public void setUser(User user) { this.user = user; }
+
+    public Sport getSport() { return sport; }
+    public void setSport(Sport sport) { this.sport = sport; }
 }

@@ -11,6 +11,7 @@ import project.service.Interfaces.IAuthenticationService;
 import project.service.Interfaces.ITournamentService;
 import project.service.Interfaces.IUserService;
 import project.utils.ScoreboardItem;
+import project.utils.Sport;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -78,7 +79,8 @@ public class TournamentService implements ITournamentService {
 
     @Override
     public List<ScoreboardItem> generateScoreboard(Tournament tournament) {
-        // TODO: Implement this
+        int pointsForWin = 3; // 3 points for a win in football, 2 points otherwise
+        if(tournament.getSport() != Sport.Football) pointsForWin = 2;
 
         List<Match> matches = tournament.getMatches();
         HashMap<String, Integer> points = new HashMap<>();
@@ -113,11 +115,11 @@ public class TournamentService implements ITournamentService {
 
                 if(home > away) {
                     int value = points.get(homeTeam) == null ? 0 : points.get(homeTeam);
-                    points.put(homeTeam, value + 3);
+                    points.put(homeTeam, value + pointsForWin);
                 }
                 else if(home < away) {
                     int value = points.get(awayTeam) == null ? 0 : points.get(awayTeam);
-                    points.put(awayTeam, value + 3);
+                    points.put(awayTeam, value + pointsForWin);
                 }
                 else {
                     int oldHome = points.get(homeTeam) == null ? 0 : points.get(homeTeam);
