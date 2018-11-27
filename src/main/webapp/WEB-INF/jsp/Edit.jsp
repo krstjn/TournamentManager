@@ -27,15 +27,18 @@
         <%@include file="Navigation.jsp"%>
         <main>
             <div class = titleSection>
-                <c:forEach var="tournament" items="${tournaments}">
+
+        <sf:form method="POST" modelAttribute="tournament" action="/tournaments/edit?id=${tournament.id}">
+            <sf:hidden path = "user" />
+            <sf:hidden path = "maxTeams" />
+            <c:forEach var="tournament" items="${tournaments}">
                     <c:if test = "${tournament.id == param.id}" >
                         <h1> ${tournament.name} </h1>
-                        <h4>  Max fjöldi liða ${tournament.maxTeams}
-                                -    id ${tournament.id} -   Fjöldi liða í móti   ${tournament.teams.size()} </h4>
+                        <h4>  Max fjöldi liða ${tournament.maxTeams} -    id ${tournament.id} -   Fjöldi liða í móti   ${tournament.teams.size()} </h4>
 
                         <c:if test="${isAuthenticated}">
                             <a href="/tournaments?id=${tournament.id}">
-                                <button class="edit" style="float: right;"><i class="material-icons md-dark">done</i></button>
+                                <button id ="submitScore" class="edit" type = "submit" style="float: right;"><i class="material-icons md-dark">done</i></button>
                             </a>
                         </c:if>
 
@@ -85,7 +88,7 @@
                             <tr>
                                 <td> ${match.homeTeam.name} </td>
                                 <td> ${match.awayTeam.name} </td>
-                                <td> <input type = "number" min = "0">  </input> - <input type = "number" min="0">  </input></td>
+                                <td> <input class = "input" type = "number" min = "0"> </input> - <input class = "input" type = "number" min="0">  </input></td>
                                 <td> ${match.location} </td>
                                 <td> ${match.matchDate} </td>
                             </tr>
@@ -94,10 +97,7 @@
 
                 </table>
             </div>
-
-
-
+            </sf:form>
         </body>
     </main>
-
 </html>

@@ -122,14 +122,13 @@ public class TournamentController {
         return "Edit";
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
-    @ResponseStatus(value = HttpStatus.NOT_IMPLEMENTED)
-    public String tournamentEditPut(Model model,
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public String tournamentEditPost(@ModelAttribute("tournament") Tournament tournament,
                                     @RequestParam(value = "id")Long id){
-        // TODO: Implement this
-        model.addAttribute("errorMsg", "501 - Not implemented yet");
 
-        return "errors/error";
+        tournamentService.save(tournament);
+
+        return "redirect:/tournaments?id="+id;
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.PATCH)
