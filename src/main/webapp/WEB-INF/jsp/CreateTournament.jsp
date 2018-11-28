@@ -112,12 +112,14 @@
 
 
             $('#addTeam').click(function (e) {
+                if(parseInt($('#maxTeams').val()) <= $('#teams__container div').length) return;
                 var team = $('#newTeam').val();
+                if(team.length === 0 || team === undefined) return;
+
+                var $teamContainer = $('#teams__container');
                 var container = $("<div class='input-group flex-row-reverse'></div>");
                 container.attr('id', team);
-                var $teamContainer = $('#teams__container');
-                if(team.length === 0 || team === undefined) return;
-                console.log(team);
+
                 var p = $("<p name='myTeams' id='myTeams' style='width: 100%'></p>").text(team);
                 var button = $("<i id='removeTeam' class='material-icons md-18 btn btn-remove' onclick='removeTeam(this)'>remove</i>").attr('name',team);
                 var hidden = $("<input name='myTeams' id='myTeams' class='hidden' />").val(team);
@@ -155,7 +157,6 @@
                 $(window).keydown(function(e){
                 if(e.keyCode === 13) {
                     e.preventDefault();
-                    console.log(e)
                     var target = e.target.id || e.target.name;
                     if(target === 'newTeam'){
                         $('#addTeam').click();
