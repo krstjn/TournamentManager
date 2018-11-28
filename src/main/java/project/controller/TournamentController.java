@@ -131,8 +131,8 @@ public class TournamentController {
 
         Tournament tournament = tournamentService.findOne(id);
 
-        // Only the tournament owner is allowed and admin are allowed to enter the edit site
-        if(authenticationService.isAdmin() ||authenticationService.getUsername().equals(tournament.getUser().getUsername())){
+        // Only the tournament owner and admin are allowed to enter the edit site
+        if(authenticationService.isAdmin() || authenticationService.getUsername().equals(tournament.getUser().getUsername())){
             List<Match> matches = tournament.getMatches();
             Collections.sort(matches);
             model.addAttribute("tournament", tournament);
