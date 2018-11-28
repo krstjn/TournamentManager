@@ -18,5 +18,8 @@ public interface ITournamentRepository extends JpaRepository<Tournament, Long> {
     @Query(value = "SELECT p FROM Tournament p WHERE p.id = ?1")
     Tournament findOne(Long id);
 
+    @Query(value ="SELECT t FROM Tournament t WHERE UPPER(t.name) LIKE %?1%")
+    List<Tournament> findByNameSearch(String search);
+
     List<Tournament> findByUserId(Long userId);
 }

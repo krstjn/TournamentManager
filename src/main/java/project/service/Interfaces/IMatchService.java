@@ -1,6 +1,7 @@
 package project.service.Interfaces;
 
 import project.persistence.entities.Match;
+import project.persistence.entities.Tournament;
 
 import java.util.List;
 
@@ -38,4 +39,6 @@ public interface IMatchService {
      * @return All {@link Match}s with the {@link Long tournamentId} passed
      */
     List<Match> findByTournamentId(long tournamentId);
+
+    List<Match> generateMatches(Tournament tournament);
 }

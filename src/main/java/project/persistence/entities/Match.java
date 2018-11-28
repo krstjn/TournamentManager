@@ -8,7 +8,8 @@ import java.util.Date;
 
 @Entity
 @Table(name = "matches")
-public class Match {
+public class Match implements Comparable<Match> {
+    // TODO: bæta við breytu sem segir hvort búið sé að spila leik
     private long id;
     private int homeTeamScore;
     private int awayTeamScore;
@@ -18,25 +19,27 @@ public class Match {
     private String location;
     private Team homeTeam;
     private Team awayTeam;
+    private boolean played;
     private Tournament tournament;
 
     public Match(){}
 
-    public Match(long id, Team homeTeam, Team awayTeam, int round) {
-        this.id = id;
+    public Match(Team homeTeam, Team awayTeam, int round, Tournament tournament) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.round = round;
+        played = false;
+        this.tournament = tournament;
     }
 
     @Id
     @Column(name = "MatchId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -90,5 +93,14 @@ public class Match {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public boolean getPlayed() { return played; }
+
+    public void setPlayed(boolean played) { this.played = played; }
+
+    @Override
+    public int compareTo(Match o) {
+        return this.round-o.round;
     }
 }

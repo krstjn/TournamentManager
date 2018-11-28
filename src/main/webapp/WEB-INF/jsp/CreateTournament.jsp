@@ -19,51 +19,29 @@
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/icons.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/input.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/grid.css"/>"/>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/footer.css"/>"/>
     </head>
     <body>
-    <nav class="navbar">
-        <div class="navbar--container">
-            <div class="navbar--heading">
-                <a href="/"><i class="material-icons md-light md-36">home</i></a>
-            </div>
-            <div class="navbar--nav">
-                <c:choose>
-                    <c:when test="${!isAuthenticated}">
-                        <a href="/login" class="navbar--item"><i class="material-icons md-light">lock</i>Login</a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="/profile" class="navbar--item"><i class="material-icons md-light">account_circle</i>${username}</a>
-                        <a href="/logout" class="navbar--item">Logout</a>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-        </div>
-    </nav>
-    <main>
+    <div class="content">
+        <%@include file="Navigation.jsp"%>
+        <main>
         <div class="container">
 
             <sf:form method="POST" modelAttribute="tournament" action="/tournaments/create">
                 <div class="row">
                     <div class="col-6">
                         <div class="input-container">
-                            <label class="input-label" for="name">Name</label>
+                            <label class="input-label" for="name">Tournament name</label>
                             <sf:input class="input" path="name" type="text"/>
                         </div>
                         <div class="input-container">
-                            <label class="input-label" for="maxTeams">Max team limit</label>
+                            <label class="input-label" for="maxTeams">Maximum team limit</label>
                             <sf:input class="input" path="maxTeams" type="number"/>
-                        </div>
-                        <div class="input-container">
-                            <label class="input-label" for="signUpDate">SignUp expiration: <input type="checkbox" name="allowSignUp" id="allowSignUp" value="false">
-                            </label>
-                            <div id="signUpDate" class="input-group hidden">
-                                <input class="input" name="signUpExp" id="signUpExp-date" type="datetime-local" min="${minDate}"/>
-                            </div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="input-container">
-                            <label class="input-label" for="addTeam">Lið/þáttakendur:</label>
+                            <label class="input-label" for="addTeam">Teams</label>
                             <div id="teams__container" name="teams">
                             </div>
                             <div class="input-group flex-row-reverse">
@@ -75,26 +53,40 @@
                 </div>
                 <div class="row">
                     <h3>Tournament setup</h3>
-                    <div class="col-6">
-                        <div class="">
-                            <div>
-                                <sf:radiobutton path="type" id="GroupStage" value="GroupStage"/>
-                                <label for="GroupStage">Group stage</label>
-                            </div>
-                            <div>
-                                <sf:radiobutton path="type" id="Knockout" value="Knockout"/>
-                                <label for="Knockout">Knockout</label>
-                            </div>
-                            <div>
-                                <sf:radiobutton path="type" id="League" value="League"/>
-                                <label for="League">League</label>
+                    <div class="col-3">
+                        <div class="input-container">
+                            <label class="input-label" for="signUpDate">Allow sign up: <input type="checkbox" name="allowSignUp" id="allowSignUp" value="false"></label>
+                            <div id="signUpDate" class="input-group hidden">
+                                <label for="signUpExp-date">Sign up expiration: </label>
+                                <input class="input" name="signUpExp" id="signUpExp-date" type="datetime-local" min="${minDate}"/>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-3">
+                        <div class="input-container flex-row">
+                            <label class="input-label" for="nrOfRounds">Number of rounds:</label>
+                            <sf:select class="input col-4" path="nrOfRounds">
+                                <sf:option value="1">1</sf:option>
+                                <sf:option value="2">2</sf:option>
+                                <sf:option value="3">3</sf:option>
+                                <sf:option value="4">4</sf:option>
+                            </sf:select>
+                        </div>
+                    </div>
+                    <div class="col-3">
                         <div class="">
                             <label for="isPublic">Public: </label>
                             <sf:checkbox path="isPublic" value="true" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-container">
+                            <label class="input-label" for="sport">Sport</label>
+                            <sf:select class="input" path="sport">
+                                <sf:option value="Football">Football</sf:option>
+                                <sf:option value="Handball">Handball</sf:option>
+                                <sf:option value="Basketball">Basketball</sf:option>
+                            </sf:select>
                         </div>
                     </div>
                 </div>
@@ -104,22 +96,35 @@
             </sf:form>
             <button id="verifyTournament" class="btn btn-primary">Búa til mót</button>
         </div>
-
-        <a href="/">Forsíða</a>
     </main>
+    </div>
     </body>
-    <footer>Class HBV501G, University of Iceland</footer>
+    <%@include file="Footer.jsp"%>
+
     <script>
+        function removeTeam(element) {
+            var container = element.parentNode;
+            container.parentNode.removeChild(container);
+        };
+
         $('document').ready(function (){
 
+
+
             $('#addTeam').click(function (e) {
+                if(parseInt($('#maxTeams').val()) <= $('#teams__container div').length) return;
                 var team = $('#newTeam').val();
-                var $teamContainer = $('#teams__container');
                 if(team.length === 0 || team === undefined) return;
-                console.log(team);
-                var p = $("<p name='myTeams' id='myTeams'></p>").text(team);
-                var hidden = $("<input name='myTeams' id='myTeams' style='display: none' />").val(team);
-                $teamContainer.append(p, hidden);
+
+                var $teamContainer = $('#teams__container');
+                var container = $("<div class='input-group flex-row-reverse'></div>");
+                container.attr('id', team);
+
+                var p = $("<p name='myTeams' id='myTeams' style='width: 100%'></p>").text(team);
+                var button = $("<i id='removeTeam' class='material-icons md-18 btn btn-remove' onclick='removeTeam(this)'>remove</i>").attr('name',team);
+                var hidden = $("<input name='myTeams' id='myTeams' class='hidden' />").val(team);
+                container.append(p, button, hidden);
+                $teamContainer.append(container);
                 $('#newTeam').val("");
             });
 
@@ -127,6 +132,8 @@
                 var name = $('#name').val();
                 if(name !== undefined && name !== ''){
                     $('#submitTournament').click();
+                } else {
+                    $('#name').addClass('input-danger');
                 }
             });
 
@@ -142,14 +149,14 @@
                 }
             });
 
-            $('#signUpExp-date').change(function (){
-                console.log($('#signUpExp-date').val());
+            $('#name').change(function () {
+                $('#name').removeClass('input-danger');
+
             });
 
-            $(window).keydown(function(e){
+                $(window).keydown(function(e){
                 if(e.keyCode === 13) {
                     e.preventDefault();
-                    console.log(e)
                     var target = e.target.id || e.target.name;
                     if(target === 'newTeam'){
                         $('#addTeam').click();

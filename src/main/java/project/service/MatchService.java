@@ -6,16 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.controller.UserController;
 import project.persistence.entities.Match;
+import project.persistence.entities.Team;
 import project.persistence.entities.Tournament;
 import project.persistence.repositories.IMatchRepository;
 import project.service.Interfaces.IMatchService;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class MatchService implements IMatchService {
 
     IMatchRepository repository;
+    private Logger logger = LogManager.getLogger(MatchService.class);
 
     @Autowired
     public MatchService(IMatchRepository repository) {this.repository = repository;}
@@ -45,8 +47,62 @@ public class MatchService implements IMatchService {
         return repository.findByTournamentId(tournamentId);
     }
 
+    @Override
     public List<Match> generateMatches(Tournament tournament){
-        // TODO: Implement this
-        return null;
+        List teams = new ArrayList(tournament.getTeams());
+        // If the number of teams is an odd number we add one "ghost" team to the tournament.
+        if(teams.size() % 2 != 0) {
+            teams.add(new Team("ghost", tournament));
+        }
+
+        int nrOfTeams = teams.size();
+        int nrOfRounds = tournament.getNrOfRounds();
+        List<Match> matches = new ArrayList<Match>();
+        int round = 1;
+
+        for(int i = 0; i < nrOfTeams-1; i++) {
+            // Split teams into 2 lists.
+            List<Team> t1 = new ArrayList<Team>(teams.subList(0, nrOfTeams/2));
+            List<Team> t2 = new ArrayList<Team>(teams.subList(nrOfTeams/2, nrOfTeams));
+            //Collections.reverse(t2);
+
+            if(i % 2 == 1) {
+                for(int j = 0; j < t1.size(); j++) {
+                    for(int x = 0; x < nrOfRounds; x++){
+                        if(t1.get(j).getName() == "ghost" || t2.get(j).getName() == "ghost") break;
+                        if(x % 2 == 1){
+                            matches.add(new Match(t1.get(j),t2.get(j), (round + ((nrOfTeams-1)*x)), tournament));
+                        } else {
+                            matches.add(new Match(t2.get(j),t1.get(j), (round + ((nrOfTeams-1)*x)), tournament));
+                        }
+                    }
+
+                }
+            } else {
+                for(int j = 0; j < t1.size(); j++) {
+                    for(int x = 0; x < nrOfRounds; x++){
+                        if(t1.get(j).getName() == "ghost" || t2.get(j).getName() == "ghost") break;
+                        if(x % 2 == 1){
+                            matches.add(new Match(t2.get(j),t1.get(j), (round + ((nrOfTeams-1)*x)), tournament));
+                        } else {
+                            matches.add(new Match(t1.get(j),t2.get(j), (round + ((nrOfTeams-1)*x)), tournament));
+                        }
+                    }
+                }
+            }
+
+            // Loading
+            teams.add(1, teams.remove(nrOfTeams-1));
+            round++;
+
+        }
+        Collections.sort(matches);
+
+        for (Match m: matches)
+            this.save(m);
+
+        logger.info(matches.size() + " matches created.");
+        return matches;
     }
+
 }

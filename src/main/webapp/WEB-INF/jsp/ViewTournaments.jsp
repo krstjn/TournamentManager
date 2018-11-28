@@ -14,32 +14,19 @@
         <script src="<c:url value="/js/jquery-3.3.1.min.js" />"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Raleway:400,700|Roboto:400,400i,700" rel="stylesheet">        <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/index.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/icons.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/navigation.css"/>"/>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/footer.css"/>"/>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/grid.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/viewTournaments.css"/>"/>
 
     </head>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="navbar--container">
-            <div class="navbar--heading">
-                <a href="/"><i class="material-icons md-light md-36">home</i></a>
-            </div>
-            <div class="navbar--nav">
-                <c:choose>
-                    <c:when test="${!isAuthenticated}">
-                        <a href="/login" class="navbar--item"><i class="material-icons md-light">lock</i>Login</a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="/profile" class="navbar--item"><i class="material-icons md-light">account_circle</i>${username}</a>
-                        <a href="/logout" class="navbar--item">Logout</a>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-        </div>
-    </nav>
+<div class="content">
+    <%@include file="Navigation.jsp"%>
     <main>
         <h1>Tournaments</h1>
         <c:choose>
@@ -47,15 +34,26 @@
             <c:when test="${not empty tournaments}">
                 <%--Create a table for the Tournaments--%>
                 <div class="tournaments">
-
-                    <c:forEach var="tournament" items="${tournaments}">
-                        <c:if test="${tournament.isPublic}">
-                            <div>
-                                <p><a href="/tournament?id=${tournament.id}"> ${tournament.name}</a></p>
-                                <p>Fjöldi skráða liða: ${tournament.teams.size()}</p>
-                            </div>
-                        </c:if>
-                    </c:forEach>
+                    <div class="col-12">
+                        <c:forEach var="tournament" items="${tournaments}">
+                            <c:if test="${tournament.isPublic}">
+                                <div class="row-12">
+                                    <a class="tournaments__link" href="/tournaments?id=${tournament.id}"></a>
+                                    <div class="tournaments__info">
+                                        <h2>${tournament.name}</h2>
+                                        <c:choose>
+                                          <c:when test="${tournament.teams.size() < tournament.maxTeams}">
+                                                <div class="open">Open for registration</div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="closed">Closed for registration</div>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                </div>
+                            </c:if>
+                        </c:forEach>
+                    </div>
                 </div>
             </c:when>
 
@@ -65,7 +63,7 @@
             </c:otherwise>
         </c:choose>
     </main>
-
+    </div>
     </body>
-    <footer>Class HBV501G, University of Iceland</footer>
+    <%@include file="Footer.jsp"%>
 </html>

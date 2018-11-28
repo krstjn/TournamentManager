@@ -1,0 +1,25 @@
+.footer {
+    flex-shrink: 0;
+    height: 50px;
+    background-color: #EF8823;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.footer--container {
+    width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.footer--item {
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+}
+

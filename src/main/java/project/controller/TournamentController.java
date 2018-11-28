@@ -7,47 +7,77 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import project.persistence.entities.Match;
 import project.persistence.entities.Team;
 import project.persistence.entities.Tournament;
 import project.persistence.entities.User;
 import project.service.Interfaces.IAuthenticationService;
+import project.service.Interfaces.IMatchService;
 import project.service.Interfaces.ITournamentService;
 import project.service.Interfaces.IUserService;
 
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Controller
-@RequestMapping(value = "/tournaments")
+@RequestMapping(value = "/tournaments" )
 public class TournamentController {
 
     // Instance Variables
     private ITournamentService tournamentService;
+    private IMatchService matchService;
     private IAuthenticationService authenticationService;
     private IUserService userService;
     private Logger logger = LogManager.getLogger(TournamentController.class);
 
-    public TournamentController(ITournamentService tournamentService, IAuthenticationService authenticationService, IUserService userService) {
+    public TournamentController(ITournamentService tournamentService, IAuthenticationService authenticationService, IUserService userService, IMatchService matchService) {
         this.tournamentService = tournamentService;
         this.authenticationService = authenticationService;
         this.userService = userService;
+        this.matchService = matchService;
     }
 
     @GetMapping
-    public String tournamentsGet(Model model){
+    public String tournamentsGet(Model model,
+                                 @RequestParam(value="search", required = false)String search,
+                                 @RequestParam(value="id", required = false)Long id){
         if(authenticationService.isAuthenticated()){
             model.addAttribute("isAuthenticated", true);
             model.addAttribute("username", authenticationService.getUsername());
         }
-        model.addAttribute("tournaments", tournamentService.findAll());
+
+        Tournament tournament = tournamentService.findOne(id);
+
+        if(tournament != null){
+            model.addAttribute("tournament", tournament);
+            model.addAttribute("scoreboard", tournamentService.generateScoreboard(tournament));
+            List<Match> matches = tournament.getMatches();
+            Collections.sort(matches);
+            model.addAttribute("matches", matches);
+
+            boolean allowSignUp = tournament.getMatches().size() == 0 &&
+                                  tournament.getTeams().size() < tournament.getMaxTeams() &&
+                                  authenticationService.isAuthenticated() &&
+                                  ((tournament.getSignUpExpiration() != null &&
+                                  tournament.getSignUpExpiration().compareTo(LocalDateTime.now()) > 0) ||
+                                  tournament.getUser().getUsername().equals(authenticationService.getUsername()));
+
+            model.addAttribute("allowSignUp", allowSignUp);
+            return "TournamentView";
+        }
+
+        if(search != null) {
+            model.addAttribute("tournaments", tournamentService.findByNameSearch(search.toUpperCase()));
+        } else {
+            model.addAttribute("tournaments", tournamentService.findAll());
+        }
         return "ViewTournaments";
     }
 
     @RequestMapping(value ="/create", method = RequestMethod.GET)
-    public String createTournamentGet(Model model) throws ParseException {
+    public String createTournamentGet(Model model) {
         Tournament tournament = new Tournament();
 
         model.addAttribute("tournament", tournament);
@@ -66,80 +96,81 @@ public class TournamentController {
     @RequestMapping(value ="/create", method = RequestMethod.POST)
     public String createTournamentPost(@ModelAttribute("tournament") Tournament tournament,
                                        @RequestParam(value = "myTeams", required = false)String[] myTeams,
-                                       @RequestParam(value = "signUpExp", required = false)@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")LocalDateTime signUpExp,
+                                       @RequestParam(value = "signUpExp", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")LocalDateTime signUpExp,
                                        Model model){
         // TODO: Improve User input, figure out if more fields are needed
         // TODO: Improve view based on input fields
         logger.info("Creating tournament: " + tournament.getName());
-        Set<Team> teams = new HashSet<>();
-        if(myTeams != null)
-            for (String s: myTeams)
-                teams.add(new Team(s, tournament));
+        Tournament t = tournamentService.create(tournament, myTeams, signUpExp);
+        logger.info("Tournament created: " + t.getName());
 
-        if(teams.size() > 0) {
-            tournament.setTeams(teams);
-        }
+        // Redirecta á tournament síðuna
+        return "redirect:/tournaments?id=" + t.getId();
+    }
 
-        // Check if matches should be created
-        if (signUpExp == null || signUpExp.isAfter(LocalDateTime.now())){
-            tournament.setSignUpExpiration(signUpExp);
-            // logger.info("Creating matches for: " + tournament.getName());
-            // matchService.generateMatches(tournament);
-            // logger.info("Matches created for: " + tournament.getName());
-        }
+    @RequestMapping(value="/addTeam", method = RequestMethod.POST)
+    public String addTeam(Model model,
+                          @RequestParam(value = "id")Long id,
+                          @RequestParam(value="team")String name){
+        Tournament tournament = tournamentService.findOne(id);
+        Team team = new Team(name,tournament);
+        tournament.addTeam(team);
+        tournamentService.save(tournament);
 
-        // Setup owner of tournament
-        User user = userService.findByUsername(authenticationService.getUsername());
-        tournament.setUser(user);
+        return "redirect:/tournaments?id="+id;
+    }
 
-        tournament.setCreated(LocalDateTime.now());
-        try{
-            tournamentService.save(tournament);
-        } catch (Exception ex){
-            logger.error(ex.getMessage());
-        }
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public String tournamentEditGet(Model model,
+                                    @RequestParam(value = "id")Long id){
 
-        model.addAttribute("tournament",new Tournament());
-
-        // Setup authentication
         if(authenticationService.isAuthenticated()){
             model.addAttribute("isAuthenticated", true);
             model.addAttribute("username", authenticationService.getUsername());
         }
-        logger.info("Tournament created: " + tournament.getName());
 
-        // TODO: Redirecta á tournament síðuna
-        return "CreateTournament";
+        Tournament tournament = tournamentService.findOne(id);
+        List<Match> matches = tournament.getMatches();
+        Collections.sort(matches);
+        model.addAttribute("tournament", tournament);
+        model.addAttribute("scoreboard", tournamentService.generateScoreboard(tournament));
+        model.addAttribute("matches", matches);
+
+
+        return "Edit";
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    @ResponseStatus(value = HttpStatus.NOT_IMPLEMENTED)
-    public String tournamentEditGet(Model model,
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public String tournamentEditPost(@ModelAttribute("tournament") Tournament tournament,
                                     @RequestParam(value = "id")Long id){
-        // TODO: Implement this
-        model.addAttribute("errorMsg", "501 - Not implemented yet");
 
-        return "errors/error";
+        tournamentService.save(tournament);
+
+        return "redirect:/tournaments?id="+id;
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
-    @ResponseStatus(value = HttpStatus.NOT_IMPLEMENTED)
-    public String tournamentEditPut(Model model,
-                                    @RequestParam(value = "id")Long id){
-        // TODO: Implement this
-        model.addAttribute("errorMsg", "501 - Not implemented yet");
+    @RequestMapping(value = "/editMatch", method = RequestMethod.POST)
+    public String tournamentEditMatch(Model model,
+                                      @RequestParam(value = "id")Long id,
+                                      @RequestParam(value = "homeScore")int home,
+                                      @RequestParam(value = "awayScore")int away){
 
-        return "errors/error";
+        Match match = matchService.findOne(id);
+        match.setHomeTeamScore(home);
+        match.setAwayTeamScore(away);
+        match.setPlayed(true);
+        matchService.save(match);
+
+        return "redirect:/tournaments/edit?id="+match.getTournament().getId()+"#matches";
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.PATCH)
-    @ResponseStatus(value = HttpStatus.NOT_IMPLEMENTED)
-    public String tournamentEditPatch(Model model,
-                                      @RequestParam(value = "id")Long id){
-        // TODO: Implement this
-        model.addAttribute("errorMsg", "501 - Not implemented yet");
+    @RequestMapping(value="generateMatches", method=RequestMethod.GET)
+    public String generateMatches(Model model, @RequestParam(value="id")Long id){
+        Tournament tournament = tournamentService.findOne(id);
+        if(tournament.getMatches().isEmpty())
+            matchService.generateMatches(tournament);
 
-        return "errors/error";
+        return "redirect:/tournaments?id="+id;
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.DELETE)

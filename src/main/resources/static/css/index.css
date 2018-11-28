@@ -17,6 +17,13 @@ body {
     font-size: 16px;
     font-family: 'Roboto', sans-serif;
     background-color: #F5F5F5;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1 0 auto;
 }
 
 h1,
@@ -31,7 +38,8 @@ h3 {
 .index .row {
     display: flex;
     flex-wrap: wrap;
-    height: 350px;
+    justify-content: space-around;
+    height: 43vh;
 }
 
 .index .col-12 {
@@ -54,7 +62,7 @@ h3 {
 
 .index__icon {
     margin: 0 auto;
-    font-size: 13em;
+    font-size: 20vh;
 }
 
 .index h2 {
@@ -80,7 +88,8 @@ p {
 main {
     padding: 15px;
     max-width: 1200px;
-    margin: 74px auto;
+    margin: 50px auto;
+    margin-bottom: 5px;
     background-color: #FFFFFF;
     border: 1px solid #dde2e2;
     border-radius: 3px;
@@ -93,7 +102,7 @@ main {
     }
 }
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .error {

@@ -9,17 +9,11 @@ import java.util.Set;
 public class Team {
     private long id;
     private String name;
-    private Set<Match> matches = new HashSet<>();
     private Tournament tournament;
 
     public Team(){}
     public Team(String name, Tournament tournament){
         this.name = name;
-        this.tournament = tournament;
-    }
-    public Team(String name, Set<Match> matches, Tournament tournament) {
-        this.name = name;
-        this.matches = matches;
         this.tournament = tournament;
     }
 
@@ -33,17 +27,8 @@ public class Team {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    @ManyToMany
-    @JoinTable(
-            name="team_matches",
-            joinColumns=@JoinColumn(name="team_ID", referencedColumnName="TeamId"),
-            inverseJoinColumns=@JoinColumn(name="match_ID", referencedColumnName="MatchId"))
-    public Set<Match> getMatches() { return this.matches; }
-    public void setMatches(Set<Match> matches) { this.matches = matches;
-    }
 
-    @ManyToOne(fetch = FetchType.EAGER,
-            optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "TournamentId")
     public Tournament getTournament() { return this.tournament; }
     public void setTournament(Tournament tournament) { this.tournament = tournament; }

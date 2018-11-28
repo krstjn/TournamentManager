@@ -22,7 +22,7 @@ public class CustomErrorController implements ErrorController {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         if (status != null) {
             Integer statusCode = Integer.valueOf(status.toString());
-            logger.info("Error - statusCode: " + statusCode);
+            logger.error("Error - statusCode: " + statusCode);
 
             if(statusCode == HttpStatus.NOT_FOUND.value()) {
                 return "errors/error-404";

@@ -13,34 +13,19 @@
         <meta charset="UTF-8">
         <script src="<c:url value="/js/jquery-3.3.1.min.js" />"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Raleway:400,700|Roboto:400,400i,700" rel="stylesheet">        <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
+        <link href="https://fonts.googleapis.com/css?family=Raleway:400,700|Roboto:400,400i,700" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/icons.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/navigation.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/index.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/grid.css"/>"/>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/footer.css"/>"/>
     </head>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="navbar--container">
-            <div class="navbar--heading">
-                <a href="/"><i class="material-icons md-light md-36">home</i></a>
-            </div>
-            <div class="navbar--nav">
-                <c:choose>
-                    <c:when test="${!isAuthenticated}">
-                        <a href="/login" class="navbar--item"><i class="material-icons md-light">lock</i>Login</a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="/profile" class="navbar--item"><i class="material-icons md-light">account_circle</i>${username}</a>
-                        <a href="/logout" class="navbar--item">Logout</a>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-        </div>
-    </nav>
-    <main>
+    <div class="content">
+    <%@include file="Navigation.jsp"%>
+    <main class="content">
         <div class="index">
             <div class="index row">
                 <div class="index col-12">
@@ -54,14 +39,20 @@
                     <h2>Create a Tournament</h2>
                 </div>
                 <div class="index col-6">
-                    <a class="index__link" href="<c:url value="/tournaments"/>"></a>
+                    <a class="index__link" href="<c:url value="/tournaments?id=0"/>"></a>
                     <i class="material-icons index__icon">list</i>
                     <h2>View Tournaments</h2>
                 </div>
             </div>
         </div>
     </main>
-
+    </div>
     </body>
-    <footer>Class HBV501G, University of Iceland</footer>
+    <footer class="footer">
+        <div class="footer--container">
+            <div class="footer--item">Class HBV501G, University of Iceland</div>
+            <div class="footer--item">Class HBV501G, University of Iceland</div>
+            <div class="footer--item">Class HBV501G, University of Iceland</div>
+        </div>
+    </footer>
 </html>

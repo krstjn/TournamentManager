@@ -1,8 +1,9 @@
 package project.service.Interfaces;
 
 import project.persistence.entities.Tournament;
+import project.utils.ScoreboardItem;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ITournamentService {
@@ -26,12 +27,6 @@ public interface ITournamentService {
     List<Tournament> findAll();
 
     /**
-     * Get all {@link Tournament}s in a reverse order
-     * @return A reversed list of {@link Tournament}s
-     */
-    List<Tournament> findAllByOrderByIdDesc();
-
-    /**
      * Find a {@link Tournament} based on {@link Long id}
      * @param id {@link Long}
      * @return A {@link Tournament} with {@link Long id}
@@ -45,6 +40,25 @@ public interface ITournamentService {
      */
     List<Tournament> findByUserId(Long userId);
 
+    /**
+     * Find all tournaments that contain the search String
+     * @param search
+     * @return
+     */
+    List<Tournament> findByNameSearch(String search);
 
-    ArrayList generateScoreboard(Tournament tournament);
+    /**
+     * Generate the scoreboard based on the matches already played
+     * @param tournament
+     * @return returns a list containing
+     */
+    List<ScoreboardItem> generateScoreboard(Tournament tournament);
+
+    /**
+     * Creates the tournament
+     * @param tournament
+     * @param teams the teams participating in the tournament
+     * @return Tournament the result of creating the tournament
+     */
+    Tournament create(Tournament tournament, String[] teams, LocalDateTime signUp);
 }
