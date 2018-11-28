@@ -56,6 +56,15 @@ public class TournamentController {
             List<Match> matches = tournament.getMatches();
             Collections.sort(matches);
             model.addAttribute("matches", matches);
+
+            boolean allowSignUp = tournament.getMatches().size() == 0 &&
+                                  tournament.getTeams().size() < tournament.getMaxTeams() &&
+                                  authenticationService.isAuthenticated() &&
+                                  ((tournament.getSignUpExpiration() != null &&
+                                  tournament.getSignUpExpiration().compareTo(LocalDateTime.now()) > 0) ||
+                                  tournament.getUser().getUsername().equals(authenticationService.getUsername()));
+
+            model.addAttribute("allowSignUp", allowSignUp);
             return "TournamentView";
         }
 
@@ -92,11 +101,23 @@ public class TournamentController {
         // TODO: Improve User input, figure out if more fields are needed
         // TODO: Improve view based on input fields
         logger.info("Creating tournament: " + tournament.getName());
-        Tournament t = tournamentService.create(tournament, myTeams);
+        Tournament t = tournamentService.create(tournament, myTeams, signUpExp);
         logger.info("Tournament created: " + t.getName());
 
         // Redirecta á tournament síðuna
         return "redirect:/tournaments?id=" + t.getId();
+    }
+
+    @RequestMapping(value="/addTeam", method = RequestMethod.POST)
+    public String addTeam(Model model,
+                          @RequestParam(value = "id")Long id,
+                          @RequestParam(value="team")String name){
+        Tournament tournament = tournamentService.findOne(id);
+        Team team = new Team(name,tournament);
+        tournament.addTeam(team);
+        tournamentService.save(tournament);
+
+        return "redirect:/tournaments?id="+id;
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -114,8 +135,6 @@ public class TournamentController {
         model.addAttribute("tournament", tournament);
         model.addAttribute("scoreboard", tournamentService.generateScoreboard(tournament));
         model.addAttribute("matches", matches);
-
-
 
 
         return "Edit";

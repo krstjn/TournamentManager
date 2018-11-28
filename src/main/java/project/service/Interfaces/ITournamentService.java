@@ -1,11 +1,9 @@
 package project.service.Interfaces;
 
 import project.persistence.entities.Tournament;
-import project.persistence.entities.User;
 import project.utils.ScoreboardItem;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public interface ITournamentService {
@@ -62,5 +60,5 @@ public interface ITournamentService {
      * @param teams the teams participating in the tournament
      * @return Tournament the result of creating the tournament
      */
-    Tournament create(Tournament tournament, String[] teams);
+    Tournament create(Tournament tournament, String[] teams, LocalDateTime signUp);
 }

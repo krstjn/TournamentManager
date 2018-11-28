@@ -48,6 +48,14 @@
                         </c:if>
 
             </div>
+            <c:if test="${allowSignUp}">
+                <div>
+                    <sf:form action="tournaments/addTeam?id=${tournament.id}" method="POST">
+                        <input type="text" name="team" required/>
+                        <button class="btn btn-primary">Add Team</button>
+                    </sf:form>
+                </div>
+            </c:if>
 
             <div class = "tournamentTable">
                 <h3> Scoreboard </h3>

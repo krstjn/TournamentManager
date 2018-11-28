@@ -61,7 +61,7 @@ public class TournamentService implements ITournamentService {
     }
 
     @Override
-    public Tournament create(Tournament tournament, String[] myTeams) {
+    public Tournament create(Tournament tournament, String[] myTeams, LocalDateTime signUp) {
 
         Set<Team> teams = new HashSet<>();
         if(myTeams != null)
@@ -70,6 +70,10 @@ public class TournamentService implements ITournamentService {
 
         if(teams.size() > 0) {
             tournament.setTeams(teams);
+        }
+
+        if(signUp != null){
+            tournament.setSignUpExpiration(signUp);
         }
         tournament.setUser(userService.findByUsername(authenticationService.getUsername()));
         tournament.setCreated(LocalDateTime.now());
