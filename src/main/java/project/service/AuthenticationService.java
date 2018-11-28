@@ -38,5 +38,14 @@ public class AuthenticationService implements IAuthenticationService {
         return getAuthentication().getName();
     }
 
+    @Override
+    public boolean isAdmin(){
+        Collection<SimpleGrantedAuthority> roles = getAuthorities();
+        for(SimpleGrantedAuthority role: roles){
+            if(role.getAuthority().equals("ROLE_ADMIN")) return true;
+        }
+        return false;
+    }
+
 
 }
