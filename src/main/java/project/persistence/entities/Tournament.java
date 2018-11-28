@@ -97,4 +97,8 @@ public class Tournament {
 
     public Sport getSport() { return sport; }
     public void setSport(Sport sport) { this.sport = sport; }
+
+    public void addTeam(Team team){
+        teams.add(team);
+    }
 }

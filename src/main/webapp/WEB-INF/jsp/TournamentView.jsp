@@ -34,6 +34,12 @@
                                 - Fjöldi umferða ${tournament.nrOfRounds}</h4>
 
                         <c:if test="${isAuthenticated}">
+                            <c:if test="${empty matches}">
+                                <a href="tournaments/generateMatches?id=${tournament.id}">
+                                    <button class="btn btn-primary" style="float: right;">Generate matches</button>
+                                </a>
+                            </c:if>
+
                             <a href="tournaments/edit?id=${tournament.id}">
                                 <button class="edit" style="float: right;"><i class="material-icons md-dark">edit</i></button>
                             </a>

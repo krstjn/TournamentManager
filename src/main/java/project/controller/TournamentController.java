@@ -19,10 +19,7 @@ import project.service.Interfaces.IUserService;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequestMapping(value = "/tournaments" )
@@ -56,7 +53,9 @@ public class TournamentController {
         if(tournament != null){
             model.addAttribute("tournament", tournament);
             model.addAttribute("scoreboard", tournamentService.generateScoreboard(tournament));
-            model.addAttribute("matches", matchService.generateMatches(tournament));
+            List<Match> matches = tournament.getMatches();
+            Collections.sort(matches);
+            model.addAttribute("matches", matches);
             return "TournamentView";
         }
 
@@ -109,12 +108,12 @@ public class TournamentController {
             model.addAttribute("username", authenticationService.getUsername());
         }
 
-        model.addAttribute("tournaments", tournamentService.findAll());
-        model.addAttribute("tournament", tournamentService.findOne(id));
         Tournament tournament = tournamentService.findOne(id);
-        List<Match> Matches = matchService.generateMatches(tournament);
+        List<Match> matches = tournament.getMatches();
+        Collections.sort(matches);
+        model.addAttribute("tournament", tournament);
         model.addAttribute("scoreboard", tournamentService.generateScoreboard(tournament));
-        model.addAttribute("matches", Matches);
+        model.addAttribute("matches", matches);
 
 
 
@@ -131,14 +130,28 @@ public class TournamentController {
         return "redirect:/tournaments?id="+id;
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.PATCH)
-    @ResponseStatus(value = HttpStatus.NOT_IMPLEMENTED)
-    public String tournamentEditPatch(Model model,
-                                      @RequestParam(value = "id")Long id){
-        // TODO: Implement this
-        model.addAttribute("errorMsg", "501 - Not implemented yet");
+    @RequestMapping(value = "/editMatch", method = RequestMethod.POST)
+    public String tournamentEditMatch(Model model,
+                                      @RequestParam(value = "id")Long id,
+                                      @RequestParam(value = "homeScore")int home,
+                                      @RequestParam(value = "awayScore")int away){
 
-        return "errors/error";
+        Match match = matchService.findOne(id);
+        match.setHomeTeamScore(home);
+        match.setAwayTeamScore(away);
+        match.setPlayed(true);
+        matchService.save(match);
+
+        return "redirect:/tournaments/edit?id="+match.getTournament().getId()+"#matches";
+    }
+
+    @RequestMapping(value="generateMatches", method=RequestMethod.GET)
+    public String generateMatches(Model model, @RequestParam(value="id")Long id){
+        Tournament tournament = tournamentService.findOne(id);
+        if(tournament.getMatches().isEmpty())
+            matchService.generateMatches(tournament);
+
+        return "redirect:/tournaments?id="+id;
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.DELETE)

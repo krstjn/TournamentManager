@@ -45,6 +45,7 @@
                     </c:if>
                 </c:forEach>
             </div>
+            </sf:form>
 
             <div class = "tournamentTable">
                 <h3> Scoreboard </h3>
@@ -72,7 +73,7 @@
                 </table>
             </div>
 
-            <div class = "scoreTable">
+            <div id="matches" class = "scoreTable">
                 <h3> Games </h3>
                 <table>
                     <tr>
@@ -81,23 +82,27 @@
                         <th>Score</th>
                         <th>Location</th>
                         <th>Date</th>
+                        <th></th>
                     </tr>
 
                     <c:forEach var="match" items="${matches}">
                         <div>
                             <tr>
-                                <td> ${match.homeTeam.name} </td>
-                                <td> ${match.awayTeam.name} </td>
-                                <td> <input class = "input" type = "number" min = "0"> </input> - <input class = "input" type = "number" min="0">  </input></td>
-                                <td> ${match.location} </td>
-                                <td> ${match.matchDate} </td>
+                                <sf:form method="POST" action="/tournaments/editMatch?id=${match.id}">
+                                    <td> ${match.homeTeam.name} </td>
+                                    <td> ${match.awayTeam.name} </td>
+                                    <td> <input class="input" name="homeScore" type = "number" value="${match.homeTeamScore}" min = "0"/> - <input class = "input" name="awayScore" value="${match.awayTeamScore}" type = "number" min="0"/></td>
+                                    <td> ${match.location} </td>
+                                    <td> ${match.matchDate} </td>
+                                    <td><button>Submit</button></td>
+                                </sf:form>
+
                             </tr>
                         </div>
                     </c:forEach>
 
                 </table>
             </div>
-            </sf:form>
         </body>
     </main>
 </html>

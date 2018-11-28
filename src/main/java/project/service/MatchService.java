@@ -98,6 +98,9 @@ public class MatchService implements IMatchService {
         }
         Collections.sort(matches);
 
+        for (Match m: matches)
+            this.save(m);
+
         logger.info(matches.size() + " matches created.");
         return matches;
     }
