@@ -6,7 +6,7 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<html lang="en">
+<div lang="en">
 
     <head>
         <title>Tournament View</title>
@@ -20,6 +20,8 @@
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/icons.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/input.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/grid.css"/>"/>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/footer.css"/>"/>
+
     </head>
     <body>
     <div class="content">
@@ -29,20 +31,20 @@
             <div class = titleSection>
 
                         <h1> ${tournament.name} </h1>
-                        <h4> Max fjöldi liða ${tournament.maxTeams}
-                                -    id ${tournament.id} -   Fjöldi liða í móti  ${tournament.teams.size()}
-                                - Fjöldi umferða ${tournament.nrOfRounds}</h4>
+                        <h4> Max fjöldi liða ${tournament.maxTeams} -   Fjöldi liða í móti  ${tournament.teams.size()} - Fjöldi umferða ${tournament.nrOfRounds}</h4>
 
                         <c:if test="${isAuthenticated}">
-                            <c:if test="${empty matches}">
-                                <a href="tournaments/generateMatches?id=${tournament.id}">
-                                    <button class="btn btn-primary" style="float: right;">Generate matches</button>
-                                </a>
-                            </c:if>
 
                             <a href="tournaments/edit?id=${tournament.id}">
                                 <button class="edit" style="float: right;"><i class="material-icons md-dark">edit</i></button>
                             </a>
+
+                            <c:if test="${empty matches}">
+                                <a href="tournaments/generateMatches?id=${tournament.id}">
+                                    <button class="btn btn-primary" id = "start" style="float: right;">Start Tournament</button>
+                                </a>
+                            </c:if>
+
                         </c:if>
 
             </div>
@@ -92,7 +94,16 @@
                             <tr>
                                 <td> ${match.homeTeam.name} </td>
                                 <td> ${match.awayTeam.name} </td>
-                                <td> ${match.homeTeamScore} - ${match.awayTeamScore} </td>
+
+                                <c:choose>
+                                    <c:when test="${match.played}">
+                                        <td> ${match.homeTeamScore} - ${match.awayTeamScore} </td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td>  -  </td>
+                                    </c:otherwise>
+                                </c:choose>
+
                                 <td> ${match.location} </td>
                                 <td> ${match.matchDate} </td>
                             </tr>
@@ -104,5 +115,4 @@
 
         </body>
     </main>
-
 </html>

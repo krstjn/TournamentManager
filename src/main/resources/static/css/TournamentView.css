@@ -59,7 +59,7 @@ table {
     table-layout: fixed;
 }
 
-td, th {
+th,td {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
@@ -90,6 +90,7 @@ tr:nth-child(even) {
 }
 
 .edit{
+    margin-left: 2em;
     border:none;
     border-radius: 50%;
     padding : 0.5em;
@@ -97,12 +98,14 @@ tr:nth-child(even) {
     transition: all 0.4s;
     text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
     color:#FFFFFF;
-
 }
 
 .edit:hover {
     background-color: forestgreen;
-    border : solid 1px green;
-    border-color: rgba(255,255,255,1);
 }
+
+.edit:hover .material-icons {
+    color : white;
+}
+
 

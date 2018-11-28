@@ -21,6 +21,8 @@
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/icons.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/input.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/grid.css"/>"/>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/footer.css"/>"/>
+
     </head>
     <body>
     <div class="content">
@@ -28,13 +30,15 @@
         <main>
             <div class = titleSection>
 
-        <sf:form method="POST" modelAttribute="tournament" action="/tournaments/edit?id=${tournament.id}">
-            <sf:hidden path = "user" />
-            <sf:hidden path = "maxTeams" />
-            <c:forEach var="tournament" items="${tournaments}">
-                    <c:if test = "${tournament.id == param.id}" >
-                        <h1> ${tournament.name} </h1>
-                        <h4>  Max fjöldi liða ${tournament.maxTeams} -    id ${tournament.id} -   Fjöldi liða í móti   ${tournament.teams.size()} </h4>
+                <h1> ${tournament.name} </h1>
+                <h4> Max fjöldi liða ${tournament.maxTeams}  -   Fjöldi liða í móti  ${tournament.teams.size()} - Fjöldi umferða ${tournament.nrOfRounds} </h4>
+
+
+                <sf:form method="POST" modelAttribute="tournament" action="/tournaments/edit?id=${tournament.id}">
+                <sf:hidden path = "user" />
+                <sf:hidden path = "maxTeams" />
+                <sf:hidden path = "name"/>
+
 
                         <c:if test="${isAuthenticated}">
                             <a href="/tournaments?id=${tournament.id}">
@@ -42,10 +46,8 @@
                             </a>
                         </c:if>
 
-                    </c:if>
-                </c:forEach>
+             </sf:form>
             </div>
-            </sf:form>
 
             <div class = "tournamentTable">
                 <h3> Scoreboard </h3>
@@ -94,7 +96,7 @@
                                     <td> <input class="input" name="homeScore" type = "number" value="${match.homeTeamScore}" min = "0"/> - <input class = "input" name="awayScore" value="${match.awayTeamScore}" type = "number" min="0"/></td>
                                     <td> ${match.location} </td>
                                     <td> ${match.matchDate} </td>
-                                    <td><button>Submit</button></td>
+                                    <td><button class = "btn btn-primary">Submit</button></td>
                                 </sf:form>
 
                             </tr>
@@ -106,3 +108,4 @@
         </body>
     </main>
 </html>
+
