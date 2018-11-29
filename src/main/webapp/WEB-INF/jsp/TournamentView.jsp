@@ -29,14 +29,11 @@
             <div class = titleSection>
 
                         <h1> ${tournament.name} </h1>
-                        <h4> Max fjöldi liða ${tournament.maxTeams}
-                                -    id ${tournament.id} -   Fjöldi liða í móti  ${tournament.teams.size()}
-                                - Fjöldi umferða ${tournament.nrOfRounds}</h4>
 
                         <c:if test="${isAuthenticated}">
                             <c:if test="${empty matches}">
                                 <a href="tournaments/generateMatches?id=${tournament.id}">
-                                    <button class="btn btn-primary" style="float: right;">Generate matches</button>
+                                    <button class="btn btn-primary" style="float: right;">Start tournament</button>
                                 </a>
                             </c:if>
 
@@ -88,6 +85,7 @@
                 <h3> Games </h3>
                 <table>
                     <tr>
+                        <th>Round</th>
                         <th>Home</th>
                         <th>Away</th>
                         <th>Score</th>
@@ -98,6 +96,7 @@
                     <c:forEach var="match" items="${matches}">
                         <div>
                             <tr>
+                                <td> ${match.round}</td>
                                 <td> ${match.homeTeam.name} </td>
                                 <td> ${match.awayTeam.name} </td>
                                 <td> ${match.homeTeamScore} - ${match.awayTeamScore} </td>

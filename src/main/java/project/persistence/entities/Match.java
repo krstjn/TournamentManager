@@ -4,6 +4,7 @@ package project.persistence.entities;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -13,8 +14,8 @@ public class Match implements Comparable<Match> {
     private long id;
     private int homeTeamScore;
     private int awayTeamScore;
-    @DateTimeFormat(pattern = "YYYY/mm/dd")
-    private Date matchDate;
+    //@DateTimeFormat(pattern = "YYYY/mm/dd")
+    private LocalDateTime matchDate;
     private int round;
     private String location;
     private Team homeTeam;
@@ -71,11 +72,11 @@ public class Match implements Comparable<Match> {
         this.awayTeamScore = awayTeamScore;
     }
 
-    public Date getMatchDate() {
+    public LocalDateTime getMatchDate() {
         return matchDate;
     }
 
-    public void setMatchDate(Date matchDate) {
+    public void setMatchDate(LocalDateTime matchDate) {
         this.matchDate = matchDate;
     }
 

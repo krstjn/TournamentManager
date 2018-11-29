@@ -42,7 +42,7 @@
                                     <div class="tournaments__info">
                                         <h2>${tournament.name}</h2>
                                         <c:choose>
-                                          <c:when test="${tournament.teams.size() < tournament.maxTeams}">
+                                          <c:when test="${tournament.teams.size() < tournament.maxTeams && tournament.matches.size() == 0}">
                                                 <div class="open">Open for registration</div>
                                             </c:when>
                                             <c:otherwise>

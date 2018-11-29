@@ -152,13 +152,22 @@ public class TournamentController {
     @RequestMapping(value = "/editMatch", method = RequestMethod.POST)
     public String tournamentEditMatch(Model model,
                                       @RequestParam(value = "id")Long id,
-                                      @RequestParam(value = "homeScore")int home,
-                                      @RequestParam(value = "awayScore")int away){
+                                      @RequestParam(value = "homeScore", required = false)int home,
+                                      @RequestParam(value = "awayScore", required = false)int away,
+                                      @RequestParam(value = "location", required = false) String location,
+                                      @RequestParam(value = "matchDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime matchDate,
+                                      @RequestParam(value = "played", required = false) String played){
 
+
+        System.out.println("MatchDate: " + matchDate);
         Match match = matchService.findOne(id);
-        match.setHomeTeamScore(home);
-        match.setAwayTeamScore(away);
-        match.setPlayed(true);
+        if(location != null) match.setLocation(location);
+        if(matchDate != null) match.setMatchDate(matchDate);
+        if(played != null && played.equals("on")){
+            match.setHomeTeamScore(home);
+            match.setAwayTeamScore(away);
+            match.setPlayed(true);
+        }
         matchService.save(match);
 
         return "redirect:/tournaments/edit?id="+match.getTournament().getId()+"#matches";
