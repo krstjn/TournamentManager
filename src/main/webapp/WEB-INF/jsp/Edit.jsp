@@ -31,8 +31,11 @@
             <div class = titleSection>
                 <h1> ${tournament.name} </h1>
 
-                <h1> ${tournament.name} </h1>
-                <h4> Max fjöldi liða ${tournament.maxTeams}  -   Fjöldi liða í móti  ${tournament.teams.size()} - Fjöldi umferða ${tournament.nrOfRounds} </h4>
+                <c:if test="${isAuthenticated}">
+                    <a href="/tournaments?id=${tournament.id}">
+                        <button class="edit" style="float: right;"><i class="material-icons md-dark">edit</i></button>
+                    </a>
+                </c:if>
 
 
                 <sf:form method="POST" modelAttribute="tournament" action="/tournaments/edit?id=${tournament.id}">
