@@ -32,25 +32,11 @@
                 <h1> ${tournament.name} </h1>
 
                 <c:if test="${isAuthenticated}">
-                    <a href="/tournaments?id=${tournament.id}">
+                    <a href="/tournaments?id=${tournament.id}" title="Done">
                         <button class="edit" style="float: right;"><i class="material-icons md-dark">check</i></button>
                     </a>
                 </c:if>
 
-
-                <sf:form method="POST" modelAttribute="tournament" action="/tournaments/edit?id=${tournament.id}">
-                <sf:hidden path = "user" />
-                <sf:hidden path = "maxTeams" />
-                <sf:hidden path = "name"/>
-
-
-                        <c:if test="${isAuthenticated}">
-                            <a href="/tournaments?id=${tournament.id}">
-                                <button id ="submitScore" class="edit" type = "submit" style="float: right;"><i class="material-icons md-dark">done</i></button>
-                            </a>
-                        </c:if>
-
-             </sf:form>
             </div>
 
             <div class = "tournamentTable">

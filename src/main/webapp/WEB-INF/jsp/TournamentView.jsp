@@ -38,7 +38,7 @@
                                 <button class="edit" style="float: right;"><i class="material-icons md-dark">edit</i></button>
                             </a>
 
-                            <c:if test="${empty matches}">
+                            <c:if test="${empty matches && username.equals(tournament.user.username)}">
                                 <div class = "startbtn">
                                 <a href="tournaments/generateMatches?id=${tournament.id}">
                                     <button class="btn btn-primary" id = "start" style="float: right;">Start Tournament</button>
