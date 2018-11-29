@@ -40,9 +40,11 @@
                             </a>
 
                             <c:if test="${empty matches}">
+                                <div class = "startbtn">
                                 <a href="tournaments/generateMatches?id=${tournament.id}">
                                     <button class="btn btn-primary" id = "start" style="float: right;">Start Tournament</button>
                                 </a>
+                                </div>
                             </c:if>
 
                         </c:if>
@@ -84,7 +86,7 @@
                 </table>
             </div>
 
-
+            <c:if test="${not empty matches}">
 
             <div class = "scoreTable">
                 <h3> Games </h3>
@@ -96,6 +98,7 @@
                         <th>Location</th>
                         <th>Date</th>
                     </tr>
+
 
                     <c:forEach var="match" items="${matches}">
                         <div>
@@ -118,7 +121,16 @@
                         </div>
                     </c:forEach>
 
+
                 </table>
+                </c:if>
+                <c:if test="${isAuthenticated}">
+                <c:if test="${empty matches}">
+                   <div class = "notStarted"> <h2> Tournament has not started yet to begin press the "Start Tournament" button </h2>
+                   </div>
+                </c:if>
+                </c:if>
+
             </div>
 
         </body>
