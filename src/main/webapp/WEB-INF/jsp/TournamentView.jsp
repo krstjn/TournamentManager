@@ -117,7 +117,7 @@
                                 </c:choose>
 
                                 <td> ${match.location} </td>
-                                <td> ${match.matchDate} </td>
+                                <td> <c:if test="${not empty match.matchDate}">${timeFormatter.format(match.matchDate)}</c:if> </td>
                             </tr>
                         </div>
                     </c:forEach>

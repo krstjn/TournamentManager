@@ -65,6 +65,7 @@ public class TournamentController {
                                   tournament.getUser().getUsername().equals(authenticationService.getUsername()));
 
             model.addAttribute("allowSignUp", allowSignUp);
+            model.addAttribute("timeFormatter", DateTimeFormatter.ofPattern("HH:mm - dd. MMM YYYY"));
             return "TournamentView";
         }
 
@@ -87,7 +88,7 @@ public class TournamentController {
             model.addAttribute("isAuthenticated", true);
             model.addAttribute("username", authenticationService.getUsername());
         }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime minDate = LocalDateTime.now();
         model.addAttribute("minDate", minDate.format(formatter));
         return "CreateTournament";
