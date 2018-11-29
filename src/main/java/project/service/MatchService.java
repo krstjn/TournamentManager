@@ -103,11 +103,6 @@ public class MatchService implements IMatchService {
 
         logger.info(matches.size() + " matches created.");
 
-
-        for (Match match : matches) {
-            save(match);
-        }
-
         return matches;
     }
 
