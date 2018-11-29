@@ -29,6 +29,7 @@
         <%@include file="Navigation.jsp"%>
         <main>
             <div class = titleSection>
+                <h1> ${tournament.name} </h1>
 
                 <h1> ${tournament.name} </h1>
                 <h4> Max fjöldi liða ${tournament.maxTeams}  -   Fjöldi liða í móti  ${tournament.teams.size()} - Fjöldi umferða ${tournament.nrOfRounds} </h4>
@@ -79,6 +80,7 @@
                 <h3> Games </h3>
                 <table>
                     <tr>
+                        <th>Round</th>
                         <th>Home</th>
                         <th>Away</th>
                         <th>Score</th>
@@ -91,12 +93,21 @@
                         <div>
                             <tr>
                                 <sf:form method="POST" action="/tournaments/editMatch?id=${match.id}">
+                                    <td> ${match.round}</td>
                                     <td> ${match.homeTeam.name} </td>
                                     <td> ${match.awayTeam.name} </td>
                                     <td> <input class="input" name="homeScore" type = "number" value="${match.homeTeamScore}" min = "0"/> - <input class = "input" name="awayScore" value="${match.awayTeamScore}" type = "number" min="0"/></td>
-                                    <td> ${match.location} </td>
-                                    <td> ${match.matchDate} </td>
-                                    <td><button class = "btn btn-primary">Submit</button></td>
+                                    <td> <input class="input" name="location" type="text" style="width: 90%" placeholder="${match.location}"/> </td>
+                                    <td> <input class="input" name="matchDate" type="datetime-local" value="${match.matchDate}" style="width: 95%" min="${minDate}"/> </td>
+                                    <td> Played:
+                                        <c:if test="${match.played}">
+                                            <input class="input" name="played" type="checkbox" checked disabled>
+                                        </c:if>
+                                        <c:if test="${!match.played}">
+                                            <input class="input" name="played" type="checkbox">
+                                        </c:if>
+                                        <button class="btn btn-primary">Submit</button>
+                                    </td>
                                 </sf:form>
 
                             </tr>
