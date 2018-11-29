@@ -33,7 +33,7 @@
 
                 <c:if test="${isAuthenticated}">
                     <a href="/tournaments?id=${tournament.id}">
-                        <button class="edit" style="float: right;"><i class="material-icons md-dark">edit</i></button>
+                        <button class="edit" style="float: right;"><i class="material-icons md-dark">check</i></button>
                     </a>
                 </c:if>
 
@@ -100,7 +100,7 @@
                                     <td> ${match.homeTeam.name} </td>
                                     <td> ${match.awayTeam.name} </td>
                                     <td> <input class="input" name="homeScore" type = "number" value="${match.homeTeamScore}" min = "0"/> - <input class = "input" name="awayScore" value="${match.awayTeamScore}" type = "number" min="0"/></td>
-                                    <td> <input class="input" name="location" type="text" style="width: 90%" placeholder="${match.location}"/> </td>
+                                    <td> <input class="input" name="location" type="text" style="width: 90%" value="${match.location}"/> </td>
                                     <td> <input class="input" name="matchDate" type="datetime-local" value="${match.matchDate}" style="width: 95%" min="${minDate}"/> </td>
                                     <td> Played:
                                         <c:if test="${match.played}">

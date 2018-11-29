@@ -45,6 +45,9 @@
                                           <c:when test="${tournament.teams.size() < tournament.maxTeams && tournament.matches.size() == 0}">
                                                 <div class="open">Open for registration</div>
                                             </c:when>
+                                            <c:when test="${tournament.matches.size() > 0}">
+                                                <div class="started">Started</div>
+                                            </c:when>
                                             <c:otherwise>
                                                 <div class="closed">Closed for registration</div>
                                             </c:otherwise>
