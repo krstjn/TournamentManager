@@ -12,7 +12,8 @@
         <meta charset="UTF-8">
         <script src="<c:url value="/js/jquery-3.3.1.min.js" />"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Raleway:400,700|Roboto:400,400i,700" rel="stylesheet">        <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
+        <link href="https://fonts.googleapis.com/css?family=Raleway:400,700|Roboto:400,400i,700" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/button.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/navigation.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/CreateTournament.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/index.css"/>"/>
@@ -28,6 +29,7 @@
         <div class="container">
 
             <sf:form method="POST" modelAttribute="tournament" action="/tournaments/create">
+                <h2 class="center">Create a tournament</h2>
                 <div class="row">
                     <div class="col-6">
                         <div class="input-container">
@@ -55,28 +57,22 @@
                     <h3>Tournament setup</h3>
                     <div class="col-3">
                         <div class="input-container">
-                            <label class="input-label" for="signUpDate">Allow sign up: <input type="checkbox" name="allowSignUp" id="allowSignUp" value="false"></label>
+                            <label class="input-label" for="signUpDate">Allow sign up: <input class="m-10" type="checkbox" name="allowSignUp" id="allowSignUp" value="false"></label>
                             <div id="signUpDate" class="input-group hidden">
-                                <label for="signUpExp-date">Sign up expiration: </label>
+                                <label class="input-label" for="signUpExp-date">Sign up expiration: </label>
                                 <input class="input" name="signUpExp" id="signUpExp-date" type="datetime-local" min="${minDate}"/>
                             </div>
                         </div>
                     </div>
                     <div class="col-3">
-                        <div class="input-container flex-row">
+                        <div class="input-container">
                             <label class="input-label" for="nrOfRounds">Number of rounds:</label>
-                            <sf:select class="input col-4" path="nrOfRounds">
-                                <sf:option value="1">1</sf:option>
-                                <sf:option value="2">2</sf:option>
-                                <sf:option value="3">3</sf:option>
-                                <sf:option value="4">4</sf:option>
+                            <sf:select class="input" path="nrOfRounds">
+                                <sf:option value="1">1 round</sf:option>
+                                <sf:option value="2">2 rounds</sf:option>
+                                <sf:option value="3">3 rounds</sf:option>
+                                <sf:option value="4">4 rounds</sf:option>
                             </sf:select>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="">
-                            <label for="isPublic">Public: </label>
-                            <sf:checkbox path="isPublic" value="true" />
                         </div>
                     </div>
                     <div class="col-3">
@@ -89,12 +85,21 @@
                             </sf:select>
                         </div>
                     </div>
+                    <div class="col-3">
+                        <div class="pt-10">
+                            <label class="input-label mr-10" for="isPublic">Public: </label>
+                            <sf:checkbox path="isPublic" value="true" />
+                        </div>
+                    </div>
+
                 </div>
 
 
                 <button id="submitTournament" class="hidden"  type="submit"></button>
             </sf:form>
-            <button id="verifyTournament" class="btn btn-primary">Búa til mót</button>
+            <div class="center">
+                <button id="verifyTournament" class="center btn btn-primary btn-large">Búa til mót</button>
+            </div>
         </div>
     </main>
     </div>
@@ -112,12 +117,14 @@
 
 
             $('#addTeam').click(function (e) {
+                if(parseInt($('#maxTeams').val()) <= $('#teams__container div').length) return;
                 var team = $('#newTeam').val();
+                if(team.length === 0 || team === undefined) return;
+
+                var $teamContainer = $('#teams__container');
                 var container = $("<div class='input-group flex-row-reverse'></div>");
                 container.attr('id', team);
-                var $teamContainer = $('#teams__container');
-                if(team.length === 0 || team === undefined) return;
-                console.log(team);
+
                 var p = $("<p name='myTeams' id='myTeams' style='width: 100%'></p>").text(team);
                 var button = $("<i id='removeTeam' class='material-icons md-18 btn btn-remove' onclick='removeTeam(this)'>remove</i>").attr('name',team);
                 var hidden = $("<input name='myTeams' id='myTeams' class='hidden' />").val(team);
@@ -155,7 +162,6 @@
                 $(window).keydown(function(e){
                 if(e.keyCode === 13) {
                     e.preventDefault();
-                    console.log(e)
                     var target = e.target.id || e.target.name;
                     if(target === 'newTeam'){
                         $('#addTeam').click();

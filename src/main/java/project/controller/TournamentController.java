@@ -58,9 +58,9 @@ public class TournamentController {
             model.addAttribute("matches", matches);
 
             boolean allowSignUp = tournament.getMatches().size() == 0 &&
-                                  tournament.getTeams().size() < tournament.getMaxTeams() &&
+                                  ((tournament.getTeams().size() < tournament.getMaxTeams() &&
                                   authenticationService.isAuthenticated() &&
-                                  ((tournament.getSignUpExpiration() != null &&
+                                  tournament.getSignUpExpiration() != null &&
                                   tournament.getSignUpExpiration().compareTo(LocalDateTime.now()) > 0) ||
                                   tournament.getUser().getUsername().equals(authenticationService.getUsername()));
 
@@ -130,14 +130,19 @@ public class TournamentController {
         }
 
         Tournament tournament = tournamentService.findOne(id);
-        List<Match> matches = tournament.getMatches();
-        Collections.sort(matches);
-        model.addAttribute("tournament", tournament);
-        model.addAttribute("scoreboard", tournamentService.generateScoreboard(tournament));
-        model.addAttribute("matches", matches);
 
+        // Only the tournament owner and admin are allowed to enter the edit site
+        if(authenticationService.isAdmin() || authenticationService.getUsername().equals(tournament.getUser().getUsername())){
+            List<Match> matches = tournament.getMatches();
+            Collections.sort(matches);
+            model.addAttribute("tournament", tournament);
+            model.addAttribute("scoreboard", tournamentService.generateScoreboard(tournament));
+            model.addAttribute("matches", matches);
 
-        return "Edit";
+            return "Edit";
+        }
+
+        return "redirect:/tournaments?id="+id;
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
