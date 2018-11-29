@@ -125,11 +125,15 @@
 
                 </table>
                 </c:if>
-                <c:if test="${isAuthenticated}">
                 <c:if test="${empty matches}">
-                   <div class = "notStarted"> <h2> Tournament has not started yet to begin press the "Start Tournament" button </h2>
+                   <div class = "notStarted center">
+                       <h2> Tournament has not started yet</h2>
+                       <c:if test="${username.equals(tournament.user.username)}">
+                           <h3 class="center">To start the tournament press the 'Start tournament' button</h3>
+                           <h3 class="center">This can only be done once, so make sure all participating teams are included</h3>
+                       </c:if>
+
                    </div>
-                </c:if>
                 </c:if>
 
             </div>
