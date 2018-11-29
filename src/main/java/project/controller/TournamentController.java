@@ -58,13 +58,14 @@ public class TournamentController {
             model.addAttribute("matches", matches);
 
             boolean allowSignUp = tournament.getMatches().size() == 0 &&
-                                  tournament.getTeams().size() < tournament.getMaxTeams() &&
+                                  ((tournament.getTeams().size() < tournament.getMaxTeams() &&
                                   authenticationService.isAuthenticated() &&
-                                  ((tournament.getSignUpExpiration() != null &&
+                                  tournament.getSignUpExpiration() != null &&
                                   tournament.getSignUpExpiration().compareTo(LocalDateTime.now()) > 0) ||
                                   tournament.getUser().getUsername().equals(authenticationService.getUsername()));
 
             model.addAttribute("allowSignUp", allowSignUp);
+            model.addAttribute("timeFormatter", DateTimeFormatter.ofPattern("HH:mm - dd. MMM YYYY"));
             return "TournamentView";
         }
 
@@ -87,7 +88,7 @@ public class TournamentController {
             model.addAttribute("isAuthenticated", true);
             model.addAttribute("username", authenticationService.getUsername());
         }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime minDate = LocalDateTime.now();
         model.addAttribute("minDate", minDate.format(formatter));
         return "CreateTournament";
@@ -130,14 +131,19 @@ public class TournamentController {
         }
 
         Tournament tournament = tournamentService.findOne(id);
-        List<Match> matches = tournament.getMatches();
-        Collections.sort(matches);
-        model.addAttribute("tournament", tournament);
-        model.addAttribute("scoreboard", tournamentService.generateScoreboard(tournament));
-        model.addAttribute("matches", matches);
 
+        // Only the tournament owner and admin are allowed to enter the edit site
+        if(authenticationService.isAdmin() || authenticationService.getUsername().equals(tournament.getUser().getUsername())){
+            List<Match> matches = tournament.getMatches();
+            Collections.sort(matches);
+            model.addAttribute("tournament", tournament);
+            model.addAttribute("scoreboard", tournamentService.generateScoreboard(tournament));
+            model.addAttribute("matches", matches);
 
-        return "Edit";
+            return "Edit";
+        }
+
+        return "redirect:/tournaments?id="+id;
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)

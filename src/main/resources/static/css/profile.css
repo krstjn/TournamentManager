@@ -133,6 +133,10 @@ h1 {
     color: red;
 }
 
+.started {
+    color: blue;
+}
+
 h2 {
     text-transform: uppercase;
 }

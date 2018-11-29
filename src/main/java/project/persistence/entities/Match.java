@@ -102,6 +102,12 @@ public class Match implements Comparable<Match> {
 
     @Override
     public int compareTo(Match o) {
-        return this.round-o.round;
+        if (this.getRound() > o.getRound()) return 1;
+        else if(this.getRound() < o.getRound()) return -1;
+        else {
+            if(this.getMatchDate() != null && o.getMatchDate() != null)
+                return this.getMatchDate().compareTo(o.getMatchDate());
+        }
+        return 0;
     }
 }

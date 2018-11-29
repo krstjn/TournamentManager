@@ -6,7 +6,7 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<html lang="en">
+<div lang="en">
 
     <head>
         <title>Tournament View</title>
@@ -20,6 +20,8 @@
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/icons.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/input.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/grid.css"/>"/>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/footer.css"/>"/>
+
     </head>
     <body>
     <div class="content">
@@ -31,15 +33,19 @@
                         <h1> ${tournament.name} </h1>
 
                         <c:if test="${isAuthenticated}">
-                            <c:if test="${empty matches}">
-                                <a href="tournaments/generateMatches?id=${tournament.id}">
-                                    <button class="btn btn-primary" style="float: right;">Start tournament</button>
-                                </a>
-                            </c:if>
 
                             <a href="tournaments/edit?id=${tournament.id}">
                                 <button class="edit" style="float: right;"><i class="material-icons md-dark">edit</i></button>
                             </a>
+
+                            <c:if test="${empty matches && username.equals(tournament.user.username)}">
+                                <div class = "startbtn">
+                                <a href="tournaments/generateMatches?id=${tournament.id}">
+                                    <button class="btn btn-primary" id = "start" style="float: right;">Start Tournament</button>
+                                </a>
+                                </div>
+                            </c:if>
+
                         </c:if>
 
             </div>
@@ -79,7 +85,7 @@
                 </table>
             </div>
 
-
+            <c:if test="${not empty matches}">
 
             <div class = "scoreTable">
                 <h3> Games </h3>
@@ -93,23 +99,45 @@
                         <th>Date</th>
                     </tr>
 
+
                     <c:forEach var="match" items="${matches}">
                         <div>
                             <tr>
                                 <td> ${match.round}</td>
                                 <td> ${match.homeTeam.name} </td>
                                 <td> ${match.awayTeam.name} </td>
-                                <td> ${match.homeTeamScore} - ${match.awayTeamScore} </td>
+
+                                <c:choose>
+                                    <c:when test="${match.played}">
+                                        <td> ${match.homeTeamScore} - ${match.awayTeamScore} </td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td>  -  </td>
+                                    </c:otherwise>
+                                </c:choose>
+
                                 <td> ${match.location} </td>
-                                <td> ${match.matchDate} </td>
+                                <td> <c:if test="${not empty match.matchDate}">${timeFormatter.format(match.matchDate)}</c:if> </td>
                             </tr>
                         </div>
                     </c:forEach>
 
+
                 </table>
+                </c:if>
+                <c:if test="${empty matches}">
+                   <div class = "notStarted center">
+                       <h2> Tournament has not started yet</h2>
+                       <c:if test="${username.equals(tournament.user.username)}">
+                           <h3 class="center">To start the tournament press the 'Start tournament' button</h3>
+                           <h3 class="center">This can only be done once, so make sure all participating teams are included</h3>
+                       </c:if>
+
+                   </div>
+                </c:if>
+
             </div>
 
         </body>
     </main>
-
 </html>

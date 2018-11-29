@@ -102,6 +102,7 @@ public class MatchService implements IMatchService {
             this.save(m);
 
         logger.info(matches.size() + " matches created.");
+
         return matches;
     }
 

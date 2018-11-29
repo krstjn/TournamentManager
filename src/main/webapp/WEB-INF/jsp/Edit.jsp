@@ -21,6 +21,8 @@
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/icons.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/input.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<c:url value="/css/grid.css"/>"/>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/footer.css"/>"/>
+
     </head>
     <body>
     <div class="content">
@@ -30,28 +32,12 @@
                 <h1> ${tournament.name} </h1>
 
                 <c:if test="${isAuthenticated}">
-                    <a href="/tournaments?id=${tournament.id}">
-                        <button class="edit" style="float: right;"><i class="material-icons md-dark">edit</i></button>
+                    <a href="/tournaments?id=${tournament.id}" title="Done">
+                        <button class="edit" style="float: right;"><i class="material-icons md-dark">check</i></button>
                     </a>
                 </c:if>
 
-        <sf:form method="POST" modelAttribute="tournament" action="/tournaments/edit?id=${tournament.id}">
-            <sf:hidden path = "user" />
-            <sf:hidden path = "maxTeams" />
-            <c:forEach var="tournament" items="${tournaments}">
-                    <c:if test = "${tournament.id == param.id}" >
-                        <h1> ${tournament.name} </h1>
-
-                        <c:if test="${isAuthenticated}">
-                            <a href="/tournaments?id=${tournament.id}">
-                                <button id ="submitScore" class="edit" type = "submit" style="float: right;"><i class="material-icons md-dark">done</i></button>
-                            </a>
-                        </c:if>
-
-                    </c:if>
-                </c:forEach>
             </div>
-            </sf:form>
 
             <div class = "tournamentTable">
                 <h3> Scoreboard </h3>
@@ -100,7 +86,7 @@
                                     <td> ${match.homeTeam.name} </td>
                                     <td> ${match.awayTeam.name} </td>
                                     <td> <input class="input" name="homeScore" type = "number" value="${match.homeTeamScore}" min = "0"/> - <input class = "input" name="awayScore" value="${match.awayTeamScore}" type = "number" min="0"/></td>
-                                    <td> <input class="input" name="location" type="text" style="width: 90%" placeholder="${match.location}"/> </td>
+                                    <td> <input class="input" name="location" type="text" style="width: 90%" value="${match.location}"/> </td>
                                     <td> <input class="input" name="matchDate" type="datetime-local" value="${match.matchDate}" style="width: 95%" min="${minDate}"/> </td>
                                     <td> Played:
                                         <c:if test="${match.played}">
@@ -122,3 +108,4 @@
         </body>
     </main>
 </html>
+

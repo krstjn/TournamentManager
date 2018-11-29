@@ -14,4 +14,6 @@ public interface IAuthenticationService {
 
     String getUsername();
 
+    boolean isAdmin();
+
 }
