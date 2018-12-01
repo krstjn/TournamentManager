@@ -46,7 +46,6 @@
                 <div class="tournaments">
                     <div class="col-12">
                         <c:forEach var="tournament" items="${tournaments}">
-                            <c:if test="${tournament.isPublic}">
                                 <div class="row-12">
                                     <a class="tournaments__link" href="/tournaments?id=${tournament.id}"></a>
                                     <div class="tournaments__info">
@@ -64,7 +63,6 @@
                                         </c:choose>
                                     </div>
                                 </div>
-                            </c:if>
                         </c:forEach>
                     </div>
                 </div>
