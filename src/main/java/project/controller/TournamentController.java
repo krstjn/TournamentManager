@@ -180,7 +180,7 @@ public class TournamentController {
 
         // Extra security
         // If the user that tries to edit the match isn't the owner of the tournament or an admin, the edit is denied
-        if(!authenticationService.isAdmin() ||
+        if(!authenticationService.isAdmin() &&
                 !authenticationService.getUsername().equals(match.getTournament().getUser().getUsername())) {
             return "redirect:/";
         }
