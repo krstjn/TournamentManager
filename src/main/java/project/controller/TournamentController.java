@@ -55,7 +55,7 @@ public class TournamentController {
         }
 
         Tournament tournament = tournamentService.findOne(id);
-
+        // Tournament only returned if it is public or the user is the owner
         if(tournament != null &&
             (tournament.getIsPublic() || authenticationService.getUsername().equals(tournament.getUser().getUsername()))){
             model.addAttribute("tournament", tournament);
@@ -115,7 +115,7 @@ public class TournamentController {
         logger.info("Creating tournament: " + tournament.getName());
         Tournament t = tournamentService.create(tournament, myTeams, signUpExp);
         logger.info("Tournament created: " + t.getName());
-        
+
         return "redirect:/tournaments?id=" + t.getId();
     }
 
