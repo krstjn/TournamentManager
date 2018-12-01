@@ -14,8 +14,7 @@ import java.util.List;
 
 @Service
 public class UserService implements IUserService {
-    IUserRepository repository;
-    Logger logger = LogManager.getLogger(UserService.class);
+    private IUserRepository repository;
 
     // Dependency Injection
     @Autowired

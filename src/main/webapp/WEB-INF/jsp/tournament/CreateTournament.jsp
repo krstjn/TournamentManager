@@ -24,7 +24,7 @@
     </head>
     <body>
     <div class="content">
-        <%@include file="Navigation.jsp"%>
+        <%@include file="../Navigation.jsp"%>
         <main>
         <div class="container">
 
@@ -104,7 +104,7 @@
     </main>
     </div>
     </body>
-    <%@include file="Footer.jsp"%>
+    <%@include file="../Footer.jsp"%>
 
     <script>
         function removeTeam(element) {

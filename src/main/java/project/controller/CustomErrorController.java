@@ -11,19 +11,19 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
-/************************
- * Höfundur: Kristján P.*
- ************************/
+/**
+ * Catches errors, and renders a more user friendly error page
+ */
 @Controller
 public class CustomErrorController implements ErrorController {
-    Logger logger = LogManager.getLogger(ErrorController.class);
+    private Logger logger = LogManager.getLogger(ErrorController.class);
 
     @RequestMapping("/error")
     public ModelAndView handleError(HttpServletRequest request) {
         ModelAndView m = new ModelAndView("error");
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         if (status != null) {
-            Integer statusCode = Integer.valueOf(status.toString());
+            int statusCode = Integer.valueOf(status.toString());
             logger.error("Error - statusCode: " + statusCode);
 
             if(statusCode == HttpStatus.NOT_FOUND.value()) {
@@ -41,6 +41,6 @@ public class CustomErrorController implements ErrorController {
 
     @Override
     public String getErrorPath() {
-        return "errors/error";
+        return "error";
     }
 }

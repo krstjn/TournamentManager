@@ -26,7 +26,7 @@
 </head>
 <body>
 <div class="content">
-    <%@include file="Navigation.jsp"%>
+    <%@include file="../Navigation.jsp"%>
     <main>
         <h1>Tournaments</h1>
         <c:choose>
@@ -68,5 +68,5 @@
     </main>
     </div>
     </body>
-    <%@include file="Footer.jsp"%>
+    <%@include file="../Footer.jsp"%>
 </html>

@@ -9,9 +9,6 @@ import project.service.Interfaces.ITeamService;
 import java.util.Collections;
 import java.util.List;
 
-/************************
- * Höfundur: Kristján P.*
- ************************/
 @Service
 public class TeamService implements ITeamService {
     // Instance Variables

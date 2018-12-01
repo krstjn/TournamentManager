@@ -1,20 +1,14 @@
 package project.persistence.entities;
 
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "matches")
 public class Match implements Comparable<Match> {
-    // TODO: bæta við breytu sem segir hvort búið sé að spila leik
     private long id;
     private int homeTeamScore;
     private int awayTeamScore;
-    //@DateTimeFormat(pattern = "YYYY/mm/dd")
     private LocalDateTime matchDate;
     private int round;
     private String location;

@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.controller.UserController;
 import project.persistence.entities.Match;
 import project.persistence.entities.Team;
 import project.persistence.entities.Tournament;
@@ -16,7 +15,7 @@ import java.util.*;
 @Service
 public class MatchService implements IMatchService {
 
-    IMatchRepository repository;
+    private IMatchRepository repository;
     private Logger logger = LogManager.getLogger(MatchService.class);
 
     @Autowired

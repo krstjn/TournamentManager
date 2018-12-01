@@ -9,7 +9,7 @@ import project.service.Interfaces.IRoleService;
 @Service
 public class RoleService implements IRoleService {
 
-    IRoleRepository repository;
+    private IRoleRepository repository;
 
     @Autowired
     public RoleService(IRoleRepository repository) {

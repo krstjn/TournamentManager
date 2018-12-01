@@ -3,20 +3,17 @@ package project.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.persistence.entities.Match;
 import project.persistence.entities.Team;
 import project.persistence.entities.Tournament;
-import project.persistence.entities.User;
 import project.service.Interfaces.IAuthenticationService;
 import project.service.Interfaces.IMatchService;
 import project.service.Interfaces.ITournamentService;
 import project.service.Interfaces.IUserService;
 
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -24,21 +21,30 @@ import java.util.*;
 @Controller
 @RequestMapping(value = "/tournaments" )
 public class TournamentController {
+    private final String path = "tournament/";
 
     // Instance Variables
     private ITournamentService tournamentService;
     private IMatchService matchService;
     private IAuthenticationService authenticationService;
-    private IUserService userService;
     private Logger logger = LogManager.getLogger(TournamentController.class);
 
-    public TournamentController(ITournamentService tournamentService, IAuthenticationService authenticationService, IUserService userService, IMatchService matchService) {
+    public TournamentController(ITournamentService tournamentService, IAuthenticationService authenticationService, IMatchService matchService) {
         this.tournamentService = tournamentService;
         this.authenticationService = authenticationService;
-        this.userService = userService;
         this.matchService = matchService;
     }
 
+    /**
+     * Gets the tournaments/ site
+     * If search is defined, user will always be given the search results
+     * If id is defined and references an existing tournament, user will get the tournaments site
+     * Otherwise the user will be given all public tournaments
+     * @param model
+     * @param search
+     * @param id
+     * @return
+     */
     @GetMapping
     public String tournamentsGet(Model model,
                                  @RequestParam(value="search", required = false)String search,
@@ -50,7 +56,8 @@ public class TournamentController {
 
         Tournament tournament = tournamentService.findOne(id);
 
-        if(tournament != null){
+        if(tournament != null &&
+            (tournament.getIsPublic() || authenticationService.getUsername().equals(tournament.getUser().getUsername()))){
             model.addAttribute("tournament", tournament);
             model.addAttribute("scoreboard", tournamentService.generateScoreboard(tournament));
             List<Match> matches = tournament.getMatches();
@@ -66,7 +73,7 @@ public class TournamentController {
 
             model.addAttribute("allowSignUp", allowSignUp);
             model.addAttribute("timeFormatter", DateTimeFormatter.ofPattern("HH:mm - dd. MMM YYYY"));
-            return "TournamentView";
+            return path + "TournamentView";
         }
 
         if(search != null) {
@@ -74,9 +81,15 @@ public class TournamentController {
         } else {
             model.addAttribute("tournaments", tournamentService.findAll());
         }
-        return "ViewTournaments";
+        return path + "ViewTournaments";
     }
 
+
+    /**
+     * Sets up the model for creating a tournament
+     * @param model
+     * @return
+     */
     @RequestMapping(value ="/create", method = RequestMethod.GET)
     public String createTournamentGet(Model model) {
         Tournament tournament = new Tournament();
@@ -91,7 +104,7 @@ public class TournamentController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime minDate = LocalDateTime.now();
         model.addAttribute("minDate", minDate.format(formatter));
-        return "CreateTournament";
+        return path +"CreateTournament";
     }
 
     @RequestMapping(value ="/create", method = RequestMethod.POST)
@@ -99,13 +112,10 @@ public class TournamentController {
                                        @RequestParam(value = "myTeams", required = false)String[] myTeams,
                                        @RequestParam(value = "signUpExp", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")LocalDateTime signUpExp,
                                        Model model){
-        // TODO: Improve User input, figure out if more fields are needed
-        // TODO: Improve view based on input fields
         logger.info("Creating tournament: " + tournament.getName());
         Tournament t = tournamentService.create(tournament, myTeams, signUpExp);
         logger.info("Tournament created: " + t.getName());
-
-        // Redirecta á tournament síðuna
+        
         return "redirect:/tournaments?id=" + t.getId();
     }
 
@@ -140,21 +150,23 @@ public class TournamentController {
             model.addAttribute("scoreboard", tournamentService.generateScoreboard(tournament));
             model.addAttribute("matches", matches);
 
-            return "Edit";
+            return path + "Edit";
         }
 
         return "redirect:/tournaments?id="+id;
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String tournamentEditPost(@ModelAttribute("tournament") Tournament tournament,
-                                    @RequestParam(value = "id")Long id){
-
-        tournamentService.save(tournament);
-
-        return "redirect:/tournaments?id="+id;
-    }
-
+    /**
+     * Edits the match with the given ID, based on the params provided by the user
+     * @param model
+     * @param id
+     * @param home home team score(goals)
+     * @param away away team score(goals)
+     * @param location where the match is taking place
+     * @param matchDate when it takes place
+     * @param played has it been played
+     * @return redirects back to the edit site
+     */
     @RequestMapping(value = "/editMatch", method = RequestMethod.POST)
     public String tournamentEditMatch(Model model,
                                       @RequestParam(value = "id")Long id,
@@ -164,9 +176,16 @@ public class TournamentController {
                                       @RequestParam(value = "matchDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime matchDate,
                                       @RequestParam(value = "played", required = false) String played){
 
-
-        System.out.println("MatchDate: " + matchDate);
         Match match = matchService.findOne(id);
+
+        // Extra security
+        // If the user that tries to edit the match isn't the owner of the tournament or an admin, the edit is denied
+        if(!authenticationService.isAdmin() ||
+                !authenticationService.getUsername().equals(match.getTournament().getUser().getUsername())) {
+            return "redirect:/";
+        }
+
+
         if(location != null) match.setLocation(location);
         if(matchDate != null) match.setMatchDate(matchDate);
         if(played != null && played.equals("on")){
@@ -179,6 +198,12 @@ public class TournamentController {
         return "redirect:/tournaments/edit?id="+match.getTournament().getId()+"#matches";
     }
 
+    /**
+     * Generates the matches for the given tournament ID
+     * @param model
+     * @param id the tournament ID
+     * @return redirects back to the tournaments site
+     */
     @RequestMapping(value="generateMatches", method=RequestMethod.GET)
     public String generateMatches(Model model, @RequestParam(value="id")Long id){
         Tournament tournament = tournamentService.findOne(id);
@@ -186,16 +211,6 @@ public class TournamentController {
             matchService.generateMatches(tournament);
 
         return "redirect:/tournaments?id="+id;
-    }
-
-    @RequestMapping(value = "/edit", method = RequestMethod.DELETE)
-    @ResponseStatus(value = HttpStatus.NOT_IMPLEMENTED)
-    public String tournamentDelete(Model model,
-                                   @RequestParam(value = "id")Long id){
-        // TODO: Implement this
-        model.addAttribute("errorMsg", "501 - Not implemented yet");
-
-        return "errors/error";
     }
 
 

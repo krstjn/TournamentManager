@@ -20,6 +20,8 @@ import java.util.Set;
 @Controller
 public class UserController {
 
+    private final String path = "user/";
+
     private IUserService userService;
     private IRoleService roleService;
     private IAuthenticationService authenticationService;
@@ -33,6 +35,12 @@ public class UserController {
         this.authenticationService = authenticationService;
     }
 
+    /**
+     * Set up the login view, the login itself is handled by spring security
+     * @param model
+     * @param error
+     * @return
+     */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginGet(Model model,
                            @RequestParam(name = "error", required = false, defaultValue = "false")String error){
@@ -42,23 +50,35 @@ public class UserController {
         model.addAttribute("target", "/login");
         model.addAttribute("errors", errors);
 
-        return "Login_Signup";
+        return path + "Login_Signup";
     }
 
+    /**
+     * Set up the Sign up view
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signupGet(Model model){
         model.addAttribute("title", "Signup");
         model.addAttribute("target", "/signup");
-        return "Login_Signup";
+        return path + "Login_Signup";
     }
 
+    /**
+     * Signs up a user, including some validation
+     * @param model
+     * @param username
+     * @param password
+     * @return
+     */
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String signupPost(Model model,
                              @RequestParam(value = "username") String username,
                              @RequestParam(value = "password") String password){
         ArrayList<String> errors = new ArrayList<>();
 
-        // Lightweight validation, might need improvement
+        // Lightweight validation
         if(userService.findByUsername(username.toUpperCase()) != null){
             errors.add("Username already in use.");
         }
@@ -73,7 +93,7 @@ public class UserController {
             model.addAttribute("title","Signup");
             model.addAttribute("target", "/signup");
 
-            return "Login_Signup";
+            return path + "Login_Signup";
         }
 
         User user = new User(username.toUpperCase(), userService.hashPW(password));
@@ -94,7 +114,6 @@ public class UserController {
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public String profileGet(Model model){
-        // TODO: Improve view, and maybe add more fields
         User user = userService.findByUsername(authenticationService.getUsername());
         Set<Tournament> tournaments = user.getTournaments();
 
@@ -105,7 +124,7 @@ public class UserController {
             model.addAttribute("tournaments", tournaments);
         }
 
-        return "Profile";
+        return path + "Profile";
     }
 
 }

@@ -3,6 +3,11 @@ package project.utils;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
+
+/**
+ * Helper class to be able to use LocalDateTime
+ * in the Database
+ */
 @Converter(autoApply = true)
 public class LocalDateTimeConverter implements AttributeConverter<java.time.LocalDateTime, java.sql.Timestamp> {
 

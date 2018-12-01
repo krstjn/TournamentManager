@@ -25,7 +25,7 @@
 </head>
 <body>
 <div class="content">
-    <%@include file="Navigation.jsp"%>
+    <%@include file="../Navigation.jsp"%>
 
 <main>
         <div class="profile__info">
@@ -78,6 +78,6 @@
 </main>
 </div>
 </body>
-<%@include file="Footer.jsp"%>
+<%@include file="../Footer.jsp"%>
 
 </html>

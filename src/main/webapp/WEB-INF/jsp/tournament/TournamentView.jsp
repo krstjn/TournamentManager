@@ -25,7 +25,7 @@
     </head>
     <body>
     <div class="content">
-        <%@include file="Navigation.jsp"%>
+        <%@include file="../Navigation.jsp"%>
 
         <main>
             <div class = titleSection>
