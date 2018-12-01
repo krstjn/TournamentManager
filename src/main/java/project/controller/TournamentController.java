@@ -137,6 +137,7 @@ public class TournamentController {
 
         if(authenticationService.isAuthenticated()){
             model.addAttribute("isAuthenticated", true);
+            model.addAttribute("isAdmin", authenticationService.isAdmin());
             model.addAttribute("username", authenticationService.getUsername());
         }
 
