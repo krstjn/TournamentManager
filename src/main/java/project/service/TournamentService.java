@@ -87,17 +87,17 @@ public class TournamentService implements ITournamentService {
         if(tournament.getSport() != Sport.Football) pointsForWin = 2;
 
         List<Match> matches = tournament.getMatches();
-        HashMap<String, Integer> points = new HashMap<>();
-        HashMap<String, Integer> goalsFor = new HashMap<>();
-        HashMap<String, Integer> goalsAgainst = new HashMap<>();
-        HashMap<String, Integer> gamesPlayed = new HashMap<>();
+        HashMap<Long, Integer> points = new HashMap<>();
+        HashMap<Long, Integer> goalsFor = new HashMap<>();
+        HashMap<Long, Integer> goalsAgainst = new HashMap<>();
+        HashMap<Long, Integer> gamesPlayed = new HashMap<>();
         for(Match match: matches){
             if(match.getPlayed()){
 
                 int home = match.getHomeTeamScore();
                 int away = match.getAwayTeamScore();
-                String homeTeam = match.getHomeTeam().getName();
-                String awayTeam = match.getAwayTeam().getName();
+                Long homeTeam = match.getHomeTeam().getId();
+                Long awayTeam = match.getAwayTeam().getId();
 
                 int playedHome = gamesPlayed.get(homeTeam) == null ? 0 : gamesPlayed.get(homeTeam);
                 gamesPlayed.put(homeTeam, playedHome + 1);
@@ -141,19 +141,20 @@ public class TournamentService implements ITournamentService {
 
 
     private List<ScoreboardItem> generateScoreboard(Set<Team> teams,
-                                    HashMap<String,Integer> goalsFor,
-                                    HashMap<String,Integer> goalsAgainst,
-                                    HashMap<String,Integer> points,
-                                    HashMap<String,Integer> gamesPlayed){
+                                    HashMap<Long,Integer> goalsFor,
+                                    HashMap<Long,Integer> goalsAgainst,
+                                    HashMap<Long,Integer> points,
+                                    HashMap<Long,Integer> gamesPlayed){
         List<ScoreboardItem> scoreboard= new ArrayList<>();
         for(Team team : teams){
             String name = team.getName();
+            Long id = team.getId();
             scoreboard.add(new ScoreboardItem(
                     name,
-                    gamesPlayed.get(name) == null ? 0 : gamesPlayed.get(name),
-                    goalsFor.get(name) == null ? 0 : goalsFor.get(name),
-                    goalsAgainst.get(name) == null ? 0 : goalsAgainst.get(name),
-                    points.get(name) == null ? 0 : points.get(name))
+                    gamesPlayed.get(id) == null ? 0 : gamesPlayed.get(id),
+                    goalsFor.get(id) == null ? 0 : goalsFor.get(id),
+                    goalsAgainst.get(id) == null ? 0 : goalsAgainst.get(id),
+                    points.get(id) == null ? 0 : points.get(id))
             );
         }
         Collections.sort(scoreboard, Collections.reverseOrder());
