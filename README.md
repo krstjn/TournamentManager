@@ -1,6 +1,19 @@
 # Tournament manager
 
-### Hópmeðlimir
+## How to run:
+
+To run you must have postgres setup on your machine. You might have to change these fields in the `application.properties` file:
+
+    # The URL to your database
+    spring.datasource.url=jdbc:postgresql://localhost:5432/HBV
+    
+    # User name and Password to your database
+    spring.datasource.username=
+    spring.datasource.password=
+    
+A running version of the master branch can also be found here: [Tournament manager](https://tournament-management.herokuapp.com)
+
+### Group members
 
 *Birgir Óli Snorrason       - bos32@hi.is	 - 150795-2499*
 
